@@ -1,4 +1,4 @@
-package com.unitn.disi.lpsmt.myapplication.ui.gallery;
+package com.unitn.disi.lpsmt.racer.ui.gallery;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.unitn.disi.lpsmt.myapplication.R;
+import com.unitn.disi.lpsmt.racer.R;
 
 public class GalleryFragment extends Fragment {
 

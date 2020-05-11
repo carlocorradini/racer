@@ -1,4 +1,4 @@
-package com.unitn.disi.lpsmt.myapplication;
+package com.unitn.disi.lpsmt.racer;
 
 import android.os.Bundle;
 import android.view.Menu;
