@@ -5,10 +5,30 @@
     <string name="menu_gallery">Gallery</string>
     <string name="avatar">Avatar</string>
     <string name="username">Username</string>
+    <string name="email">Email</string>
     <string name="password">Password</string>
+    <string name="password_repeat">Repeat password</string>
+    <string name="name">Name</string>
+    <string name="surname">Surname</string>
+    <string name="gender">Gender</string>
+    <string name="date_of_birth">Date of birth</string>
 
     <!-- Sign In -->
     <string name="sign_in">Sign In</string>
+    <string name="sign_in_unauthorized">Wrong username or password</string>
     <string name="no_account">I don\'t have an account</string>
     <string name="forgot_password">Forgot password?</string>
+
+    <!-- Sign Up -->
+    <string name="favorite_number">Favorite number</string>
+    <string-array name="user_genders_array">
+        <item>Unknown</item>
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+
+    <!-- Errors -->
+    <string name="error_unknown">Unknown error</string>
+    <string name="error_connection_timeout">The server is unreachable</string>
+    <string name="error_conversion">Conversion error</string>
 </resources>

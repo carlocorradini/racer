@@ -5,10 +5,30 @@
     <string name="menu_gallery">Gallery</string>
     <string name="avatar">Avatar</string>
     <string name="username">Username</string>
+    <string name="email">Email</string>
     <string name="password">Password</string>
+    <string name="password_repeat">Ripeti password</string>
+    <string name="name">Nome</string>
+    <string name="surname">Cognome</string>
+    <string name="gender">Sesso</string>
+    <string name="date_of_birth">Data di nascita</string>
 
     <!-- Sign In -->
     <string name="sign_in">Accedi</string>
+    <string name="sign_in_unauthorized">Username o password errati</string>
     <string name="no_account">Non ho un account</string>
     <string name="forgot_password">Password dimenticata?</string>
+
+    <!-- Sign Up -->
+    <string name="favorite_number">Numero preferito</string>
+    <string-array name="user_genders_array">
+        <item>Sconosciuto</item>
+        <item>Maschio</item>
+        <item>Femmina</item>
+    </string-array>
+
+    <!-- Errors -->
+    <string name="error_unknown">Errore sconosciuto</string>
+    <string name="error_connection_timeout">Impossibile contattare il server</string>
+    <string name="error_conversion">Errore di conversione</string>
 </resources>
