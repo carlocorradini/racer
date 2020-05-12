@@ -24,7 +24,7 @@ public interface CircuitService {
      * @param options Find options
      * @return An {@link API.Response} with the {@link List} of {@link Circuit} founds
      */
-    @GET("auth/circuit")
+    @GET("circuit")
     Call<API.Response<List<Circuit>>> find(@QueryMap Map<String, String> options);
 
     /**
@@ -32,7 +32,7 @@ public interface CircuitService {
      *
      * @return An {@link API.Response} with the {@link List} of {@link Circuit} founds
      */
-    @GET("auth/circuit")
+    @GET("circuit")
     Call<API.Response<List<Circuit>>> find();
 
     /**
@@ -41,6 +41,6 @@ public interface CircuitService {
      * @param id The {@link Circuit} id
      * @return An {@link API.Response} with the {@link Circuit} found
      */
-    @GET("auth/circuit/{id}")
+    @GET("circuit/{id}")
     Call<API.Response<Circuit>> findById(@Path("id") Long id);
 }

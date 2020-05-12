@@ -24,7 +24,7 @@ public interface CarService {
      * @param options Find options
      * @return An {@link API.Response} with the {@link List} of {@link Car} founds
      */
-    @GET("auth/car")
+    @GET("car")
     Call<API.Response<List<Car>>> find(@QueryMap Map<String, String> options);
 
     /**
@@ -32,7 +32,7 @@ public interface CarService {
      *
      * @return An {@link API.Response} with the {@link List} of {@link Car} founds
      */
-    @GET("auth/car")
+    @GET("car")
     Call<API.Response<List<Car>>> find();
 
     /**
@@ -41,6 +41,6 @@ public interface CarService {
      * @param id The {@link Car} id
      * @return An {@link API.Response} with the {@link Car} found
      */
-    @GET("auth/car/{id}")
+    @GET("car/{id}")
     Call<API.Response<Car>> findById(@Path("id") Long id);
 }

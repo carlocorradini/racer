@@ -85,7 +85,8 @@
             android:id="@+id/sign_up_spinner_gender"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin" />
+            android:layout_marginTop="@dimen/margin"
+            android:entries="@array/user_genders_array"/>
 
         <EditText
             android:id="@+id/sign_up_input_date_of_birth"
@@ -93,7 +94,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin"
             android:drawableEnd="@drawable/ic_birthday_cake"
-            android:enabled="false"
             android:hint="@string/date_of_birth"
             android:importantForAutofill="no"
             android:inputType="date" />
@@ -107,6 +107,38 @@
             android:hint="@string/favorite_number"
             android:importantForAutofill="no"
             android:inputType="number" />
+
+        <TextView
+            android:id="@+id/sign_up_input_favorite_car"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin"
+            android:drawableEnd="@drawable/ic_car_formula_one"
+            android:hint="@string/favorite_car" />
+
+        <TextView
+            android:id="@+id/sign_up_input_favorite_circuit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin"
+            android:drawableEnd="@drawable/ic_circuit"
+            android:hint="@string/favorite_circuit" />
+
+        <TextView
+            android:id="@+id/sign_up_input_hated_circuit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin"
+            android:drawableEnd="@drawable/ic_circuit"
+            android:hint="@string/hated_circuit" />
+
+        <Button
+            android:id="@+id/sign_up_button_sign_up"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin"
+            android:drawableEnd="@drawable/ic_send"
+            android:text="@string/sign_up" />
 
     </LinearLayout>
 </ScrollView>

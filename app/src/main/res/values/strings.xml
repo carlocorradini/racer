@@ -12,6 +12,9 @@
     <string name="surname">Surname</string>
     <string name="gender">Gender</string>
     <string name="date_of_birth">Date of birth</string>
+    <string name="confirm">Confirm</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="search">Search</string>
 
     <!-- Sign In -->
     <string name="sign_in">Sign In</string>
@@ -20,12 +23,22 @@
     <string name="forgot_password">Forgot password?</string>
 
     <!-- Sign Up -->
+    <string name="sign_up">Sign Up</string>
     <string name="favorite_number">Favorite number</string>
+    <string name="favorite_car">Favorite car</string>
+    <string name="favorite_circuit">Favorite circuit</string>
+    <string name="hated_circuit">Hated circuit</string>
     <string-array name="user_genders_array">
         <item>Unknown</item>
         <item>Male</item>
         <item>Female</item>
     </string-array>
+
+    <!-- Dialog Car -->
+    <string name="choose_car">Choose a car</string>
+
+    <!-- Dialog Circuit -->
+    <string name="choose_circuit">Choose a circuit</string>
 
     <!-- Errors -->
     <string name="error_unknown">Unknown error</string>

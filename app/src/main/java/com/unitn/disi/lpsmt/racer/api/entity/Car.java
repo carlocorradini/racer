@@ -1,9 +1,14 @@
 package com.unitn.disi.lpsmt.racer.api.entity;
 
+import androidx.annotation.Nullable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * Car mapping
@@ -26,11 +31,11 @@ public class Car {
     public String name;
 
     /**
-     * Manufacturer id of the Car
+     * Manufacturer of the Car
      */
     @SerializedName("manufacturer")
     @Expose
-    public Long manufacturer;
+    public CarManufacturer manufacturer;
 
     /**
      * Creation {@link LocalDateTime} of the Car
@@ -51,11 +56,11 @@ public class Car {
      *
      * @param id           Id of the Car
      * @param name         Name of the Car
-     * @param manufacturer Manufacturer id of the Car
+     * @param manufacturer Manufacturer of the Car
      * @param createdAt    Creation {@link LocalDateTime} of the Car
      * @param updatedAt    Update {@link LocalDateTime} of the Car
      */
-    public Car(Long id, String name, Long manufacturer, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Car(Long id, String name, CarManufacturer manufacturer, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.name = name;
         this.manufacturer = manufacturer;
@@ -67,5 +72,26 @@ public class Car {
      * Construct an empty Car class
      */
     public Car() {
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Car car = (Car) obj;
+        return Objects.equals(id, car.id);
+    }
+
+    /**
+     * Return the full car name having the {@link CarManufacturer manufacturer} name and {@link Car} name
+     *
+     * @return The {@link Car} full name having the {@link CarManufacturer manufacturer} name as first
+     */
+    public String getFullName() {
+        return String.format("%s %s", StringUtils.capitalize(this.manufacturer.name), StringUtils.capitalize(this.name));
     }
 }

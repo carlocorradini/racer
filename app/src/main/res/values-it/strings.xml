@@ -12,6 +12,9 @@
     <string name="surname">Cognome</string>
     <string name="gender">Sesso</string>
     <string name="date_of_birth">Data di nascita</string>
+    <string name="confirm">Conferma</string>
+    <string name="dismiss">Annulla</string>
+    <string name="search">Cerca</string>
 
     <!-- Sign In -->
     <string name="sign_in">Accedi</string>
@@ -20,12 +23,22 @@
     <string name="forgot_password">Password dimenticata?</string>
 
     <!-- Sign Up -->
+    <string name="sign_up">Registrati</string>
     <string name="favorite_number">Numero preferito</string>
+    <string name="favorite_car">Auto preferita</string>
+    <string name="favorite_circuit">Circuito preferito</string>
+    <string name="hated_circuit">Circuito odiato</string>
     <string-array name="user_genders_array">
         <item>Sconosciuto</item>
         <item>Maschio</item>
         <item>Femmina</item>
     </string-array>
+
+    <!-- Dialog Car -->
+    <string name="choose_car">Scegli una macchina</string>
+
+    !-- Dialog Circuit -->
+    <string name="choose_circuit">Scegli un circuito</string>
 
     <!-- Errors -->
     <string name="error_unknown">Errore sconosciuto</string>
