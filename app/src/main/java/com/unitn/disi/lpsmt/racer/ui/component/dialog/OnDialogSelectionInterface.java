@@ -1,4 +1,4 @@
-package com.unitn.disi.lpsmt.racer.ui.component;
+package com.unitn.disi.lpsmt.racer.ui.component.dialog;
 
 /**
  * Listener used in Dialog class fragments when one or more has been selected

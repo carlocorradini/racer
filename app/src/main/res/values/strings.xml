@@ -12,9 +12,12 @@
     <string name="surname">Surname</string>
     <string name="gender">Gender</string>
     <string name="date_of_birth">Date of birth</string>
+    <string name="residence">Residence</string>
     <string name="confirm">Confirm</string>
     <string name="dismiss">Dismiss</string>
     <string name="search">Search</string>
+    <string name="send">Send</string>
+    <string name="loading">Loading</string>
 
     <!-- Sign In -->
     <string name="sign_in">Sign In</string>
@@ -33,6 +36,25 @@
         <item>Male</item>
         <item>Female</item>
     </string-array>
+    <string name="warning_empty_username">Fill username field</string>
+    <string name="warning_empty_email">Fill email field</string>
+    <string name="warning_invalid_email">Invalid email</string>
+    <string name="warning_empty_password">Fill password field</string>
+    <string name="warning_password_min_length">Minimum password length is 8 characters</string>
+    <string name="warning_password_mismatch">The passwords are not the same</string>
+    <string name="warning_empty_name">Fill name field</string>
+    <string name="warning_empty_surname">Fill surname field</string>
+    <string name="warning_empty_date_of_birth">Fill date of birth field</string>
+    <string name="warning_empty_residence">Fill residence field</string>
+    <string name="warning_empty_favorite_number">Fill favorite number field</string>
+    <string name="warning_empty_favorite_car">Fill favorite car field</string>
+    <string name="warning_empty_favorite_circuit">Fill favorite circuit field</string>
+    <string name="warning_empty_hated_circuit">Fill hated circuit field</string>
+    <string name="warning_favorite_hated_circuits_equals">Favorite and Hated circuit must not be equals</string>
+
+    <!-- Forgot Password -->
+    <string name="recover_password_email_sent">Recovery email sent successfully</string>
+    <string name="warning_email_not_found">Email not found</string>
 
     <!-- Dialog Car -->
     <string name="choose_car">Choose a car</string>
@@ -40,8 +62,13 @@
     <!-- Dialog Circuit -->
     <string name="choose_circuit">Choose a circuit</string>
 
+    <!-- Warning -->
+    <string name="warning_unprocessable_entity">Unable to process entity due to properties: </string>
+    <string name="warning_conflict">Conflict on properties: </string>
+
     <!-- Errors -->
     <string name="error_unknown">Unknown error</string>
     <string name="error_connection_timeout">The server is unreachable</string>
     <string name="error_conversion">Conversion error</string>
+    <string name="error_internal_server_error">Internal server error</string>
 </resources>

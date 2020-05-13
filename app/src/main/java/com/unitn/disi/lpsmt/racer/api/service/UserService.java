@@ -71,10 +71,10 @@ public interface UserService {
      * Create a new {@link User} with the given user
      *
      * @param user The {@link User} to create
-     * @return An {@link API.Response} with the newly created {@link User} {@link UUID id}
+     * @return An {@link API.Response} with the authentication {@link JWT token}
      */
     @POST("auth/user")
-    Call<API.Response<UUID>> create(@Body User user);
+    Call<API.Response<JWT>> create(@Body User user);
 
     /**
      * Update the current authenticated {@link User} with the given user

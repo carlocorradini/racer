@@ -1,144 +1,180 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_vertical"
+    android:gravity="center_vertical"
+    android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:orientation="vertical"
-        android:padding="@dimen/padding">
+    <include
+        android:id="@+id/sign_up_loader"
+        layout="@layout/layout_loader"
+        android:visibility="gone" />
 
-        <ImageView
-            style="@style/Logo"
-            android:layout_gravity="center"
-            android:contentDescription="@string/logo" />
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
 
-        <EditText
-            android:id="@+id/sign_up_input_username"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin"
-            android:drawableEnd="@drawable/ic_user"
-            android:hint="@string/username"
-            android:importantForAutofill="no"
-            android:inputType="textNoSuggestions" />
+            android:layout_gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="@dimen/padding">
 
-        <EditText
-            android:id="@+id/sign_up_input_email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin"
-            android:drawableEnd="@drawable/ic_email"
-            android:hint="@string/email"
-            android:importantForAutofill="no"
-            android:inputType="textEmailAddress" />
+            <ImageView
+                style="@style/Logo"
+                android:layout_gravity="center"
+                android:contentDescription="@string/logo" />
 
-        <EditText
-            android:id="@+id/sign_up_input_password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin"
-            android:drawableEnd="@drawable/ic_lock"
-            android:hint="@string/password"
-            android:importantForAutofill="no"
-            android:inputType="textPassword" />
+            <EditText
+                android:id="@+id/sign_up_input_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin"
+                android:drawableEnd="@drawable/ic_user"
+                android:hint="@string/username"
+                android:importantForAutofill="no"
+                android:inputType="textNoSuggestions" />
 
-        <EditText
-            android:id="@+id/sign_up_input_password_repeat"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin"
-            android:drawableEnd="@drawable/ic_lock"
-            android:hint="@string/password_repeat"
-            android:importantForAutofill="no"
-            android:inputType="textPassword" />
+            <EditText
+                android:id="@+id/sign_up_input_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin"
+                android:drawableEnd="@drawable/ic_email"
+                android:hint="@string/email"
+                android:importantForAutofill="no"
+                android:inputType="textEmailAddress" />
 
-        <EditText
-            android:id="@+id/sign_up_input_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin"
-            android:drawableEnd="@drawable/ic_user"
-            android:hint="@string/name"
-            android:importantForAutofill="no"
-            android:inputType="textNoSuggestions" />
+            <EditText
+                android:id="@+id/sign_up_input_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin"
+                android:drawableEnd="@drawable/ic_lock"
+                android:hint="@string/password"
+                android:importantForAutofill="no"
+                android:inputType="textPassword" />
 
-        <EditText
-            android:id="@+id/sign_up_input_surname"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin"
-            android:drawableEnd="@drawable/ic_user"
-            android:hint="@string/surname"
-            android:importantForAutofill="no"
-            android:inputType="textNoSuggestions" />
+            <EditText
+                android:id="@+id/sign_up_input_password_repeat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin"
+                android:drawableEnd="@drawable/ic_lock"
+                android:hint="@string/password_repeat"
+                android:importantForAutofill="no"
+                android:inputType="textPassword" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin"
-            android:text="@string/gender" />
+            <EditText
+                android:id="@+id/sign_up_input_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin"
+                android:drawableEnd="@drawable/ic_user"
+                android:hint="@string/name"
+                android:importantForAutofill="no"
+                android:inputType="textNoSuggestions" />
 
-        <Spinner
-            android:id="@+id/sign_up_spinner_gender"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin"
-            android:entries="@array/user_genders_array"/>
+            <EditText
+                android:id="@+id/sign_up_input_surname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin"
+                android:drawableEnd="@drawable/ic_user"
+                android:hint="@string/surname"
+                android:importantForAutofill="no"
+                android:inputType="textNoSuggestions" />
 
-        <EditText
-            android:id="@+id/sign_up_input_date_of_birth"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin"
-            android:drawableEnd="@drawable/ic_birthday_cake"
-            android:hint="@string/date_of_birth"
-            android:importantForAutofill="no"
-            android:inputType="date" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin"
+                android:text="@string/gender" />
 
-        <EditText
-            android:id="@+id/sign_up_input_favorite_number"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin"
-            android:drawableEnd="@drawable/ic_hashtag"
-            android:hint="@string/favorite_number"
-            android:importantForAutofill="no"
-            android:inputType="number" />
+            <Spinner
+                android:id="@+id/sign_up_spinner_gender"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin"
+                android:entries="@array/user_genders_array" />
 
-        <TextView
-            android:id="@+id/sign_up_input_favorite_car"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin"
-            android:drawableEnd="@drawable/ic_car_formula_one"
-            android:hint="@string/favorite_car" />
+            <EditText
+                android:id="@+id/sign_up_input_date_of_birth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin"
+                android:clickable="true"
+                android:drawableEnd="@drawable/ic_birthday_cake"
+                android:focusable="false"
+                android:hint="@string/date_of_birth"
+                android:importantForAutofill="no"
+                android:inputType="date" />
 
-        <TextView
-            android:id="@+id/sign_up_input_favorite_circuit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin"
-            android:drawableEnd="@drawable/ic_circuit"
-            android:hint="@string/favorite_circuit" />
+            <EditText
+                android:id="@+id/sign_up_input_residence"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin"
+                android:drawableEnd="@drawable/ic_home"
+                android:hint="@string/residence"
+                android:importantForAutofill="no"
+                android:inputType="textNoSuggestions" />
 
-        <TextView
-            android:id="@+id/sign_up_input_hated_circuit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin"
-            android:drawableEnd="@drawable/ic_circuit"
-            android:hint="@string/hated_circuit" />
+            <EditText
+                android:id="@+id/sign_up_input_favorite_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin"
+                android:drawableEnd="@drawable/ic_hashtag"
+                android:hint="@string/favorite_number"
+                android:importantForAutofill="no"
+                android:inputType="number" />
 
-        <Button
-            android:id="@+id/sign_up_button_sign_up"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin"
-            android:drawableEnd="@drawable/ic_send"
-            android:text="@string/sign_up" />
+            <EditText
+                android:id="@+id/sign_up_input_favorite_car"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin"
+                android:clickable="true"
+                android:drawableEnd="@drawable/ic_car_formula_one"
+                android:focusable="false"
+                android:hint="@string/favorite_car"
+                android:importantForAutofill="no"
+                android:inputType="textNoSuggestions" />
 
-    </LinearLayout>
-</ScrollView>
+            <EditText
+                android:id="@+id/sign_up_input_favorite_circuit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin"
+                android:clickable="true"
+                android:drawableEnd="@drawable/ic_circuit"
+                android:focusable="false"
+                android:hint="@string/favorite_circuit"
+                android:importantForAutofill="no"
+                android:inputType="textNoSuggestions" />
+
+            <EditText
+                android:id="@+id/sign_up_input_hated_circuit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin"
+                android:clickable="true"
+                android:drawableEnd="@drawable/ic_circuit"
+                android:focusable="false"
+                android:hint="@string/hated_circuit"
+                android:importantForAutofill="no"
+                android:inputType="textNoSuggestions" />
+
+            <Button
+                android:id="@+id/sign_up_button_sign_up"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin"
+                android:drawableEnd="@drawable/ic_send"
+                android:text="@string/sign_up" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

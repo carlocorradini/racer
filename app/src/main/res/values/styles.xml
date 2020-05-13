@@ -23,5 +23,17 @@
         <item name="android:layout_height">@dimen/logo_height</item>
         <item name="android:src">@drawable/ic_logo</item>
     </style>
+    <style name="Logo.Medium" parent="Logo">
+        <item name="android:layout_width">@dimen/logo_medium_width</item>
+        <item name="android:layout_height">@dimen/logo_medium_height</item>
+    </style>
+    <style name="Logo.Small" parent="Logo">
+        <item name="android:layout_width">@dimen/logo_small_width</item>
+        <item name="android:layout_height">@dimen/logo_small_height</item>
+    </style>
+    <style name="Logo.Mini" parent="Logo">
+        <item name="android:layout_width">@dimen/logo_mini_width</item>
+        <item name="android:layout_height">@dimen/logo_mini_height</item>
+    </style>
 
 </resources>

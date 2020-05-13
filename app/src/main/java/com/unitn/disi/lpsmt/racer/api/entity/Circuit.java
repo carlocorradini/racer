@@ -1,9 +1,12 @@
 package com.unitn.disi.lpsmt.racer.api.entity;
 
+import androidx.annotation.Nullable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * Circuit mapping
@@ -58,5 +61,17 @@ public class Circuit {
      * Construct an empty Circuit class
      */
     public Circuit() {
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Circuit circuit = (Circuit) obj;
+        return Objects.equals(id, circuit.id);
     }
 }

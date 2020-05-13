@@ -1,4 +1,4 @@
-package com.unitn.disi.lpsmt.racer.ui.component;
+package com.unitn.disi.lpsmt.racer.ui.component.dialog;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -34,18 +34,18 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
- * Circuit Dialog component
+ * Circuit Dialog
  *
  * @author Carlo Corradini
  */
-public final class DialogCircuit extends AppCompatDialogFragment {
+public final class CircuitDialog extends AppCompatDialogFragment {
 
     /**
      * Current selected {@link Circuit}
      */
     private Circuit currentCircuit = null;
     /**
-     * Old selected {@link Circuit circuit} if the {@link DialogCircuit} was close and the positive button has been clicked
+     * Old selected {@link Circuit circuit} if the {@link CircuitDialog} was close and the positive button has been clicked
      */
     private Circuit savedCircuit = null;
     /**
@@ -123,9 +123,9 @@ public final class DialogCircuit extends AppCompatDialogFragment {
                 .setTitle(R.string.choose_circuit)
                 .setNegativeButton(R.string.dismiss, (dialog, which) -> dialog.dismiss())
                 .setPositiveButton(R.string.confirm, (dialog, which) -> {
-                    if (currentCircuit == null && listener == null) return;
-                    listener.onDialogSelection(currentCircuit);
                     savedCircuit = currentCircuit;
+                    if (currentCircuit != null && listener != null)
+                        listener.onDialogSelection(currentCircuit);
                 })
                 .create();
     }
@@ -164,7 +164,7 @@ public final class DialogCircuit extends AppCompatDialogFragment {
 
     /**
      * Show the available circuits in the {@link List} of circuits into the circuitsContainer
-     * After hide the loader and show the circuitsContainer
+     * After hide the loader and show the dataContainer
      */
     private void showCircuits() {
         for (int i = 0; i < circuits.size(); ++i) {

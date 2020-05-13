@@ -57,7 +57,7 @@ public interface UserChampionshipService {
      * Find all {@link UserChampionship} that correspond to the given {@link Championship} {@link Long id}
      *
      * @param championship The {@link Championship} {@link Long id}
-     * @return An {@link API.Response} with the {@link List} of {@link UserChampionship} founds for the corresponding {@link Championship} {@link Long ID}
+     * @return An {@link API.Response} with the {@link List} of {@link UserChampionship} founds for the corresponding {@link Championship} {@link Long id}
      */
     @GET("auth/user_championship/{championship}")
     Call<API.Response<List<UserChampionship>>> findByChampionship(@Path("championship") Long championship);

@@ -16,6 +16,19 @@ import java.util.UUID;
  */
 public class User {
     /**
+     * Password minimum length in chars
+     */
+    public static final short PASSWORD_MIN_LENGTH = 8;
+    /**
+     * Favorite number minimum inclusive value
+     */
+    public static final int FAVORITE_NUMBER_MIN = 1;
+    /**
+     * Favorite number maximum inclusive value
+     */
+    public static final int FAVORITE_NUMBER_MAX = 99;
+
+    /**
      * User Genders
      */
     public enum Gender {
@@ -162,6 +175,13 @@ public class User {
     public LocalDate dateOfBirth;
 
     /**
+     * Residence of the User
+     */
+    @SerializedName("residence")
+    @Expose
+    public String residence;
+
+    /**
      * Email of the User
      */
     @SerializedName("email")
@@ -235,6 +255,7 @@ public class User {
      * @param surname         Surname of the User
      * @param gender          Gender of the User
      * @param dateOfBirth     Date of Birth of the User
+     * @param residence       Residence of the User
      * @param email           Email of the User
      * @param avatar          Avatar of the User
      * @param favoriteNumber  Favorite Number of the User
@@ -245,7 +266,7 @@ public class User {
      * @param createdAt       Creation {@link LocalDateTime} of the User
      * @param updatedAt       Update {@link LocalDateTime} of the User
      */
-    public User(UUID id, String username, String password, Role role, String name, String surname, Gender gender, LocalDate dateOfBirth, String email, URL avatar, Short favoriteNumber, Long favoriteCar, Long favoriteCircuit, Long hatedCircuit, List<Long> championships, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public User(UUID id, String username, String password, Role role, String name, String surname, Gender gender, LocalDate dateOfBirth, String residence, String email, URL avatar, Short favoriteNumber, Long favoriteCar, Long favoriteCircuit, Long hatedCircuit, List<Long> championships, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -254,6 +275,7 @@ public class User {
         this.surname = surname;
         this.gender = gender;
         this.dateOfBirth = dateOfBirth;
+        this.residence = residence;
         this.email = email;
         this.avatar = avatar;
         this.favoriteNumber = favoriteNumber;

@@ -1,4 +1,4 @@
-package com.unitn.disi.lpsmt.racer.ui.component;
+package com.unitn.disi.lpsmt.racer.ui.component.dialog;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -34,18 +34,18 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
- * Car Dialog component
+ * Car Dialog
  *
  * @author Carlo Corradini
  */
-public final class DialogCar extends AppCompatDialogFragment {
+public final class CarDialog extends AppCompatDialogFragment {
 
     /**
      * Current selected {@link Car}
      */
     private Car currentCar = null;
     /**
-     * Old selected {@link Car car} if the {@link DialogCar} was close and the positive button has been clicked
+     * Old selected {@link Car car} if the {@link CarDialog} was close and the positive button has been clicked
      */
     private Car savedCar = null;
     /**
@@ -123,9 +123,9 @@ public final class DialogCar extends AppCompatDialogFragment {
                 .setTitle(R.string.choose_car)
                 .setNegativeButton(R.string.dismiss, (dialog, which) -> dialog.dismiss())
                 .setPositiveButton(R.string.confirm, (dialog, which) -> {
-                    if (currentCar == null && listener == null) return;
-                    listener.onDialogSelection(currentCar);
                     savedCar = currentCar;
+                    if (currentCar != null && listener != null)
+                        listener.onDialogSelection(currentCar);
                 })
                 .create();
     }
@@ -164,7 +164,7 @@ public final class DialogCar extends AppCompatDialogFragment {
 
     /**
      * Show the available cars in the {@link List} of cars into the carsContainer
-     * After hide the loader and show the carsContainer
+     * After hide the loader and show the dataContainer
      */
     private void showCars() {
         for (int i = 0; i < cars.size(); ++i) {

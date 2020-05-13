@@ -12,9 +12,12 @@
     <string name="surname">Cognome</string>
     <string name="gender">Sesso</string>
     <string name="date_of_birth">Data di nascita</string>
+    <string name="residence">Residenza</string>
     <string name="confirm">Conferma</string>
     <string name="dismiss">Annulla</string>
     <string name="search">Cerca</string>
+    <string name="send">Invia</string>
+    <string name="loading">Caricamento</string>
 
     <!-- Sign In -->
     <string name="sign_in">Accedi</string>
@@ -33,15 +36,39 @@
         <item>Maschio</item>
         <item>Femmina</item>
     </string-array>
+    <string name="warning_empty_username">Compilare il campo username</string>
+    <string name="warning_empty_email">Compilare il campo email</string>
+    <string name="warning_invalid_email">Email non valida</string>
+    <string name="warning_empty_password">Compilare il campo password</string>
+    <string name="warning_password_min_length">Lunghezza password minimo 8 caratteri</string>
+    <string name="warning_password_mismatch">Le password non combaciano</string>
+    <string name="warning_empty_name">Compilare il campo nome</string>
+    <string name="warning_empty_surname">Compilare il campo cognome</string>
+    <string name="warning_empty_date_of_birth">Compilare il campo data di nascita</string>
+    <string name="warning_empty_residence">Compilare il campo residenza</string>
+    <string name="warning_empty_favorite_number">Compilare il campo numero preferito</string>
+    <string name="warning_empty_favorite_car">Compilare il campo macchina preferita</string>
+    <string name="warning_empty_favorite_circuit">Compilare il campo circuito preferito</string>
+    <string name="warning_empty_hated_circuit">Compilare il campo circuito odiato</string>
+    <string name="warning_favorite_hated_circuits_equals">Il circuito preferito e odiato devono essere differenti</string>
+
+    <!-- Forgot Password -->
+    <string name="recover_password_email_sent">Email di recupero inviata con successo</string>
+    <string name="warning_email_not_found">Email non trovata</string>
 
     <!-- Dialog Car -->
     <string name="choose_car">Scegli una macchina</string>
 
-    !-- Dialog Circuit -->
+    <!-- Dialog Circuit -->
     <string name="choose_circuit">Scegli un circuito</string>
+
+    <!-- Warning -->
+    <string name="warning_unprocessable_entity">Impossibile processa l\'entità a causa delle proprietà: </string>
+    <string name="warning_conflict">Conflitto sulle proprietà: </string>
 
     <!-- Errors -->
     <string name="error_unknown">Errore sconosciuto</string>
     <string name="error_connection_timeout">Impossibile contattare il server</string>
     <string name="error_conversion">Errore di conversione</string>
+    <string name="error_internal_server_error">Errore interno del server</string>
 </resources>
