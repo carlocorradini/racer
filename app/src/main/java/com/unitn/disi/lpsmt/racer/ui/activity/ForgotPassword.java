@@ -1,4 +1,4 @@
-package com.unitn.disi.lpsmt.racer;
+package com.unitn.disi.lpsmt.racer.ui.activity;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -10,6 +10,7 @@ import android.widget.FrameLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.unitn.disi.lpsmt.racer.R;
 import com.unitn.disi.lpsmt.racer.api.API;
 import com.unitn.disi.lpsmt.racer.api.service.UserService;
 import com.unitn.disi.lpsmt.racer.helper.ErrorHelper;

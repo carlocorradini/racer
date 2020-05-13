@@ -1,4 +1,4 @@
-package com.unitn.disi.lpsmt.racer;
+package com.unitn.disi.lpsmt.racer.ui.activity;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -13,6 +13,7 @@ import android.widget.Spinner;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.auth0.android.jwt.JWT;
+import com.unitn.disi.lpsmt.racer.R;
 import com.unitn.disi.lpsmt.racer.api.API;
 import com.unitn.disi.lpsmt.racer.api.AuthManager;
 import com.unitn.disi.lpsmt.racer.api.entity.User;
@@ -173,7 +174,7 @@ public final class SignUp extends AppCompatActivity {
                 loader.setVisibility(View.GONE);
                 if (response.isSuccessful() && response.body() != null) {
                     AuthManager.getInstance().setToken(response.body().data);
-                    startActivity(new Intent(getBaseContext(), MainActivity.class));
+                    startActivity(new Intent(getBaseContext(), Home.class));
                     finish();
                 } else if (response.errorBody() != null) {
                     switch (response.code()) {

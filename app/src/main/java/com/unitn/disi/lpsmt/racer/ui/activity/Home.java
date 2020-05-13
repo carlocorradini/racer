@@ -1,8 +1,9 @@
-package com.unitn.disi.lpsmt.racer;
+package com.unitn.disi.lpsmt.racer.ui.activity;
 
 import android.os.Bundle;
 
 import com.google.android.material.navigation.NavigationView;
+import com.unitn.disi.lpsmt.racer.R;
 
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -12,7 +13,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-public class MainActivity extends AppCompatActivity {
+public final class Home extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
 
