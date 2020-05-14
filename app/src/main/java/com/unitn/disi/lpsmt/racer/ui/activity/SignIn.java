@@ -79,7 +79,7 @@ public final class SignIn extends AppCompatActivity {
                 loader.setVisibility(View.GONE);
                 if (response.isSuccessful() && response.body() != null) {
                     AuthManager.getInstance().setToken(response.body().data);
-                    startActivity(new Intent(getBaseContext(), Home.class));
+                    startActivity(new Intent(getBaseContext(), MainActivity.class));
                     finish();
                 } else {
                     Toasty.error(getBaseContext(), R.string.sign_in_unauthorized).show();

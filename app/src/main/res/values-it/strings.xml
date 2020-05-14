@@ -18,6 +18,8 @@
     <string name="search">Cerca</string>
     <string name="send">Invia</string>
     <string name="loading">Caricamento</string>
+    <string name="championships">Campionati</string>
+    <string name="championship">Campionato</string>
 
     <!-- Sign In -->
     <string name="sign_in">Accedi</string>

@@ -6,7 +6,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.unitn.disi.lpsmt.racer.api.AuthManager;
-import com.unitn.disi.lpsmt.racer.ui.activity.Home;
+import com.unitn.disi.lpsmt.racer.ui.activity.MainActivity;
 import com.unitn.disi.lpsmt.racer.ui.activity.SignIn;
 
 /**
@@ -38,7 +38,7 @@ public final class Launcher extends AppCompatActivity {
                 } catch (Exception ignored) {
                 } finally {
                     Intent intent = AuthManager.getInstance().isAuth()
-                            ? new Intent(Launcher.this, Home.class)
+                            ? new Intent(Launcher.this, MainActivity.class)
                             : new Intent(Launcher.this, SignIn.class);
                     startActivity(intent);
                     finish();

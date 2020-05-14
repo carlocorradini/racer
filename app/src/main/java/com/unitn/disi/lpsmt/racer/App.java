@@ -9,7 +9,7 @@ import android.content.Context;
  *
  * @author Carlo Corradini
  */
-public class App extends Application {
+public final class App extends Application {
 
     /**
      * The {@link Application} context

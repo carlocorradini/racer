@@ -24,6 +24,9 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".ui.activity.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".ui.activity.SignIn"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -31,9 +34,6 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.activity.ForgotPassword"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".ui.activity.Home"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
