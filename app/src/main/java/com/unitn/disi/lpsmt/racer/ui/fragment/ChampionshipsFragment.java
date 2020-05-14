@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.unitn.disi.lpsmt.racer.R;
@@ -38,8 +39,9 @@ public final class ChampionshipsFragment extends Fragment {
      */
     private ChampionshipsAdapter championshipsAdapter = null;
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
+    @NotNull
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_championships, container, false);
 
         championshipsAdapter = new ChampionshipsAdapter(getContext(), new ArrayList<>());
