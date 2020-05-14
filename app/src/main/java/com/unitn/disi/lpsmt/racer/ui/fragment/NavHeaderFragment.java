@@ -46,6 +46,7 @@ public final class NavHeaderFragment implements Observer {
         if (headerView == null) throw new NullPointerException("Navigation Header View is null");
 
         this.headerView = headerView;
+
         init();
     }
 
@@ -58,6 +59,19 @@ public final class NavHeaderFragment implements Observer {
 
         userObservable = UserObserver.getInstance();
         userObservable.addObserver(this);
+
+        setUIData(UserObserver.getInstance().getUser());
+    }
+
+    /**
+     * Set UI from the data given
+     *
+     * @param user The data {@link User}
+     */
+    private void setUIData(final User user) {
+        if (user == null) return;
+        txtUsername.setText(user.username);
+        Picasso.get().load(user.avatar.toString()).into(imageAvatar);
     }
 
     /**
@@ -77,8 +91,7 @@ public final class NavHeaderFragment implements Observer {
     public void update(Observable o, Object arg) {
         if (o instanceof UserObserver) {
             User user = ((UserObserver) o).getUser();
-            txtUsername.setText(user.username);
-            Picasso.get().load(user.avatar.toString()).into(imageAvatar);
+            setUIData(user);
         }
     }
 }

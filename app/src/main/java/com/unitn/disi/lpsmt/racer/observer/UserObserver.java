@@ -42,7 +42,16 @@ public final class UserObserver extends Observable {
      */
     private User user;
 
+    /**
+     * Boolean flag to check if another request is running
+     */
+    private boolean isRunning;
+
+    /**
+     * Construct the {@link UserObserver} calling the retrieveUser
+     */
     private UserObserver() {
+        isRunning = false;
         retrieveUser();
     }
 
@@ -82,6 +91,7 @@ public final class UserObserver extends Observable {
      * @return Current {@link User}, null otherwise
      */
     public User getUser() {
+        if (user == null) retrieveUser();
         return user;
     }
 
@@ -99,9 +109,13 @@ public final class UserObserver extends Observable {
      * If the response is unsuccessful retry.
      */
     private void retrieveUser() {
+        if (isRunning) return;
+        isRunning = true;
+
         API.getInstance().getClient().create(UserService.class).me().enqueue(new Callback<API.Response<User>>() {
             @Override
             public void onResponse(@NotNull Call<API.Response<User>> call, @NotNull Response<API.Response<User>> response) {
+                isRunning = false;
                 if (response.isSuccessful() && response.body() != null) {
                     Log.i(TAG, "Successfully downloaded current authenticated user, notify observers");
                     setUser(response.body().data);
@@ -113,6 +127,7 @@ public final class UserObserver extends Observable {
 
             @Override
             public void onFailure(@NotNull Call<API.Response<User>> call, @NotNull Throwable t) {
+                isRunning = false;
                 Log.e(TAG, "Unable to download current authenticated user due to " + t.getMessage(), t);
                 retryRetrieveUser();
             }
