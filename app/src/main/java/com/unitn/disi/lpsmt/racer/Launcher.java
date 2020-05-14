@@ -19,6 +19,7 @@ public final class Launcher extends AppCompatActivity {
     /**
      * Timeout in ms
      */
+    // TODO 2500
     private static final int LAUNCHER_TIMEOUT = 0;
 
     @Override
