@@ -12,11 +12,11 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.chip.Chip;
 import com.squareup.picasso.Picasso;
 import com.unitn.disi.lpsmt.racer.R;
-import com.unitn.disi.lpsmt.racer.api.AuthManager;
 import com.unitn.disi.lpsmt.racer.api.entity.Championship;
 
 import java.util.ArrayList;
@@ -33,8 +33,8 @@ public final class ChampionshipsAdapter extends ArrayAdapter<Championship> {
     /**
      * Construct a {@link ChampionshipsAdapter} with the given context and championships
      *
-     * @param context       The current {@link Context}
-     * @param championships The {@link List} of {@link Championship} to represent
+     * @param context         The current {@link Context}
+     * @param championships   The {@link List} of {@link Championship} to represent
      */
     public ChampionshipsAdapter(Context context, ArrayList<Championship> championships) {
         super(context, 0, championships);
@@ -48,6 +48,7 @@ public final class ChampionshipsAdapter extends ArrayAdapter<Championship> {
         if (convertView == null)
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_championship, parent, false);
 
+        convertView.setTag(championship.id);
         ImageView imageLogo = convertView.findViewById(R.id.item_championship_logo);
         TextView txtName = convertView.findViewById(R.id.item_championship_name);
         Chip txtUsers = convertView.findViewById(R.id.item_championship_users);
@@ -56,6 +57,9 @@ public final class ChampionshipsAdapter extends ArrayAdapter<Championship> {
         Chip txtSettings = convertView.findViewById(R.id.item_championship_settings);
         Chip buttonForum = convertView.findViewById(R.id.item_championship_forum);
 
+        convertView.setOnClickListener(v -> {
+            // todo
+        });
         Picasso.get().load(championship.logo.toString()).into(imageLogo);
         txtName.setText(championship.name);
         txtUsers.setText(String.valueOf(championship.users.size()));

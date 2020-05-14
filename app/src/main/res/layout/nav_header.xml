@@ -12,7 +12,7 @@
         android:id="@+id/nav_header_avatar"
         android:layout_width="@dimen/logo_big_width"
         android:layout_height="@dimen/logo_big_height"
-        android:layout_gravity="end"
+        android:layout_gravity="start"
         android:contentDescription="@string/avatar"
         android:src="@drawable/ic_remove_color" />
 
@@ -22,6 +22,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_small"
         android:text="@string/username"
-        android:textAlignment="textEnd"
+        android:textAlignment="textStart"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 </LinearLayout>

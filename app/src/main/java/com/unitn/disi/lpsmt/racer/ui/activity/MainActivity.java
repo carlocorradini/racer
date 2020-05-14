@@ -47,6 +47,7 @@ public final class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         navigationView.setItemIconTintList(null);
         appBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.nav_account,
                 R.id.nav_championships)
                 .setDrawerLayout(drawer)
                 .build();

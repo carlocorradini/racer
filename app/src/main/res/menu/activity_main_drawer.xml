@@ -5,6 +5,13 @@
 
     <group android:checkableBehavior="single">
         <item
+            android:id="@+id/nav_account"
+            android:icon="@drawable/ic_user_shield"
+            android:title="@string/account" />
+    </group>
+
+    <group android:checkableBehavior="single">
+        <item
             android:id="@+id/nav_championships"
             android:icon="@drawable/ic_trophy_color"
             android:title="@string/championships" />

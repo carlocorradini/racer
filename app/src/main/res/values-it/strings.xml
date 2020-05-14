@@ -28,6 +28,7 @@
     <string name="setting">Impostazione</string>
     <string name="settings">Impostazioni</string>
     <string name="forum">Forum</string>
+    <string name="account">Account</string>
 
     <!-- Sign In -->
     <string name="sign_in">Accedi</string>
