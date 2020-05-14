@@ -1,6 +1,8 @@
 <resources>
     <dimen name="logo_width">120dp</dimen>
     <dimen name="logo_height">120dp</dimen>
+    <dimen name="logo_big_width">96dp</dimen>
+    <dimen name="logo_big_height">96dp</dimen>
     <dimen name="logo_medium_width">64dp</dimen>
     <dimen name="logo_medium_height">64dp</dimen>
     <dimen name="logo_small_width">48dp</dimen>

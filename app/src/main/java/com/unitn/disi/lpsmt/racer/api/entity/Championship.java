@@ -3,6 +3,7 @@ package com.unitn.disi.lpsmt.racer.api.entity;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.net.URI;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -33,7 +34,7 @@ public class Championship {
      */
     @SerializedName("logo")
     @Expose
-    public URL logo;
+    public URI logo;
 
     /**
      * Forum url of the Championship
@@ -98,7 +99,7 @@ public class Championship {
      * @param createdAt     Creation {@link LocalDateTime} of the Championship
      * @param updatedAt     Update {@link LocalDateTime} of the Championship
      */
-    public Championship(Long id, String name, URL logo, URL forum, List<Long> cars, List<UUID> users, List<Long> circuits, List<Long> game_settings, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Championship(Long id, String name, URI logo, URL forum, List<Long> cars, List<UUID> users, List<Long> circuits, List<Long> game_settings, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.name = name;
         this.logo = logo;

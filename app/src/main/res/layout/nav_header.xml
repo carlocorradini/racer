@@ -10,10 +10,12 @@
 
     <ImageView
         android:id="@+id/nav_header_avatar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/logo_big_width"
+        android:layout_height="@dimen/logo_big_height"
+        android:layout_gravity="end"
         android:contentDescription="@string/avatar"
-        android:paddingTop="@dimen/nav_header_vertical_spacing" />
+        android:paddingTop="@dimen/nav_header_vertical_spacing"
+        android:src="@drawable/ic_remove_color" />
 
     <TextView
         android:id="@+id/nav_header_username"
@@ -21,5 +23,6 @@
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:text="@string/username"
+        android:textAlignment="textEnd"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 </LinearLayout>

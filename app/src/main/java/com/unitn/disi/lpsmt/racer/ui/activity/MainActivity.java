@@ -1,8 +1,6 @@
 package com.unitn.disi.lpsmt.racer.ui.activity;
 
 import android.os.Bundle;
-import android.view.View;
-import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
 import com.unitn.disi.lpsmt.racer.R;
@@ -16,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.unitn.disi.lpsmt.racer.api.entity.User;
+import com.unitn.disi.lpsmt.racer.ui.fragment.NavHeaderFragment;
 
 /**
  * Main Activity when the {@link User} has been successfully authenticated
@@ -30,9 +29,9 @@ public final class MainActivity extends AppCompatActivity {
     private AppBarConfiguration appBarConfiguration;
 
     /**
-     * Navigation header {@link View}
+     * {@link NavHeaderFragment Navigation Header} fragment
      */
-    private View navHeaderView;
+    private NavHeaderFragment navHeaderFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +42,7 @@ public final class MainActivity extends AppCompatActivity {
         DrawerLayout drawer = findViewById(R.id.drawer_layout_main);
         NavigationView navigationView = findViewById(R.id.nav_view_main);
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_main);
-        navHeaderView = navigationView.getHeaderView(0);
+        navHeaderFragment = new NavHeaderFragment(navigationView.getHeaderView(0));
 
         setSupportActionBar(toolbar);
         navigationView.setItemIconTintList(null);
@@ -62,7 +61,9 @@ public final class MainActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, appBarConfiguration) || super.onSupportNavigateUp();
     }
 
-    private void set() {
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        navHeaderFragment.destroy();
     }
 }

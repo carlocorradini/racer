@@ -3,7 +3,7 @@ package com.unitn.disi.lpsmt.racer.api.entity;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.net.URL;
+import java.net.URI;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -193,7 +193,7 @@ public class User {
      */
     @SerializedName("avatar")
     @Expose
-    public URL avatar;
+    public URI avatar;
 
     /**
      * Favorite Number of the User
@@ -266,7 +266,7 @@ public class User {
      * @param createdAt       Creation {@link LocalDateTime} of the User
      * @param updatedAt       Update {@link LocalDateTime} of the User
      */
-    public User(UUID id, String username, String password, Role role, String name, String surname, Gender gender, LocalDate dateOfBirth, String residence, String email, URL avatar, Short favoriteNumber, Long favoriteCar, Long favoriteCircuit, Long hatedCircuit, List<Long> championships, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public User(UUID id, String username, String password, Role role, String name, String surname, Gender gender, LocalDate dateOfBirth, String residence, String email, URI avatar, Short favoriteNumber, Long favoriteCar, Long favoriteCircuit, Long hatedCircuit, List<Long> championships, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.username = username;
         this.password = password;
