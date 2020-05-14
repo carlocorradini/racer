@@ -14,7 +14,7 @@ import com.unitn.disi.lpsmt.racer.ui.activity.SignIn;
  *
  * @author Carlo Corradini
  */
-public class Launcher extends AppCompatActivity {
+public final class Launcher extends AppCompatActivity {
 
     /**
      * Timeout in ms
@@ -27,7 +27,7 @@ public class Launcher extends AppCompatActivity {
         setContentView(R.layout.activity_launcher);
 
         // TODO REMOVE!!!
-        AuthManager.getInstance().clearToken();
+        //AuthManager.getInstance().clearToken();
 
         new Thread() {
             @Override

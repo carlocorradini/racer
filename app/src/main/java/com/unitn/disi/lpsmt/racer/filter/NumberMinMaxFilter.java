@@ -7,7 +7,7 @@ import android.util.Log;
 /**
  * Number minimum and maximum {@link InputFilter}
  */
-public class NumberMinMaxFilter implements InputFilter {
+public final class NumberMinMaxFilter implements InputFilter {
 
     /**
      * {@link Log} TAG of this class
