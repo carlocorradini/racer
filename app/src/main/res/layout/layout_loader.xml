@@ -34,7 +34,7 @@
             android:gravity="center"
             android:text="@string/loading"
             android:textAllCaps="true"
-            android:textSize="@dimen/text_big"
+            android:textSize="@dimen/text_huge"
             android:textStyle="bold" />
     </LinearLayout>
 </FrameLayout>

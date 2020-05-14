@@ -1,6 +1,8 @@
 package com.unitn.disi.lpsmt.racer.ui.fragment;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +11,7 @@ import android.widget.ListView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.unitn.disi.lpsmt.racer.R;
 import com.unitn.disi.lpsmt.racer.api.API;
@@ -32,12 +35,40 @@ import retrofit2.Response;
  *
  * @author Carlo Corradini
  */
-public final class ChampionshipsFragment extends Fragment {
+public final class ChampionshipsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+
+    /**
+     * {@link Log} TAG of this class
+     */
+    private static final String TAG = ChampionshipsFragment.class.getName();
+
+    /**
+     * Blue color
+     */
+    private static final int COLOR_BLUE = 0xFF4285F4;
+    /**
+     * Red color
+     */
+    private static final int COLOR_RED = 0xFFEA4335;
+
+    /**
+     * Yellow color
+     */
+    private static final int COLOR_YELLOW = 0xFFFBBC05;
+    /**
+     * Green color
+     */
+    private static final int COLOR_GREEN = 0xFF34A853;
 
     /**
      * {@link ChampionshipsAdapter} adapter reference
      */
     private ChampionshipsAdapter championshipsAdapter = null;
+
+    /**
+     * {@link SwipeRefreshLayout} for reloading the {@link Championship} in the championshipsAdapter
+     */
+    private SwipeRefreshLayout swipeRefreshLayout = null;
 
     @NotNull
     @Override
@@ -45,8 +76,13 @@ public final class ChampionshipsFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_championships, container, false);
 
         championshipsAdapter = new ChampionshipsAdapter(getContext(), new ArrayList<>());
-        ListView listView = root.findViewById(R.id.fragment_championships_championship_container);
+        ListView listView = root.findViewById(R.id.fragment_championships_list_container);
+        swipeRefreshLayout = root.findViewById(R.id.fragment_championships_swipe_refresh);
+
         listView.setAdapter(championshipsAdapter);
+        swipeRefreshLayout.setColorSchemeColors(COLOR_BLUE, COLOR_RED, COLOR_YELLOW, COLOR_GREEN, COLOR_BLUE);
+        swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setRefreshing(true);
 
         loadChampionships();
 
@@ -59,22 +95,32 @@ public final class ChampionshipsFragment extends Fragment {
      */
     private void loadChampionships() {
         if (championshipsAdapter == null) return;
+        championshipsAdapter.clear();
 
         API.getInstance().getClient().create(ChampionshipService.class).find().enqueue(new Callback<API.Response<List<Championship>>>() {
             @Override
             public void onResponse(@NotNull Call<API.Response<List<Championship>>> call, @NotNull Response<API.Response<List<Championship>>> response) {
+                swipeRefreshLayout.setRefreshing(false);
                 if (response.isSuccessful() && response.body() != null) {
+                    Log.i(TAG, "Successfully loaded Championships");
                     championshipsAdapter.addAll(response.body().data);
                 } else {
+                    Log.w(TAG, "Unable to load Championship due to failure response");
                     Toasty.error(requireContext(), R.string.error_unknown).show();
                 }
             }
 
             @Override
             public void onFailure(@NotNull Call<API.Response<List<Championship>>> call, @NotNull Throwable t) {
+                Log.e(TAG, "Unable to load Championships due to " + t.getMessage(), t);
+                swipeRefreshLayout.setRefreshing(false);
                 ErrorHelper.showFailureError(getContext(), t);
             }
         });
     }
 
+    @Override
+    public void onRefresh() {
+        loadChampionships();
+    }
 }

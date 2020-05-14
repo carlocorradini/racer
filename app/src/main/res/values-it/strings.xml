@@ -1,4 +1,5 @@
 <resources>
+    <!-- General -->
     <string name="app_name">Racer</string>
     <string name="logo">Logo</string>
     <string name="menu_home">Home</string>
@@ -20,6 +21,13 @@
     <string name="loading">Caricamento</string>
     <string name="championships">Campionati</string>
     <string name="championship">Campionato</string>
+    <string name="cars">Macchine</string>
+    <string name="car">Macchina</string>
+    <string name="pilots">Piloti</string>
+    <string name="pilot">Pilota</string>
+    <string name="setting">Impostazione</string>
+    <string name="settings">Impostazioni</string>
+    <string name="forum">Forum</string>
 
     <!-- Sign In -->
     <string name="sign_in">Accedi</string>
