@@ -90,8 +90,7 @@ public final class NavHeaderFragment implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         if (o instanceof UserObserver) {
-            User user = ((UserObserver) o).getUser();
-            setUIData(user);
+            setUIData(((UserObserver) o).getUser());
         }
     }
 }

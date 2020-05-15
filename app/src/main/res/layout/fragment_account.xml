@@ -1,29 +1,495 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/fragment_championships_swipe_refresh"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
 
-    <LinearLayout
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/fragment_account_swipe_refresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/fragment_account_avatar"
-            android:layout_width="@dimen/logo_big_height"
-            android:layout_height="@dimen/logo_big_height"
-            android:layout_gravity="center"
-            android:contentDescription="@string/avatar"
-            android:src="@drawable/ic_remove_color" />
-
-        <TextView
-            android:id="@+id/fragment_account_username"
-            android:layout_width="match_parent"
+        <ScrollView
+            android:id="@+id/fragment_account_container"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin"
-            android:text="@string/username"
-            android:textAlignment="center"
-            android:textSize="@dimen/text_big"/>
-    </LinearLayout>
-</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+            android:visibility="visible">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/margin_small">
+
+                <ImageView
+                    android:id="@+id/fragment_account_avatar"
+                    android:layout_width="@dimen/logo_big_height"
+                    android:layout_height="@dimen/logo_big_height"
+                    android:layout_gravity="center"
+                    android:contentDescription="@string/avatar"
+                    android:src="@drawable/ic_remove_color" />
+
+                <TextView
+                    android:id="@+id/fragment_account_username"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin"
+                    android:text="@string/unknown"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/text_big" />
+
+                <TextView
+                    android:id="@+id/fragment_account_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/unknown"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/text_small" />
+
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/margin"
+                    android:gravity="center_vertical"
+                    android:stretchColumns="*">
+
+                    <TableRow
+                        android:layout_width="0dp"
+                        android:gravity="center">
+
+                        <com.google.android.material.chip.Chip
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/name"
+                            app:chipIcon="@drawable/ic_user_color" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="horizontal"
+                            android:padding="@dimen/padding_tiny">
+
+                            <TextView
+                                android:id="@+id/fragment_account_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/unknown"
+                                android:textAlignment="center"
+                                android:textStyle="bold" />
+
+                            <EditText
+                                android:id="@+id/fragment_account_name_input"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:hint="@string/name"
+                                android:importantForAutofill="no"
+                                android:inputType="textNoSuggestions"
+                                android:textAlignment="center"
+                                android:visibility="gone" />
+                        </LinearLayout>
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="0dp"
+                        android:gravity="center">
+
+                        <com.google.android.material.chip.Chip
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/surname"
+                            app:chipIcon="@drawable/ic_user_color" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="horizontal"
+                            android:padding="@dimen/padding_tiny">
+
+                            <TextView
+                                android:id="@+id/fragment_account_surname"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/unknown"
+                                android:textAlignment="center"
+                                android:textStyle="bold" />
+
+                            <EditText
+                                android:id="@+id/fragment_account_surname_input"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:hint="@string/surname"
+                                android:importantForAutofill="no"
+                                android:inputType="textNoSuggestions"
+                                android:textAlignment="center"
+                                android:visibility="gone" />
+                        </LinearLayout>
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="0dp"
+                        android:gravity="center">
+
+                        <com.google.android.material.chip.Chip
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/role"
+                            app:chipIcon="@drawable/ic_dice_color" />
+
+                        <TextView
+                            android:id="@+id/fragment_account_role"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:padding="@dimen/padding_tiny"
+                            android:text="@string/unknown"
+                            android:textAlignment="center"
+                            android:textStyle="bold" />
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="0dp"
+                        android:gravity="center">
+
+                        <com.google.android.material.chip.Chip
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/gender"
+                            app:chipIcon="@drawable/ic_genders_color" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="horizontal"
+                            android:padding="@dimen/padding_tiny">
+
+                            <TextView
+                                android:id="@+id/fragment_account_gender"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:padding="@dimen/padding_tiny"
+                                android:text="@string/unknown"
+                                android:textAlignment="center"
+                                android:textStyle="bold" />
+
+                            <Spinner
+                                android:id="@+id/fragment_account_gender_input"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:clickable="true"
+                                android:entries="@array/user_genders_array"
+                                android:focusable="false"
+                                android:textAlignment="center"
+                                android:visibility="gone" />
+                        </LinearLayout>
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="0dp"
+                        android:gravity="center">
+
+                        <com.google.android.material.chip.Chip
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/date_of_birth"
+                            app:chipIcon="@drawable/ic_birthday_cake_color" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="horizontal"
+                            android:padding="@dimen/padding_tiny">
+
+                            <TextView
+                                android:id="@+id/fragment_account_date_of_birth"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/unknown"
+                                android:textAlignment="center"
+                                android:textStyle="bold" />
+
+                            <EditText
+                                android:id="@+id/fragment_account_date_of_birth_input"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:clickable="true"
+                                android:focusable="false"
+                                android:hint="@string/date_of_birth"
+                                android:importantForAutofill="no"
+                                android:inputType="date"
+                                android:textAlignment="center"
+                                android:visibility="gone" />
+                        </LinearLayout>
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="0dp"
+                        android:gravity="center">
+
+                        <com.google.android.material.chip.Chip
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/residence"
+                            app:chipIcon="@drawable/ic_home_love_color" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="horizontal"
+                            android:padding="@dimen/padding_tiny">
+
+                            <TextView
+                                android:id="@+id/fragment_account_residence"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/unknown"
+                                android:textAlignment="center"
+                                android:textStyle="bold" />
+
+                            <EditText
+                                android:id="@+id/fragment_account_residence_input"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:hint="@string/residence"
+                                android:importantForAutofill="no"
+                                android:inputType="textNoSuggestions"
+                                android:textAlignment="center"
+                                android:visibility="gone" />
+                        </LinearLayout>
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="0dp"
+                        android:gravity="center">
+
+                        <com.google.android.material.chip.Chip
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/favorite_number"
+                            app:chipIcon="@drawable/ic_hashtag_color" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="horizontal"
+                            android:padding="@dimen/padding_tiny">
+
+                            <TextView
+                                android:id="@+id/fragment_account_favorite_number"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/unknown"
+                                android:textAlignment="center"
+                                android:textStyle="bold" />
+
+                            <EditText
+                                android:id="@+id/fragment_account_favorite_number_input"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:clickable="true"
+                                android:focusable="false"
+                                android:hint="@string/favorite_number"
+                                android:importantForAutofill="no"
+                                android:inputType="number"
+                                android:textAlignment="center"
+                                android:visibility="gone" />
+                        </LinearLayout>
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="0dp"
+                        android:gravity="center">
+
+                        <com.google.android.material.chip.Chip
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/favorite_car"
+                            app:chipIcon="@drawable/ic_car_formula_one_color" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="horizontal"
+                            android:padding="@dimen/padding_tiny">
+
+                            <TextView
+                                android:id="@+id/fragment_account_favorite_car"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/unknown"
+                                android:textAlignment="center"
+                                android:textStyle="bold"
+                                android:visibility="gone" />
+
+                            <ProgressBar
+                                android:id="@+id/fragment_account_favorite_car_progress"
+                                style="?android:attr/progressBarStyleHorizontal"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:indeterminate="true" />
+
+                            <EditText
+                                android:id="@+id/fragment_account_favorite_car_input"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:clickable="true"
+                                android:focusable="false"
+                                android:hint="@string/favorite_car"
+                                android:importantForAutofill="no"
+                                android:inputType="textNoSuggestions"
+                                android:textAlignment="center"
+                                android:visibility="gone" />
+                        </LinearLayout>
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="0dp"
+                        android:gravity="center">
+
+                        <com.google.android.material.chip.Chip
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/favorite_circuit"
+                            app:chipIcon="@drawable/ic_circuit_formula_one_color" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="horizontal"
+                            android:padding="@dimen/padding_tiny">
+
+                            <TextView
+                                android:id="@+id/fragment_account_favorite_circuit"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/unknown"
+                                android:textAlignment="center"
+                                android:textStyle="bold"
+                                android:visibility="gone" />
+
+                            <ProgressBar
+                                android:id="@+id/fragment_account_favorite_circuit_progress"
+                                style="?android:attr/progressBarStyleHorizontal"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:indeterminate="true" />
+
+                            <EditText
+                                android:id="@+id/fragment_account_favorite_circuit_input"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:clickable="true"
+                                android:focusable="false"
+                                android:hint="@string/favorite_circuit"
+                                android:importantForAutofill="no"
+                                android:inputType="textNoSuggestions"
+                                android:textAlignment="center"
+                                android:visibility="gone" />
+                        </LinearLayout>
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="0dp"
+                        android:gravity="center">
+
+                        <com.google.android.material.chip.Chip
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/hated_circuit"
+                            app:chipIcon="@drawable/ic_circuit_formula_one_color" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="horizontal"
+                            android:padding="@dimen/padding_tiny">
+
+                            <TextView
+                                android:id="@+id/fragment_account_hated_circuit"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/unknown"
+                                android:textAlignment="center"
+                                android:textStyle="bold"
+                                android:visibility="gone" />
+
+                            <ProgressBar
+                                android:id="@+id/fragment_account_hated_circuit_progress"
+                                style="?android:attr/progressBarStyleHorizontal"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:indeterminate="true" />
+
+                            <EditText
+                                android:id="@+id/fragment_account_hated_circuit_input"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:clickable="true"
+                                android:focusable="false"
+                                android:hint="@string/hated_circuit"
+                                android:importantForAutofill="no"
+                                android:inputType="textNoSuggestions"
+                                android:textAlignment="center"
+                                android:visibility="gone" />
+                        </LinearLayout>
+                    </TableRow>
+                </TableLayout>
+            </LinearLayout>
+        </ScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fragment_account_button_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="80dp"
+        android:visibility="gone"
+        app:backgroundTint="@color/colorRed"
+        app:fabSize="mini"
+        app:srcCompat="@drawable/ic_cancel"
+        app:tint="@android:color/white" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fragment_account_button_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="@dimen/margin"
+        android:contentDescription="@string/edit"
+        app:backgroundTint="@color/colorBlue"
+        app:srcCompat="@drawable/ic_edit"
+        app:tint="@android:color/white" />
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

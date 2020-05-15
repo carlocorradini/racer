@@ -13,6 +13,12 @@
     <dimen name="margin_small">8dp</dimen>
     <dimen name="padding">16dp</dimen>
     <dimen name="padding_small">8dp</dimen>
+    <dimen name="padding_mini">6dp</dimen>
+    <dimen name="padding_tiny">4dp</dimen>
+    <dimen name="text_tiny">8sp</dimen>
+    <dimen name="text_mini">12sp</dimen>
+    <dimen name="text_small">14sp</dimen>
+    <dimen name="text_medium">16sp</dimen>
     <dimen name="text_big">20sp</dimen>
     <dimen name="text_huge">24sp</dimen>
     <dimen name="nav_header_height">176dp</dimen>

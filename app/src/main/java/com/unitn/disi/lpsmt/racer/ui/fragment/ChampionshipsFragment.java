@@ -17,6 +17,7 @@ import com.unitn.disi.lpsmt.racer.R;
 import com.unitn.disi.lpsmt.racer.api.API;
 import com.unitn.disi.lpsmt.racer.api.entity.Championship;
 import com.unitn.disi.lpsmt.racer.api.service.ChampionshipService;
+import com.unitn.disi.lpsmt.racer.helper.ColorHelper;
 import com.unitn.disi.lpsmt.racer.helper.ErrorHelper;
 import com.unitn.disi.lpsmt.racer.ui.adapter.ChampionshipsAdapter;
 
@@ -43,24 +44,6 @@ public final class ChampionshipsFragment extends Fragment implements SwipeRefres
     private static final String TAG = ChampionshipsFragment.class.getName();
 
     /**
-     * Blue color
-     */
-    private static final int COLOR_BLUE = 0xFF4285F4;
-    /**
-     * Red color
-     */
-    private static final int COLOR_RED = 0xFFEA4335;
-
-    /**
-     * Yellow color
-     */
-    private static final int COLOR_YELLOW = 0xFFFBBC05;
-    /**
-     * Green color
-     */
-    private static final int COLOR_GREEN = 0xFF34A853;
-
-    /**
      * {@link ChampionshipsAdapter} adapter reference
      */
     private ChampionshipsAdapter championshipsAdapter = null;
@@ -80,7 +63,7 @@ public final class ChampionshipsFragment extends Fragment implements SwipeRefres
         swipeRefreshLayout = root.findViewById(R.id.fragment_championships_swipe_refresh);
 
         listView.setAdapter(championshipsAdapter);
-        swipeRefreshLayout.setColorSchemeColors(COLOR_BLUE, COLOR_RED, COLOR_YELLOW, COLOR_GREEN, COLOR_BLUE);
+        swipeRefreshLayout.setColorSchemeColors(ColorHelper.COLOR_BLUE, ColorHelper.COLOR_RED, ColorHelper.COLOR_YELLOW, ColorHelper.COLOR_GREEN);
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setRefreshing(true);
 

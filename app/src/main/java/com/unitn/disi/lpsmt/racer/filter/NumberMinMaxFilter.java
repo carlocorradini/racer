@@ -51,7 +51,7 @@ public final class NumberMinMaxFilter implements InputFilter {
             if (isInRange(min, max, Integer.parseInt(dest.toString() + source.toString())))
                 return null;
         } catch (NumberFormatException ex) {
-            Log.e(TAG, "Error parsing integer due to " + ex.getMessage(), ex);
+            Log.d(TAG, "Error parsing integer due to " + ex.getMessage(), ex);
         }
 
         return "";

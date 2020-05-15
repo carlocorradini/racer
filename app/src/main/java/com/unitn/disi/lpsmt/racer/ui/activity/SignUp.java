@@ -90,10 +90,7 @@ public final class SignUp extends AppCompatActivity {
             DatePickerDialog datePickerDialog = new DatePickerDialog(v.getContext(), (view, year, month, dayOfMonth) -> {
                 Calendar dateOfBirth = Calendar.getInstance();
                 dateOfBirth.set(year, month, dayOfMonth);
-                System.out.println(dateOfBirth.toString());
                 user.dateOfBirth = LocalDate.of(year, month + 1, dayOfMonth);
-                System.out.println(user.dateOfBirth
-                );
                 inputDateOfBirth.setText(DateFormat.getDateInstance(DateFormat.MEDIUM).format(dateOfBirth.getTime()));
             }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
             datePickerDialog.getDatePicker().setMaxDate(new Date().getTime());

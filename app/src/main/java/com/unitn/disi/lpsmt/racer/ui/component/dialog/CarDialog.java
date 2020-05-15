@@ -45,6 +45,10 @@ public final class CarDialog extends AppCompatDialogFragment {
      */
     private Car currentCar = null;
     /**
+     * Current {@link Car} force to set checked
+     */
+    private Long currentCarForced = null;
+    /**
      * Old selected {@link Car car} if the {@link CarDialog} was close and the positive button has been clicked
      */
     private Car savedCar = null;
@@ -172,9 +176,12 @@ public final class CarDialog extends AppCompatDialogFragment {
             carRadioButton.setText(cars.get(i).getFullName());
             carRadioButton.setTag(i);
             carsContainer.addView(carRadioButton);
-            if (savedCar != null && savedCar.equals(cars.get(i)))
+            if (currentCarForced == null && savedCar != null && savedCar.equals(cars.get(i)))
+                carRadioButton.setChecked(true);
+            else if (currentCarForced != null && currentCarForced.equals(cars.get(i).id))
                 carRadioButton.setChecked(true);
         }
+        currentCarForced = null;
         loader.setVisibility(View.GONE);
         dataContainer.setVisibility(View.VISIBLE);
     }
@@ -186,5 +193,14 @@ public final class CarDialog extends AppCompatDialogFragment {
      */
     public void setOnDialogSelectionListener(OnDialogSelectionInterface<Car> listener) {
         this.listener = listener;
+    }
+
+    /**
+     * Set the current {@link Car} even if currentCar is not null
+     *
+     * @param currentCarForced The {@link Car} {@link Long id} to force to be checked
+     */
+    public void setCurrentCarForced(Long currentCarForced) {
+        this.currentCarForced = currentCarForced;
     }
 }

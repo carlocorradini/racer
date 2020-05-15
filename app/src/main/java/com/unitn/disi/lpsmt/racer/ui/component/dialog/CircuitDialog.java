@@ -45,6 +45,10 @@ public final class CircuitDialog extends AppCompatDialogFragment {
      */
     private Circuit currentCircuit = null;
     /**
+     * Current {@link Circuit} force to set checked
+     */
+    private Long currentCircuitForced = null;
+    /**
      * Old selected {@link Circuit circuit} if the {@link CircuitDialog} was close and the positive button has been clicked
      */
     private Circuit savedCircuit = null;
@@ -174,7 +178,10 @@ public final class CircuitDialog extends AppCompatDialogFragment {
             circuitsContainer.addView(circuitRadioButton);
             if (savedCircuit != null && savedCircuit.equals(circuits.get(i)))
                 circuitRadioButton.setChecked(true);
+            else if (currentCircuitForced != null && currentCircuitForced.equals(circuits.get(i).id))
+                circuitRadioButton.setChecked(true);
         }
+        currentCircuitForced = null;
         loader.setVisibility(View.GONE);
         dataContainer.setVisibility(View.VISIBLE);
     }
@@ -186,5 +193,14 @@ public final class CircuitDialog extends AppCompatDialogFragment {
      */
     public void setOnDialogSelectionListener(OnDialogSelectionInterface<Circuit> listener) {
         this.listener = listener;
+    }
+
+    /**
+     * Set the current {@link Circuit} even if currentCircuit is not null
+     *
+     * @param currentCircuitForced The {@link Circuit} {@link Long id} to force to be checked
+     */
+    public void setCurrentCircuitForced(Long currentCircuitForced) {
+        this.currentCircuitForced = currentCircuitForced;
     }
 }

@@ -29,6 +29,19 @@
     <string name="settings">Settings</string>
     <string name="forum">Forum</string>
     <string name="account">Account</string>
+    <string name="id">Id</string>
+    <string name="edit">Edit</string>
+    <string name="role">Role</string>
+    <string name="unknown">Unknown</string>
+
+    <!-- User Role -->
+    <string name="user_role_standard">Standard</string>
+    <string name="user_role_admin">Admin</string>
+
+    <!-- User Gender -->
+    <string name="user_gender_male">Male</string>
+    <string name="user_gender_female">Female</string>
+    <string name="user_gender_unknown">Unknown</string>
 
     <!-- Sign In -->
     <string name="sign_in">Sign In</string>
@@ -72,6 +85,9 @@
 
     <!-- Dialog Circuit -->
     <string name="choose_circuit">Choose a circuit</string>
+
+    <!-- Success -->
+    <string name="success_update">Updated successfully</string>
 
     <!-- Warning -->
     <string name="warning_unprocessable_entity">Unable to process entity due to properties: </string>

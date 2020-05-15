@@ -29,6 +29,19 @@
     <string name="settings">Impostazioni</string>
     <string name="forum">Forum</string>
     <string name="account">Account</string>
+    <string name="id">Id</string>
+    <string name="edit">Modifica</string>
+    <string name="role">Ruolo</string>
+    <string name="unknown">Sconosciuto</string>
+
+    <!-- User Role -->
+    <string name="user_role_standard">Standard</string>
+    <string name="user_role_admin">Admin</string>
+
+    <!-- User Gender -->
+    <string name="user_gender_male">Mascio</string>
+    <string name="user_gender_female">Femmina</string>
+    <string name="user_gender_unknown">Sconosciuto</string>
 
     <!-- Sign In -->
     <string name="sign_in">Accedi</string>
@@ -72,6 +85,9 @@
 
     <!-- Dialog Circuit -->
     <string name="choose_circuit">Scegli un circuito</string>
+
+    <!-- Success -->
+    <string name="success_update">Updated successfully</string>
 
     <!-- Warning -->
     <string name="warning_unprocessable_entity">Impossibile processa l\'entità a causa delle proprietà: </string>

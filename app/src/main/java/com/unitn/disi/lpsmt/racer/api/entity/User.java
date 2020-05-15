@@ -1,7 +1,11 @@
 package com.unitn.disi.lpsmt.racer.api.entity;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.StringRes;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.unitn.disi.lpsmt.racer.R;
 
 import java.net.URI;
 import java.time.LocalDate;
@@ -72,6 +76,27 @@ public class User {
         public String getValue() {
             return value;
         }
+
+        /**
+         * Return the value of the current {@link Gender} as a {@link StringRes}.
+         * In other words it return the value of the current {@link Gender} translated with an id to the corresponding {@link StringRes}.
+         *
+         * @return The {@link StringRes} corresponding to the translated {@link Gender}
+         */
+        public @StringRes
+        int getValueRes() {
+            switch (this) {
+                case MALE: {
+                    return R.string.user_gender_male;
+                }
+                case FEMALE: {
+                    return R.string.user_gender_female;
+                }
+                default: {
+                    return R.string.user_gender_unknown;
+                }
+            }
+        }
     }
 
     /**
@@ -111,6 +136,27 @@ public class User {
          */
         public String getValue() {
             return value;
+        }
+
+        /**
+         * Return the value of the current {@link Role} as a {@link StringRes}.
+         * In other words it return the value of the current {@link Role} translated with an id to the corresponding {@link StringRes}.
+         *
+         * @return The {@link StringRes} corresponding to the translated {@link Role}
+         */
+        public @StringRes
+        int getValueRes() {
+            switch (this) {
+                case ADMIN: {
+                    return R.string.user_role_admin;
+                }
+                case STANDARD: {
+                    return R.string.user_role_standard;
+                }
+                default: {
+                    return R.string.unknown;
+                }
+            }
         }
     }
 
@@ -291,5 +337,29 @@ public class User {
      * Construct an empty User class
      */
     public User() {
+    }
+
+    /**
+     * Reset all properties of the current user
+     */
+    public void reset() {
+        this.id = null;
+        this.username = null;
+        this.password = null;
+        this.role = null;
+        this.name = null;
+        this.surname = null;
+        this.gender = null;
+        this.dateOfBirth = null;
+        this.residence = null;
+        this.email = null;
+        this.avatar = null;
+        this.favoriteNumber = null;
+        this.favoriteCar = null;
+        this.favoriteCircuit = null;
+        this.hatedCircuit = null;
+        this.championships = null;
+        this.createdAt = null;
+        this.updatedAt = null;
     }
 }
