@@ -73,7 +73,12 @@ public final class CarDialog extends AppCompatDialogFragment {
      * Listener when positive button has been clicked with the selected {@link Car}
      */
     private OnDialogSelectionInterface<Car> listener = null;
+    /**
+     * Current {@link View} view
+     */
+    private View view = null;
 
+    @SuppressLint("InflateParams")
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
@@ -81,7 +86,7 @@ public final class CarDialog extends AppCompatDialogFragment {
         setRetainInstance(true);
         setCancelable(true);
 
-        @SuppressLint("InflateParams") View view = requireActivity().getLayoutInflater().inflate(R.layout.fragment_dialog_car, null);
+        view = requireActivity().getLayoutInflater().inflate(R.layout.fragment_dialog_car, null);
 
         EditText inputSearch = view.findViewById(R.id.fragment_dialog_car_input_search);
         carsContainer = view.findViewById(R.id.fragment_dialog_car_container);
@@ -155,13 +160,13 @@ public final class CarDialog extends AppCompatDialogFragment {
                         cars = response.body().data;
                         showCars();
                     } else {
-                        Toasty.error(requireContext(), R.string.error_unknown).show();
+                        Toasty.error(view.getContext(), R.string.error_unknown).show();
                     }
                 }
 
                 @Override
                 public void onFailure(@NotNull Call<API.Response<List<Car>>> call, @NotNull Throwable t) {
-                    ErrorHelper.showFailureError(getContext(), t);
+                    ErrorHelper.showFailureError(view.getContext(), t);
                 }
             });
     }

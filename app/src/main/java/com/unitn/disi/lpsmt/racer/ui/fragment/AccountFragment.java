@@ -39,6 +39,7 @@ import com.unitn.disi.lpsmt.racer.observer.UserObserver;
 import com.unitn.disi.lpsmt.racer.api.entity.Circuit;
 import com.unitn.disi.lpsmt.racer.ui.component.dialog.CarDialog;
 import com.unitn.disi.lpsmt.racer.ui.component.dialog.CircuitDialog;
+import com.unitn.disi.lpsmt.racer.util.InputUtil;
 
 import java.text.DateFormat;
 import java.time.ZoneId;
@@ -71,6 +72,14 @@ public final class AccountFragment extends Fragment implements Observer, SwipeRe
      * {@link TextView} {@link User} username
      */
     private TextView txtUsername;
+    /**
+     * {@link EditText} {@link User} new password
+     */
+    private EditText inputPassword;
+    /**
+     * {@link EditText} {@link User} new password repeat
+     */
+    private EditText inputPasswordRepeat;
     /**
      * {@link TextView} {@link User} name
      */
@@ -180,6 +189,14 @@ public final class AccountFragment extends Fragment implements Observer, SwipeRe
      */
     private View accountContainerView;
     /**
+     * {@link User} password {@link View Container}
+     */
+    private View passwordContainerView;
+    /**
+     * {@link User} password repeat {@link View Container}
+     */
+    private View passwordRepeatContainerView;
+    /**
      * {@link UserObserver User Observer} {@link Observable}
      */
     private Observable userObservable;
@@ -194,12 +211,16 @@ public final class AccountFragment extends Fragment implements Observer, SwipeRe
         View root = inflater.inflate(R.layout.fragment_account, container, false);
 
         accountContainerView = root.findViewById(R.id.fragment_account_container);
+        passwordContainerView = root.findViewById(R.id.fragment_account_password_container);
+        passwordRepeatContainerView = root.findViewById(R.id.fragment_account_password_repeat_container);
         swipeRefreshLayout = root.findViewById(R.id.fragment_account_swipe_refresh);
         buttonEdit = root.findViewById(R.id.fragment_account_button_edit);
         buttonCancel = root.findViewById(R.id.fragment_account_button_cancel);
         imageAvatar = root.findViewById(R.id.fragment_account_avatar);
         txtId = root.findViewById(R.id.fragment_account_id);
         txtUsername = root.findViewById(R.id.fragment_account_username);
+        inputPassword = root.findViewById(R.id.fragment_account_password_input);
+        inputPasswordRepeat = root.findViewById(R.id.fragment_account_password_repeat_input);
         txtName = root.findViewById(R.id.fragment_account_name);
         inputName = root.findViewById(R.id.fragment_account_name_input);
         txtSurname = root.findViewById(R.id.fragment_account_surname);
@@ -255,6 +276,7 @@ public final class AccountFragment extends Fragment implements Observer, SwipeRe
         txtGender.setText(user.gender.getValueRes());
         txtGender.setTag(user.gender);
         txtDateOfBirth.setText(DateFormat.getDateInstance(DateFormat.MEDIUM).format(Date.from(user.dateOfBirth.atStartOfDay(ZoneId.systemDefault()).toInstant())));
+        txtDateOfBirth.setTag(user.dateOfBirth);
         txtResidence.setText(user.residence);
         txtFavoriteNumber.setText(String.valueOf(user.favoriteNumber));
         txtFavoriteCar.setVisibility(View.GONE);
@@ -272,9 +294,14 @@ public final class AccountFragment extends Fragment implements Observer, SwipeRe
         loadHatedCircuit(user.hatedCircuit);
 
         swipeRefreshLayout.setRefreshing(false);
+        isUpdateMode = false;
+        setEditActionsVisibility();
         accountContainerView.setVisibility(View.VISIBLE);
     }
 
+    /**
+     * Set {@link User} edit actions and resets
+     */
     private void setEditActions() {
         final User user = new User();
         final CarDialog dialogFavoriteCar = new CarDialog();
@@ -282,13 +309,15 @@ public final class AccountFragment extends Fragment implements Observer, SwipeRe
         final CircuitDialog dialogHatedCircuit = new CircuitDialog();
 
         buttonEdit.setOnClickListener(v -> {
+            if (swipeRefreshLayout.isRefreshing()) return;
+
             isUpdateMode = !isUpdateMode;
-            setEditActionsVisibility();
 
             if (isUpdateMode) {
                 // Save mode
                 buttonEdit.setImageResource(R.drawable.ic_save);
                 buttonCancel.setVisibility(View.VISIBLE);
+                user.password = null;
                 inputName.setText(txtName.getText().toString());
                 inputSurname.setText(txtSurname.getText().toString());
                 switch ((User.Gender) txtGender.getTag()) {
@@ -306,16 +335,21 @@ public final class AccountFragment extends Fragment implements Observer, SwipeRe
                     }
                 }
                 inputDateOfBirth.setText(txtDateOfBirth.getText().toString());
+                user.dateOfBirth = (LocalDate) txtDateOfBirth.getTag();
                 inputResidence.setText(txtResidence.getText().toString());
                 inputFavoriteNumber.setText(txtFavoriteNumber.getText().toString());
                 inputFavoriteCar.setText(txtFavoriteCar.getText().toString());
+                user.favoriteCar = (Long) txtFavoriteCar.getTag();
                 dialogFavoriteCar.setCurrentCarForced((Long) txtFavoriteCar.getTag());
                 inputFavoriteCircuit.setText(txtFavoriteCircuit.getText().toString());
+                user.favoriteCircuit = (Long) txtFavoriteCircuit.getTag();
                 dialogFavoriteCircuit.setCurrentCircuitForced((Long) txtFavoriteCircuit.getTag());
                 inputHatedCircuit.setText(txtHatedCircuit.getText().toString());
+                user.hatedCircuit = (Long) txtHatedCircuit.getTag();
                 dialogHatedCircuit.setCurrentCircuitForced((Long) txtHatedCircuit.getTag());
             } else {
                 // Save request
+                user.password = !inputPassword.getText().toString().isEmpty() ? inputPassword.getText().toString() : null;
                 user.name = inputName.getText().toString();
                 user.surname = inputSurname.getText().toString();
                 switch (inputGender.getSelectedItemPosition()) {
@@ -333,8 +367,16 @@ public final class AccountFragment extends Fragment implements Observer, SwipeRe
                 }
                 user.residence = inputResidence.getText().toString();
                 user.favoriteNumber = Short.valueOf(inputFavoriteNumber.getText().toString());
-                updateUserData(user);
+
+                if (isValidUser(user)) {
+                    InputUtil.hideKeyboard(getActivity());
+                    updateUserData(user);
+                } else {
+                    isUpdateMode = true;
+                }
             }
+
+            setEditActionsVisibility();
         });
 
         buttonCancel.setOnClickListener(v -> {
@@ -392,10 +434,17 @@ public final class AccountFragment extends Fragment implements Observer, SwipeRe
         });
     }
 
+    /**
+     * Set {@link User} edit {@link View views} visibility
+     */
     private void setEditActionsVisibility() {
+        if (swipeRefreshLayout.isRefreshing()) return;
         final int visibilityText = isUpdateMode ? View.GONE : View.VISIBLE;
         final int visibilityInput = isUpdateMode ? View.VISIBLE : View.GONE;
 
+
+        passwordContainerView.setVisibility(visibilityInput);
+        passwordRepeatContainerView.setVisibility(visibilityInput);
         txtName.setVisibility(visibilityText);
         inputName.setVisibility(visibilityInput);
         txtSurname.setVisibility(visibilityText);
@@ -408,16 +457,43 @@ public final class AccountFragment extends Fragment implements Observer, SwipeRe
         inputResidence.setVisibility(visibilityInput);
         txtFavoriteNumber.setVisibility(visibilityText);
         inputFavoriteNumber.setVisibility(visibilityInput);
-        txtFavoriteCar.setVisibility(visibilityText);
+        if (visibilityInput == View.VISIBLE) {
+            txtFavoriteCar.setVisibility(visibilityText);
+            progressFavoriteCar.setVisibility(visibilityText);
+        } else if (progressFavoriteCar.getVisibility() == View.VISIBLE) {
+            progressFavoriteCar.setVisibility(visibilityText);
+        } else {
+            txtFavoriteCar.setVisibility(visibilityText);
+        }
         inputFavoriteCar.setVisibility(visibilityInput);
-        txtFavoriteCircuit.setVisibility(visibilityText);
+        if (visibilityInput == View.VISIBLE) {
+            txtFavoriteCircuit.setVisibility(visibilityText);
+            progressFavoriteCircuit.setVisibility(visibilityText);
+        } else if (progressFavoriteCircuit.getVisibility() == View.VISIBLE) {
+            progressFavoriteCircuit.setVisibility(visibilityText);
+        } else {
+            txtFavoriteCircuit.setVisibility(visibilityText);
+        }
         inputFavoriteCircuit.setVisibility(visibilityInput);
-        txtHatedCircuit.setVisibility(visibilityText);
+        if (visibilityInput == View.VISIBLE) {
+            txtHatedCircuit.setVisibility(visibilityText);
+            progressHatedCircuit.setVisibility(visibilityText);
+        } else if (progressHatedCircuit.getVisibility() == View.VISIBLE) {
+            progressHatedCircuit.setVisibility(visibilityText);
+        } else {
+            txtHatedCircuit.setVisibility(visibilityText);
+        }
         inputHatedCircuit.setVisibility(visibilityInput);
     }
 
+    /**
+     * Update the current authenticated {@link User} with the given user
+     *
+     * @param user The current authenticated {@link User} data to update
+     */
     private void updateUserData(final User user) {
-        if (user == null) return;
+        if (user == null || swipeRefreshLayout.isRefreshing()) return;
+        swipeRefreshLayout.setRefreshing(true);
 
         API.getInstance().getClient().create(UserService.class).update(user).enqueue(new Callback<API.Response>() {
             @Override
@@ -428,6 +504,8 @@ public final class AccountFragment extends Fragment implements Observer, SwipeRe
                     buttonCancel.setVisibility(View.GONE);
                     UserObserver.getInstance().refreshUser();
                 } else if (response.errorBody() != null) {
+                    swipeRefreshLayout.setRefreshing(false);
+                    isUpdateMode = true;
                     switch (response.code()) {
                         case HttpStatus.SC_UNPROCESSABLE_ENTITY: {
                             API.Response<List<UnprocessableEntityError>> error = API.ErrorConverter.convert(response.errorBody(), API.ErrorConverter.TYPE_UNPROCESSABLE_ENTITY_LIST);
@@ -459,12 +537,16 @@ public final class AccountFragment extends Fragment implements Observer, SwipeRe
                         }
                     }
                 } else {
+                    swipeRefreshLayout.setRefreshing(false);
+                    isUpdateMode = true;
                     Toasty.error(requireContext(), R.string.error_unknown).show();
                 }
             }
 
             @Override
             public void onFailure(@NotNull Call<API.Response> call, @NotNull Throwable t) {
+                swipeRefreshLayout.setRefreshing(false);
+                isUpdateMode = true;
                 ErrorHelper.showFailureError(getContext(), t);
             }
         });
@@ -557,6 +639,65 @@ public final class AccountFragment extends Fragment implements Observer, SwipeRe
         });
     }
 
+    /**
+     * Validate the given user and show warning message if not
+     *
+     * @param user The {@link User} to validate
+     * @return True if user is valid, false otherwise
+     */
+    private boolean isValidUser(final User user) {
+        if (user.password != null && user.password.isEmpty()) {
+            Toasty.warning(requireContext(), R.string.warning_empty_password).show();
+            return false;
+        }
+        if (user.password != null && user.password.length() < User.PASSWORD_MIN_LENGTH) {
+            Toasty.warning(requireContext(), R.string.warning_password_min_length).show();
+            return false;
+        }
+        if (user.password != null && !user.password.equals(inputPasswordRepeat.getText().toString())) {
+            Toasty.warning(requireContext(), R.string.warning_password_mismatch).show();
+            return false;
+        }
+        if (user.name.isEmpty()) {
+            Toasty.warning(requireContext(), R.string.warning_empty_name).show();
+            return false;
+        }
+        if (user.surname.isEmpty()) {
+            Toasty.warning(requireContext(), R.string.warning_empty_surname).show();
+            return false;
+        }
+        if (user.dateOfBirth == null) {
+            Toasty.warning(requireContext(), R.string.warning_empty_date_of_birth).show();
+            return false;
+        }
+        if (user.residence.isEmpty()) {
+            Toasty.warning(requireContext(), R.string.warning_empty_residence).show();
+            return false;
+        }
+        if (user.favoriteNumber == null) {
+            Toasty.warning(requireContext(), R.string.warning_empty_favorite_number).show();
+            return false;
+        }
+        if (user.favoriteCar == null) {
+            Toasty.warning(requireContext(), R.string.warning_empty_favorite_car).show();
+            return false;
+        }
+        if (user.favoriteCircuit == null) {
+            Toasty.warning(requireContext(), R.string.warning_empty_favorite_circuit).show();
+            return false;
+        }
+        if (user.hatedCircuit == null) {
+            Toasty.warning(requireContext(), R.string.warning_empty_hated_circuit).show();
+            return false;
+        }
+        if (user.favoriteCircuit.equals(user.hatedCircuit)) {
+            Toasty.warning(requireContext(), R.string.warning_favorite_hated_circuits_equals).show();
+            return false;
+        }
+
+        return true;
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -574,6 +715,10 @@ public final class AccountFragment extends Fragment implements Observer, SwipeRe
     public void onRefresh() {
         swipeRefreshLayout.setRefreshing(true);
         accountContainerView.setVisibility(View.GONE);
+        passwordContainerView.setVisibility(View.GONE);
+        passwordRepeatContainerView.setVisibility(View.GONE);
+        buttonCancel.setVisibility(View.GONE);
+        buttonEdit.setImageResource(R.drawable.ic_edit);
         UserObserver.getInstance().refreshUser();
     }
 }
