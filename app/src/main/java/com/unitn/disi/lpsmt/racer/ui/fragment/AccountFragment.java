@@ -1,8 +1,12 @@
 package com.unitn.disi.lpsmt.racer.ui.fragment;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputFilter;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,10 +21,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.squareup.picasso.Picasso;
 import com.unitn.disi.lpsmt.racer.R;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.http.HttpStatus;
 import org.jetbrains.annotations.NotNull;
 
@@ -41,8 +47,12 @@ import com.unitn.disi.lpsmt.racer.ui.component.dialog.CarDialog;
 import com.unitn.disi.lpsmt.racer.ui.component.dialog.CircuitDialog;
 import com.unitn.disi.lpsmt.racer.util.InputUtil;
 
+import java.io.File;
+import java.net.URI;
 import java.text.DateFormat;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -52,6 +62,9 @@ import java.time.LocalDate;
 import java.util.Observer;
 
 import es.dmoral.toasty.Toasty;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -65,6 +78,19 @@ import retrofit2.Response;
 public final class AccountFragment extends Fragment implements Observer, SwipeRefreshLayout.OnRefreshListener {
 
     /**
+     * {@link Log} TAG of this class
+     */
+    private static final String TAG = AccountFragment.class.getName();
+    /**
+     * {@link User} avatar image max size in KB
+     */
+    private static final int AVATAR_MAX_SIZE_KB = 2048;
+    /**
+     * {@link User} avatar image max dimension in pixel
+     */
+    private static final Pair<Integer, Integer> AVATAR_DIMENSIONS = Pair.of(512, 512);
+
+    /**
      * {@link TextView} {@link User} {@link UUID id}
      */
     private TextView txtId;
@@ -72,6 +98,10 @@ public final class AccountFragment extends Fragment implements Observer, SwipeRe
      * {@link TextView} {@link User} username
      */
     private TextView txtUsername;
+    /**
+     * {@link TextView} {@link User} creation {@link LocalDate date}
+     */
+    private TextView txtCreatedAt;
     /**
      * {@link EditText} {@link User} new password
      */
@@ -173,6 +203,10 @@ public final class AccountFragment extends Fragment implements Observer, SwipeRe
      */
     private ImageView imageAvatar;
     /**
+     * {@link ImageView Upload} {@link User} avatar
+     */
+    private ImageView inputAvatar;
+    /**
      * {@link SwipeRefreshLayout} for reloading the {@link User} in the fragment
      */
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -205,6 +239,9 @@ public final class AccountFragment extends Fragment implements Observer, SwipeRe
      */
     private boolean isUpdateMode = false;
 
+
+    private File fileAvatar = null;
+
     @NotNull
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -217,8 +254,10 @@ public final class AccountFragment extends Fragment implements Observer, SwipeRe
         buttonEdit = root.findViewById(R.id.fragment_account_button_edit);
         buttonCancel = root.findViewById(R.id.fragment_account_button_cancel);
         imageAvatar = root.findViewById(R.id.fragment_account_avatar);
+        inputAvatar = root.findViewById(R.id.fragment_account_avatar_input);
         txtId = root.findViewById(R.id.fragment_account_id);
         txtUsername = root.findViewById(R.id.fragment_account_username);
+        txtCreatedAt = root.findViewById(R.id.fragment_account_created_at);
         inputPassword = root.findViewById(R.id.fragment_account_password_input);
         inputPasswordRepeat = root.findViewById(R.id.fragment_account_password_repeat_input);
         txtName = root.findViewById(R.id.fragment_account_name);
@@ -268,14 +307,16 @@ public final class AccountFragment extends Fragment implements Observer, SwipeRe
         if (user == null) return;
 
         Picasso.get().load(user.avatar.toString()).into(imageAvatar);
+        imageAvatar.setTag(user.avatar);
         txtId.setText(user.id.toString());
         txtUsername.setText(user.username);
+        txtCreatedAt.setText(user.createdAt.format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM).withZone(ZoneId.systemDefault())));
         txtName.setText(user.name);
         txtSurname.setText(user.surname);
         txtRole.setText(user.role.getValueRes());
         txtGender.setText(user.gender.getValueRes());
         txtGender.setTag(user.gender);
-        txtDateOfBirth.setText(DateFormat.getDateInstance(DateFormat.MEDIUM).format(Date.from(user.dateOfBirth.atStartOfDay(ZoneId.systemDefault()).toInstant())));
+        txtDateOfBirth.setText(user.dateOfBirth.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)));
         txtDateOfBirth.setTag(user.dateOfBirth);
         txtResidence.setText(user.residence);
         txtFavoriteNumber.setText(String.valueOf(user.favoriteNumber));
@@ -297,6 +338,7 @@ public final class AccountFragment extends Fragment implements Observer, SwipeRe
         isUpdateMode = false;
         setEditActionsVisibility();
         accountContainerView.setVisibility(View.VISIBLE);
+        buttonEdit.setVisibility(View.VISIBLE);
     }
 
     /**
@@ -380,8 +422,10 @@ public final class AccountFragment extends Fragment implements Observer, SwipeRe
         });
 
         buttonCancel.setOnClickListener(v -> {
-            isUpdateMode = false;
             user.reset();
+            isUpdateMode = false;
+            fileAvatar = null;
+            Picasso.get().load(((URI) imageAvatar.getTag()).toString()).into(imageAvatar);
             buttonEdit.setImageResource(R.drawable.ic_edit);
             buttonCancel.setVisibility(View.GONE);
             setEditActionsVisibility();
@@ -432,6 +476,15 @@ public final class AccountFragment extends Fragment implements Observer, SwipeRe
             user.hatedCircuit = circuit.id;
             inputHatedCircuit.setText(circuit.name);
         });
+
+        // Upload avatar image
+        inputAvatar.setOnClickListener(v -> ImagePicker
+                .Companion
+                .with(this)
+                .cropSquare()
+                .compress(AVATAR_MAX_SIZE_KB)
+                .maxResultSize(AVATAR_DIMENSIONS.getLeft(), AVATAR_DIMENSIONS.getRight())
+                .start());
     }
 
     /**
@@ -442,7 +495,7 @@ public final class AccountFragment extends Fragment implements Observer, SwipeRe
         final int visibilityText = isUpdateMode ? View.GONE : View.VISIBLE;
         final int visibilityInput = isUpdateMode ? View.VISIBLE : View.GONE;
 
-
+        inputAvatar.setVisibility(visibilityInput == View.VISIBLE ? visibilityInput : View.INVISIBLE);
         passwordContainerView.setVisibility(visibilityInput);
         passwordRepeatContainerView.setVisibility(visibilityInput);
         txtName.setVisibility(visibilityText);
@@ -499,10 +552,14 @@ public final class AccountFragment extends Fragment implements Observer, SwipeRe
             @Override
             public void onResponse(@NotNull Call<API.Response> call, @NotNull Response<API.Response> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    Toasty.success(requireContext(), R.string.success_update).show();
-                    buttonEdit.setImageResource(R.drawable.ic_edit);
-                    buttonCancel.setVisibility(View.GONE);
-                    UserObserver.getInstance().refreshUser();
+                    if (fileAvatar != null) {
+                        updateUserAvatar(fileAvatar);
+                    } else {
+                        Toasty.success(requireContext(), R.string.success_update).show();
+                        buttonEdit.setImageResource(R.drawable.ic_edit);
+                        buttonCancel.setVisibility(View.GONE);
+                        UserObserver.getInstance().refreshUser();
+                    }
                 } else if (response.errorBody() != null) {
                     swipeRefreshLayout.setRefreshing(false);
                     isUpdateMode = true;
@@ -545,9 +602,46 @@ public final class AccountFragment extends Fragment implements Observer, SwipeRe
 
             @Override
             public void onFailure(@NotNull Call<API.Response> call, @NotNull Throwable t) {
+                Log.e(TAG, "Unable to update User data due to " + t.getMessage(), t);
                 swipeRefreshLayout.setRefreshing(false);
                 isUpdateMode = true;
                 ErrorHelper.showFailureError(getContext(), t);
+            }
+        });
+    }
+
+    /**
+     * Update the current {@link User} avatar image with the given avatar {@link File}.
+     * This method can be called only from updateUserData.
+     *
+     * @param avatar The avatar {@link File} to change to
+     */
+    private void updateUserAvatar(final File avatar) {
+        if (avatar == null || !swipeRefreshLayout.isRefreshing()) return;
+        MultipartBody.Part avatarPart = MultipartBody.Part.createFormData("image", fileAvatar.getName(), RequestBody.create(avatar, MediaType.parse("image/*")));
+
+        API.getInstance().getClient().create(UserService.class).updateAvatar(avatarPart).enqueue(new Callback<API.Response<URI>>() {
+            @Override
+            public void onResponse(@NotNull Call<API.Response<URI>> call, @NotNull Response<API.Response<URI>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    Toasty.success(requireContext(), R.string.success_update).show();
+                    fileAvatar = null;
+                    buttonEdit.setImageResource(R.drawable.ic_edit);
+                    buttonCancel.setVisibility(View.GONE);
+                    UserObserver.getInstance().refreshUser();
+                } else {
+                    swipeRefreshLayout.setRefreshing(false);
+                    isUpdateMode = true;
+                    Toasty.error(requireContext(), R.string.error_unknown).show();
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<API.Response<URI>> call, @NotNull Throwable t) {
+                Log.e(TAG, "Unable to update User avatar due to " + t.getMessage(), t);
+                swipeRefreshLayout.setRefreshing(false);
+                isUpdateMode = true;
+                Toasty.error(requireContext(), R.string.error_unknown).show();
             }
         });
     }
@@ -699,15 +793,19 @@ public final class AccountFragment extends Fragment implements Observer, SwipeRe
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        userObservable.deleteObserver(this);
-    }
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Uri avatarUri;
 
-    @Override
-    public void update(Observable o, Object arg) {
-        if (o instanceof UserObserver) {
-            setUIData(((UserObserver) o).getUser());
+        if (resultCode == Activity.RESULT_OK && data != null && (avatarUri = data.getData()) != null) {
+            Log.d(TAG, "Image picked successfully");
+            fileAvatar = avatarUri.getPath() != null ? new File(avatarUri.getPath()) : null;
+            imageAvatar.setImageURI(avatarUri);
+        } else if (resultCode == ImagePicker.RESULT_ERROR) {
+            Log.e(TAG, "Error picking the image due to " + ImagePicker.Companion.getError(data));
+            Toasty.error(requireContext(), ImagePicker.Companion.getError(data)).show();
+        } else {
+            Log.i(TAG, "Image picker task cancelled");
         }
     }
 
@@ -718,7 +816,21 @@ public final class AccountFragment extends Fragment implements Observer, SwipeRe
         passwordContainerView.setVisibility(View.GONE);
         passwordRepeatContainerView.setVisibility(View.GONE);
         buttonCancel.setVisibility(View.GONE);
+        buttonEdit.setVisibility(View.GONE);
         buttonEdit.setImageResource(R.drawable.ic_edit);
         UserObserver.getInstance().refreshUser();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        userObservable.deleteObserver(this);
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        if (o instanceof UserObserver) {
+            setUIData(((UserObserver) o).getUser());
+        }
     }
 }

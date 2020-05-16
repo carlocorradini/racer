@@ -6,7 +6,7 @@ import com.unitn.disi.lpsmt.racer.api.interceptor.AuthInterceptor;
 import com.unitn.disi.lpsmt.racer.api.API;
 import com.unitn.disi.lpsmt.racer.api.entity.User;
 
-import java.net.URL;
+import java.net.URI;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -95,7 +95,7 @@ public interface UserService {
      */
     @PATCH("auth/user/avatar")
     @Multipart
-    Call<API.Response<URL>> updateAvatar(@Part MultipartBody.Part avatar);
+    Call<API.Response<URI>> updateAvatar(@Part MultipartBody.Part avatar);
 
     /**
      * Delete the current authenticated {@link User}

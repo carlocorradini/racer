@@ -80,6 +80,10 @@
     <string name="recover_password_email_sent">Recovery email sent successfully</string>
     <string name="warning_email_not_found">Email not found</string>
 
+    <!-- Account -->
+    <string name="change_avatar">Change avatar</string>
+    <string name="created_at">Created at&#160;</string>
+
     <!-- Dialog Car -->
     <string name="choose_car">Choose a car</string>
 

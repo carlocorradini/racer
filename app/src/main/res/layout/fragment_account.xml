@@ -14,7 +14,7 @@
             android:id="@+id/fragment_account_container"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -22,22 +22,37 @@
                 android:orientation="vertical"
                 android:padding="@dimen/margin_small">
 
-                <ImageView
-                    android:id="@+id/fragment_account_avatar"
-                    android:layout_width="@dimen/logo_big_height"
-                    android:layout_height="@dimen/logo_big_height"
-                    android:layout_gravity="center"
-                    android:contentDescription="@string/avatar"
-                    android:src="@drawable/ic_remove_color" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/fragment_account_avatar"
+                        android:layout_width="@dimen/logo_big_width"
+                        android:layout_height="@dimen/logo_big_height"
+                        android:layout_centerHorizontal="true"
+                        android:contentDescription="@string/avatar"
+                        android:src="@drawable/ic_remove_color" />
+
+                    <ImageView
+                        android:id="@+id/fragment_account_avatar_input"
+                        android:layout_width="@dimen/logo_mini_width"
+                        android:layout_height="@dimen/logo_mini_height"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="84dp"
+                        android:contentDescription="@string/change_avatar"
+                        android:src="@drawable/ic_plus_color"
+                        android:visibility="invisible" />
+                </RelativeLayout>
 
                 <TextView
                     android:id="@+id/fragment_account_username"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin"
                     android:text="@string/unknown"
                     android:textAlignment="center"
-                    android:textSize="@dimen/text_big" />
+                    android:textSize="@dimen/text_big"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/fragment_account_id"
@@ -47,11 +62,32 @@
                     android:textAlignment="center"
                     android:textSize="@dimen/text_small" />
 
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal"
+                    android:textAlignment="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/created_at"
+                        android:textSize="@dimen/text_mini" />
+
+                    <TextView
+                        android:id="@+id/fragment_account_created_at"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/unknown"
+                        android:textSize="@dimen/text_mini" />
+                </LinearLayout>
+
                 <TableLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/margin"
+                    android:layout_marginTop="@dimen/margin_big"
                     android:gravity="center_vertical"
                     android:stretchColumns="*">
 
@@ -550,6 +586,7 @@
         android:layout_gravity="end|bottom"
         android:layout_margin="@dimen/margin"
         android:contentDescription="@string/edit"
+        android:visibility="gone"
         app:backgroundTint="@color/colorBlue"
         app:srcCompat="@drawable/ic_edit"
         app:tint="@android:color/white" />

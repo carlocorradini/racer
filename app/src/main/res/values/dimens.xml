@@ -10,8 +10,10 @@
     <dimen name="logo_mini_width">24dp</dimen>
     <dimen name="logo_mini_height">24dp</dimen>
     <dimen name="margin">16dp</dimen>
+    <dimen name="margin_big">12dp</dimen>
     <dimen name="margin_small">8dp</dimen>
     <dimen name="padding">16dp</dimen>
+    <dimen name="padding_big">12dp</dimen>
     <dimen name="padding_small">8dp</dimen>
     <dimen name="padding_mini">6dp</dimen>
     <dimen name="padding_tiny">4dp</dimen>
