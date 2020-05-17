@@ -24,13 +24,17 @@ public final class NavHeaderFragment implements Observer {
      */
     private View headerView;
     /**
+     * {@link ImageView} {@link User} avatar
+     */
+    private ImageView imageAvatar;
+    /**
      * {@link TextView} {@link User} username
      */
     private TextView txtUsername;
     /**
-     * {@link ImageView} {@link User} avatar
+     * {@link TextView} {@link User} role
      */
-    private ImageView imageAvatar;
+    private TextView txtRole;
     /**
      * {@link UserObserver User Observer} {@link Observable}
      */
@@ -54,8 +58,9 @@ public final class NavHeaderFragment implements Observer {
      * Initialize the {@link NavHeaderFragment} {@link View views} and {@link Observable observers}
      */
     private void init() {
-        txtUsername = headerView.findViewById(R.id.nav_header_username);
         imageAvatar = headerView.findViewById(R.id.nav_header_avatar);
+        txtUsername = headerView.findViewById(R.id.nav_header_username);
+        txtRole = headerView.findViewById(R.id.nav_header_role);
 
         userObservable = UserObserver.getInstance();
         userObservable.addObserver(this);
@@ -70,8 +75,9 @@ public final class NavHeaderFragment implements Observer {
      */
     private void setUIData(final User user) {
         if (user == null) return;
-        txtUsername.setText(user.username);
         Picasso.get().load(user.avatar.toString()).into(imageAvatar);
+        txtUsername.setText(user.username);
+        txtRole.setText(user.role.getValueRes());
     }
 
     /**
