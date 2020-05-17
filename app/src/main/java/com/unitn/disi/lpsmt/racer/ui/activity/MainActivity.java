@@ -8,6 +8,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.navigation.NavigationView;
 import com.unitn.disi.lpsmt.racer.R;
 
+import androidx.core.view.GravityCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -39,13 +40,18 @@ public final class MainActivity extends AppCompatActivity {
      */
     private NavHeaderFragment navHeaderFragment;
 
+    /**
+     * {@link DrawerLayout} menu navigation
+     */
+    private DrawerLayout drawerLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         Toolbar toolbar = findViewById(R.id.toolbar_main);
-        DrawerLayout drawer = findViewById(R.id.drawer_layout_main);
+        drawerLayout = findViewById(R.id.drawer_layout_main);
         NavigationView navigationView = findViewById(R.id.nav_view_main);
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_main);
         Button buttonSignOut = findViewById(R.id.sign_out_button);
@@ -56,7 +62,7 @@ public final class MainActivity extends AppCompatActivity {
         appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_account,
                 R.id.nav_championships)
-                .setDrawerLayout(drawer)
+                .setDrawerLayout(drawerLayout)
                 .build();
 
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
@@ -87,7 +93,7 @@ public final class MainActivity extends AppCompatActivity {
             // Sign In action
             Toasty.success(this, R.string.sign_in_success).show();
         }
-        if(getIntent().getBooleanExtra("ACTION_SIGN_IN_AUTOMATIC", false)) {
+        if (getIntent().getBooleanExtra("ACTION_SIGN_IN_AUTOMATIC", false)) {
             // Sign In automatic, welcome back
             Toasty.normal(this, R.string.sign_in_automatic).show();
         }
@@ -97,6 +103,14 @@ public final class MainActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_main);
         return NavigationUI.navigateUp(navController, appBarConfiguration) || super.onSupportNavigateUp();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START))
+            drawerLayout.closeDrawer(GravityCompat.START);
+        else
+            super.onBackPressed();
     }
 
     @Override
