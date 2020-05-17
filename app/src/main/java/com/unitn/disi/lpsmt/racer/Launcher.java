@@ -41,6 +41,11 @@ public final class Launcher extends AppCompatActivity {
                     Intent intent = AuthManager.getInstance().isAuth()
                             ? new Intent(Launcher.this, MainActivity.class)
                             : new Intent(Launcher.this, SignIn.class);
+
+                    if (AuthManager.getInstance().isAuth()) {
+                        intent.putExtra("ACTION_SIGN_IN_AUTOMATIC", true);
+                    }
+
                     startActivity(intent);
                     finish();
                 }

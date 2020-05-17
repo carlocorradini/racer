@@ -33,6 +33,7 @@
     <string name="edit">Modifica</string>
     <string name="role">Ruolo</string>
     <string name="unknown">Sconosciuto</string>
+    <string name="sign_out">Disconnetti</string>
 
     <!-- User Role -->
     <string name="user_role_standard">Standard</string>
@@ -48,6 +49,12 @@
     <string name="sign_in_unauthorized">Username o password errati</string>
     <string name="no_account">Non ho un account</string>
     <string name="forgot_password">Password dimenticata?</string>
+    <string name="sign_in_success">Accesso eseguito</string>
+    <string name="sign_in_automatic">Bentornato</string>
+
+    <!-- Sign Out -->
+    <string name="sign_out_question">Sei sicuro di eseguire la disconnessione?</string>
+    <string name="sign_out_success">Disconnessione eseguita</string>
 
     <!-- Sign Up -->
     <string name="sign_up">Registrati</string>

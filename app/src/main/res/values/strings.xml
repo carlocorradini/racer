@@ -33,6 +33,7 @@
     <string name="edit">Edit</string>
     <string name="role">Role</string>
     <string name="unknown">Unknown</string>
+    <string name="sign_out">Sign out</string>
 
     <!-- User Role -->
     <string name="user_role_standard">Standard</string>
@@ -48,6 +49,12 @@
     <string name="sign_in_unauthorized">Wrong username or password</string>
     <string name="no_account">I don\'t have an account</string>
     <string name="forgot_password">Forgot password?</string>
+    <string name="sign_in_success">Sign in succeeded</string>
+    <string name="sign_in_automatic">Welcome back</string>
+
+    <!-- Sign Out -->
+    <string name="sign_out_question">Are you sure you want to sign out?</string>
+    <string name="sign_out_success">Sign out succeeded</string>
 
     <!-- Sign Up -->
     <string name="sign_up">Sign Up</string>

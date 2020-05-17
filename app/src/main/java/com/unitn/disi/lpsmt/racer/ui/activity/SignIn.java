@@ -62,6 +62,8 @@ public final class SignIn extends AppCompatActivity {
                 doSignIn(user);
             }
         });
+
+        checkAction();
     }
 
     /**
@@ -79,7 +81,9 @@ public final class SignIn extends AppCompatActivity {
                 loader.setVisibility(View.GONE);
                 if (response.isSuccessful() && response.body() != null) {
                     AuthManager.getInstance().setToken(response.body().data);
-                    startActivity(new Intent(getBaseContext(), MainActivity.class));
+                    Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                    intent.putExtra("ACTION_SIGN_IN", true);
+                    startActivity(intent);
                     finish();
                 } else {
                     Toasty.error(getBaseContext(), R.string.sign_in_unauthorized).show();
@@ -115,5 +119,16 @@ public final class SignIn extends AppCompatActivity {
         }
 
         return true;
+    }
+
+    /**
+     * Check if the activity has a correlated action
+     * and show the status to the user
+     */
+    private void checkAction() {
+        if (getIntent().getBooleanExtra("ACTION_SIGN_OUT", false)) {
+            // Sign Out action
+            Toasty.success(this, R.string.sign_out_success).show();
+        }
     }
 }
