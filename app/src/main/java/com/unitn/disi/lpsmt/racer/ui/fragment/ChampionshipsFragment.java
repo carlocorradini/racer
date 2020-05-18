@@ -71,9 +71,7 @@ public final class ChampionshipsFragment extends Fragment implements SwipeRefres
         listView.setAdapter(championshipsAdapter);
         listView.setOnItemClickListener((parent, view, position, id) -> {
             final Bundle bundle = new Bundle();
-            long championshipId = (long) view.getTag();
-
-            bundle.putLong("id", championshipId);
+            bundle.putLong("id", (long) view.getTag());
             Navigation.findNavController(root).navigate(R.id.nav_championships_action_to_nav_championship, bundle);
         });
 
