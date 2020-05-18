@@ -238,8 +238,9 @@ public final class AccountFragment extends Fragment implements Observer, SwipeRe
      * Flag used to check if the {@link User} is in update mode
      */
     private boolean isUpdateMode = false;
-
-
+    /**
+     * The {@link File} reference of the new {@link User} avatar
+     */
     private File fileAvatar = null;
 
     @NotNull

@@ -34,6 +34,9 @@
     <string name="role">Ruolo</string>
     <string name="unknown">Sconosciuto</string>
     <string name="sign_out">Disconnetti</string>
+    <string name="circuits">Circuiti</string>
+    <string name="circuit">Circuito</string>
+    <string name="more_info">Maggiori informazioni</string>
 
     <!-- User Role -->
     <string name="user_role_standard">Standard</string>
@@ -90,6 +93,10 @@
     <!-- Account -->
     <string name="change_avatar">Cambia avatar</string>
     <string name="created_at">Creato il&#160;</string>
+
+    <!-- Championship-->
+    <string name="championship_invalid">Codice campionato invalido</string>
+    <string name="championship_not_found">Impossibile trovare il campionato</string>
 
     <!-- Dialog Car -->
     <string name="choose_car">Scegli una macchina</string>

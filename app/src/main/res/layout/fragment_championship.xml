@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fragment_championship_swipe_refresh"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:id="@+id/fragment_championship_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <ImageView
+                android:id="@+id/fragment_championship_logo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:contentDescription="@string/championship"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_remove_color" />
+
+            <TextView
+                android:id="@+id/fragment_championship_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/unknown"
+                android:textAlignment="center"
+                android:textSize="@dimen/text_big" />
+
+            <com.google.android.material.chip.ChipGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/fragment_championship_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/forum"
+                    app:chipIcon="@drawable/ic_hashtag_color" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/fragment_championship_forum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/forum"
+                    app:chipIcon="@drawable/ic_forum_color" />
+
+            </com.google.android.material.chip.ChipGroup>
+
+            <ExpandableListView
+                android:id="@+id/fragment_championship_list_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:choiceMode="singleChoice"
+                android:divider="@android:color/darker_gray"
+                android:dividerHeight="0.5dp"
+                android:indicatorLeft="?android:attr/expandableListPreferredItemIndicatorLeft" />
+        </LinearLayout>
+    </ScrollView>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

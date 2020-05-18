@@ -2,6 +2,7 @@ package com.unitn.disi.lpsmt.racer.api.service;
 
 import com.unitn.disi.lpsmt.racer.api.API;
 import com.unitn.disi.lpsmt.racer.api.entity.Circuit;
+import com.unitn.disi.lpsmt.racer.api.entity.Championship;
 
 import java.util.List;
 import java.util.Map;
@@ -43,4 +44,13 @@ public interface CircuitService {
      */
     @GET("circuit/{id}")
     Call<API.Response<Circuit>> findById(@Path("id") Long id);
+
+    /**
+     * Find all {@link Circuit} that correspond to the given {@link Championship} {@link Long id}
+     *
+     * @param championship The {@link Championship} {@link Long id}
+     * @return An {@link API.Response} with the {@link List} of {@link Circuit} founds for the corresponding {@link Championship} {@link Long ID}
+     */
+    @GET("circuit/championship/{championship}")
+    Call<API.Response<List<Circuit>>> findByChampionship(@Path("championship") Long championship);
 }

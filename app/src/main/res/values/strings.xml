@@ -34,6 +34,9 @@
     <string name="role">Role</string>
     <string name="unknown">Unknown</string>
     <string name="sign_out">Sign out</string>
+    <string name="circuits">Circuits</string>
+    <string name="circuit">Circuit</string>
+    <string name="more_info">More info</string>
 
     <!-- User Role -->
     <string name="user_role_standard">Standard</string>
@@ -90,6 +93,10 @@
     <!-- Account -->
     <string name="change_avatar">Change avatar</string>
     <string name="created_at">Created at&#160;</string>
+
+    <!-- Championship-->
+    <string name="championship_invalid">Invalid championship identifier</string>
+    <string name="championship_not_found">Unable to find championship</string>
 
     <!-- Dialog Car -->
     <string name="choose_car">Choose a car</string>

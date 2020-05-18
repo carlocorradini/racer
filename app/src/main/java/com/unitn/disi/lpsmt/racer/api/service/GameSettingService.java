@@ -1,6 +1,7 @@
 package com.unitn.disi.lpsmt.racer.api.service;
 
 import com.unitn.disi.lpsmt.racer.api.API;
+import com.unitn.disi.lpsmt.racer.api.entity.Championship;
 import com.unitn.disi.lpsmt.racer.api.entity.GameSetting;
 
 import java.util.List;
@@ -43,4 +44,13 @@ public interface GameSettingService {
      */
     @GET("auth/game_setting/{id}")
     Call<API.Response<GameSetting>> findById(@Path("id") Long id);
+
+    /**
+     * Find all {@link GameSetting} that correspond to the given {@link Championship} {@link Long id}
+     *
+     * @param championship The {@link Championship} {@link Long id}
+     * @return An {@link API.Response} with the {@link List} of {@link GameSetting} founds for the corresponding {@link Championship} {@link Long ID}
+     */
+    @GET("auth/game_setting/championship/{championship}")
+    Call<API.Response<List<GameSetting>>> findByChampionship(@Path("championship") Long championship);
 }

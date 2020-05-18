@@ -5,6 +5,7 @@ import com.unitn.disi.lpsmt.racer.api.AuthManager;
 import com.unitn.disi.lpsmt.racer.api.interceptor.AuthInterceptor;
 import com.unitn.disi.lpsmt.racer.api.API;
 import com.unitn.disi.lpsmt.racer.api.entity.User;
+import com.unitn.disi.lpsmt.racer.api.entity.Championship;
 
 import java.net.URI;
 import java.util.List;
@@ -21,6 +22,7 @@ import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 
 /**
@@ -66,6 +68,15 @@ public interface UserService {
      */
     @GET("auth/user/me")
     Call<API.Response<User>> me();
+
+    /**
+     * Find all {@link User} that correspond to the given {@link Championship} {@link Long id}
+     *
+     * @param championship The {@link Championship} {@link Long id}
+     * @return An {@link API.Response} with the {@link List} of {@link User} founds for the corresponding {@link Championship} {@link Long ID}
+     */
+    @GET("auth/user")
+    Call<API.Response<List<User>>> findByChampionship(@Query("championship") Long championship);
 
     /**
      * Create a new {@link User} with the given user
