@@ -56,9 +56,6 @@ public final class ChampionshipsAdapter extends ArrayAdapter<Championship> {
         Chip txtSettings = convertView.findViewById(R.id.item_championship_settings);
         Chip buttonForum = convertView.findViewById(R.id.item_championship_forum);
 
-        convertView.setOnClickListener(v -> {
-            // todo
-        });
         Picasso.get().load(championship.logo.toString()).into(imageLogo);
         txtName.setText(championship.name);
         txtUsers.setText(String.valueOf(championship.users.size()));

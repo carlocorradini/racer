@@ -138,8 +138,6 @@ public final class ChampionshipFragment extends Fragment implements SwipeRefresh
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_championship, container, false);
 
-        idChampionship = requireActivity().getIntent().getLongExtra("id", INVALID_CHAMPIONSHIP_ID);
-
         championshipContainer = root.findViewById(R.id.fragment_championship_container);
         swipeRefreshLayout = root.findViewById(R.id.fragment_championship_swipe_refresh);
         imageLogo = root.findViewById(R.id.fragment_championship_logo);
@@ -153,10 +151,6 @@ public final class ChampionshipFragment extends Fragment implements SwipeRefresh
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setRefreshing(true);
 
-        // todo
-        idChampionship = 1;
-        loadChampionship(idChampionship);
-
         final int[] prevExpandPosition = {-1};
         expandableListView.setOnGroupExpandListener(groupPosition -> {
             if (prevExpandPosition[0] >= 0 && prevExpandPosition[0] != groupPosition)
@@ -167,6 +161,15 @@ public final class ChampionshipFragment extends Fragment implements SwipeRefresh
         expandableListView.setAdapter(championshipAdapter);
 
         return root;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        idChampionship = getArguments() != null ? getArguments().getLong("id", INVALID_CHAMPIONSHIP_ID) : INVALID_CHAMPIONSHIP_ID;
+
+        loadChampionship(idChampionship);
     }
 
     /**

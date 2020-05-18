@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_championship">
+    app:startDestination="@+id/nav_championships">
 
     <fragment
         android:id="@+id/nav_account"
@@ -15,12 +15,20 @@
         android:id="@+id/nav_championships"
         android:name="com.unitn.disi.lpsmt.racer.ui.fragment.ChampionshipsFragment"
         android:label="@string/championships"
-        tools:layout="@layout/fragment_championships" />
+        tools:layout="@layout/fragment_championships">
+        <action
+            android:id="@+id/nav_championships_action_to_nav_championship"
+            app:destination="@id/nav_championship" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_championship"
         android:name="com.unitn.disi.lpsmt.racer.ui.fragment.ChampionshipFragment"
         android:label="@string/championship"
-        tools:layout="@layout/fragment_championship" />
+        tools:layout="@layout/fragment_championship">
+        <argument
+            android:name="id"
+            app:argType="long" />
+    </fragment>
 
 </navigation>

@@ -6,12 +6,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.NavArgument;
+import androidx.navigation.NavDirections;
+import androidx.navigation.NavOptions;
+import androidx.navigation.Navigation;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.unitn.disi.lpsmt.racer.R;
@@ -64,6 +69,14 @@ public final class ChampionshipsFragment extends Fragment implements SwipeRefres
         swipeRefreshLayout = root.findViewById(R.id.fragment_championships_swipe_refresh);
 
         listView.setAdapter(championshipsAdapter);
+        listView.setOnItemClickListener((parent, view, position, id) -> {
+            final Bundle bundle = new Bundle();
+            long championshipId = (long) view.getTag();
+
+            bundle.putLong("id", championshipId);
+            Navigation.findNavController(root).navigate(R.id.nav_championships_action_to_nav_championship, bundle);
+        });
+
         swipeRefreshLayout.setColorSchemeColors(ColorHelper.COLOR_BLUE, ColorHelper.COLOR_RED, ColorHelper.COLOR_YELLOW, ColorHelper.COLOR_GREEN);
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setRefreshing(true);

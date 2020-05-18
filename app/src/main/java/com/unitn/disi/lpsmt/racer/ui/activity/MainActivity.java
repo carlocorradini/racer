@@ -19,6 +19,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.unitn.disi.lpsmt.racer.api.AuthManager;
 import com.unitn.disi.lpsmt.racer.api.entity.User;
+import com.unitn.disi.lpsmt.racer.ui.fragment.ChampionshipFragment;
 import com.unitn.disi.lpsmt.racer.ui.fragment.NavHeaderFragment;
 
 import es.dmoral.toasty.Toasty;
@@ -68,18 +69,16 @@ public final class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-        buttonSignOut.setOnClickListener(v -> {
-            new MaterialAlertDialogBuilder(this)
-                    .setTitle(R.string.sign_out_question)
-                    .setNegativeButton(R.string.dismiss, (dialog, which) -> dialog.dismiss())
-                    .setPositiveButton(R.string.confirm, ((dialog, which) -> {
-                        AuthManager.getInstance().clearToken();
-                        Intent intent = new Intent(this, SignIn.class);
-                        intent.putExtra("ACTION_SIGN_OUT", true);
-                        startActivity(intent);
-                        finish();
-                    })).show();
-        });
+        buttonSignOut.setOnClickListener(v -> new MaterialAlertDialogBuilder(this)
+                .setTitle(R.string.sign_out_question)
+                .setNegativeButton(R.string.dismiss, (dialog, which) -> dialog.dismiss())
+                .setPositiveButton(R.string.confirm, ((dialog, which) -> {
+                    AuthManager.getInstance().clearToken();
+                    Intent intent = new Intent(this, SignIn.class);
+                    intent.putExtra("ACTION_SIGN_OUT", true);
+                    startActivity(intent);
+                    finish();
+                })).show());
 
         checkAction();
     }

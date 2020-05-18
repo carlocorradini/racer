@@ -11,7 +11,8 @@
     app:cardPreventCornerOverlap="true"
     app:cardUseCompatPadding="true"
     app:contentPadding="@dimen/padding_small"
-    app:contentPaddingBottom="0dp">
+    app:contentPaddingBottom="0dp"
+    android:descendantFocusability="blocksDescendants">
 
     <RelativeLayout
         android:layout_width="match_parent"
