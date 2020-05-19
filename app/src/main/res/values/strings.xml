@@ -97,6 +97,10 @@
     <!-- Championship-->
     <string name="championship_invalid">Invalid championship identifier</string>
     <string name="championship_not_found">Unable to find championship</string>
+    <string name="subscribe">Subscribe</string>
+    <string name="unsubscribe">Unsubscribe</string>
+    <string name="view_subscription">View subscription</string>
+    <string name="unsubscribe_success">Successfully unsubscribed</string>
 
     <!-- Dialog Car -->
     <string name="choose_car">Choose a car</string>

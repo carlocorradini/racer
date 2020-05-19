@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,6 +21,7 @@ import com.google.android.material.chip.Chip;
 import com.squareup.picasso.Picasso;
 import com.unitn.disi.lpsmt.racer.R;
 import com.unitn.disi.lpsmt.racer.api.API;
+import com.unitn.disi.lpsmt.racer.api.AuthManager;
 import com.unitn.disi.lpsmt.racer.api.entity.Car;
 import com.unitn.disi.lpsmt.racer.api.entity.Championship;
 import com.unitn.disi.lpsmt.racer.api.entity.ChampionshipCircuit;
@@ -97,6 +99,26 @@ public final class ChampionshipFragment extends Fragment implements SwipeRefresh
     private Chip txtForum;
 
     /**
+     * {@link Button} subscribe
+     */
+    private Button btnSubscribe;
+
+    /**
+     * {@link Button} unsubscribe
+     */
+    private Button btnUnsubscribe;
+
+    /**
+     * {@link Button} view subscription
+     */
+    private Button btnViewSubscription;
+
+    /**
+     * {@link View} subscription container
+     */
+    private View subscriptionContainer;
+
+    /**
      * The {@link ExpandableListView} information of the current {@link Championship}
      */
     private ExpandableListView expandableListView;
@@ -140,6 +162,10 @@ public final class ChampionshipFragment extends Fragment implements SwipeRefresh
 
         championshipContainer = root.findViewById(R.id.fragment_championship_container);
         swipeRefreshLayout = root.findViewById(R.id.fragment_championship_swipe_refresh);
+        btnSubscribe = root.findViewById(R.id.fragment_championship_button_subscribe);
+        btnUnsubscribe = root.findViewById(R.id.fragment_championship_button_unsubscribe);
+        btnViewSubscription = root.findViewById(R.id.fragment_championship_button_view_subscription);
+        subscriptionContainer = root.findViewById(R.id.fragment_championship_button_subscription_container);
         imageLogo = root.findViewById(R.id.fragment_championship_logo);
         txtName = root.findViewById(R.id.fragment_championship_name);
         txtId = root.findViewById(R.id.fragment_championship_id);
@@ -159,6 +185,11 @@ public final class ChampionshipFragment extends Fragment implements SwipeRefresh
         });
         championshipAdapter = new ChampionshipAdapter(requireContext(), new HashMap<>());
         expandableListView.setAdapter(championshipAdapter);
+
+        btnSubscribe.setOnClickListener(v -> {
+            
+        });
+        btnUnsubscribe.setOnClickListener(v -> unsubscribe());
 
         return root;
     }
@@ -220,6 +251,17 @@ public final class ChampionshipFragment extends Fragment implements SwipeRefresh
         txtName.setText(championship.name);
         txtId.setText(String.valueOf(championship.id));
         txtForum.setOnClickListener(v -> requireContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(championship.forum.toString()))));
+
+        if (championship.users.contains(AuthManager.getInstance().getAuthUserId())) {
+            // User already subscribed
+            btnSubscribe.setVisibility(View.GONE);
+            subscriptionContainer.setVisibility(View.VISIBLE);
+        } else {
+            // User is not subscribed
+            btnSubscribe.setVisibility(View.VISIBLE);
+            subscriptionContainer.setVisibility(View.GONE);
+        }
+
 
         loadChampionshipUsersAndCars(championship.id);
         loadChampionshipCircuits(championship.id);
@@ -431,8 +473,38 @@ public final class ChampionshipFragment extends Fragment implements SwipeRefresh
         });
     }
 
+    /**
+     * Unsubscribe the current authenticate {@link User}
+     */
+    private void unsubscribe() {
+        if (idChampionship == INVALID_CHAMPIONSHIP_ID) return;
+        swipeRefreshLayout.setRefreshing(true);
+
+        API.getInstance().getClient().create(UserChampionshipService.class).delete(idChampionship).enqueue(new Callback<API.Response>() {
+            @Override
+            public void onResponse(@NotNull Call<API.Response> call, @NotNull Response<API.Response> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    Toasty.success(requireContext(), R.string.unsubscribe_success).show();
+                    refresh();
+                } else {
+                    Toasty.error(requireContext(), R.string.error_unknown).show();
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<API.Response> call, @NotNull Throwable t) {
+                Log.e(TAG, "Unable to unsubscribe from Championship " + idChampionship + "due to " + t.getMessage(), t);
+                ErrorHelper.showFailureError(getContext(), t);
+            }
+        });
+    }
+
     @Override
     public void onRefresh() {
+        refresh();
+    }
+
+    private void refresh() {
         isUsersLoaded = isCircuitsLoaded = isCarsLoaded = isGameSettingsLoaded = false;
         championshipContainer.setVisibility(View.GONE);
         for (int i = 0; i < championshipAdapter.getGroupCount(); i++)

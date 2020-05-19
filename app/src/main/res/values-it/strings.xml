@@ -97,6 +97,10 @@
     <!-- Championship-->
     <string name="championship_invalid">Codice campionato invalido</string>
     <string name="championship_not_found">Impossibile trovare il campionato</string>
+    <string name="subscribe">Iscriviti</string>
+    <string name="unsubscribe">Disiscriviti</string>
+    <string name="view_subscription">Visualizza iscrizione</string>
+    <string name="unsubscribe_success">Disiscritto</string>
 
     <!-- Dialog Car -->
     <string name="choose_car">Scegli una macchina</string>
