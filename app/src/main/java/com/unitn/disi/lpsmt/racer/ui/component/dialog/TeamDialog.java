@@ -189,8 +189,11 @@ public final class TeamDialog extends AppCompatDialogFragment {
             teamsContainer.addView(teamRadioButton);
             if (currentTeamForced == null && savedTeam != null && savedTeam.equals(teams.get(i)))
                 teamRadioButton.setChecked(true);
-            else if (currentTeamForced != null && currentTeamForced.equals(teams.get(i).id))
+            else if (currentTeamForced != null && currentTeamForced.equals(teams.get(i).id)) {
+                savedTeam = teams.get(i);
+                currentTeamForced = null;
                 teamRadioButton.setChecked(true);
+            }
         }
         currentTeamForced = null;
         loader.setVisibility(View.GONE);

@@ -41,6 +41,7 @@
     <string name="teams">Squadre</string>
     <string name="point">Punto</string>
     <string name="points">Punti</string>
+    <string name="subscription">Iscrizione</string>
 
     <!-- User Role -->
     <string name="user_role_standard">Standard</string>
@@ -110,6 +111,9 @@
     <!-- Championship Subscribe Dialog -->
     <string name="warning_empty_car">Compilare il campo macchina</string>
     <string name="warning_empty_team">Compilare il campo squadra</string>
+
+    <!-- Championship View Subscription Dialog -->
+    <string name="subscription_update_success">Iscrizione aggiornata con successo</string>
 
     <!-- Dialog Car -->
     <string name="choose_car">Scegli una macchina</string>

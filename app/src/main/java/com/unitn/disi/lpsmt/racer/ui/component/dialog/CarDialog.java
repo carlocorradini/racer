@@ -189,8 +189,11 @@ public final class CarDialog extends AppCompatDialogFragment {
             carsContainer.addView(carRadioButton);
             if (currentCarForced == null && savedCar != null && savedCar.equals(cars.get(i)))
                 carRadioButton.setChecked(true);
-            else if (currentCarForced != null && currentCarForced.equals(cars.get(i).id))
+            else if (currentCarForced != null && currentCarForced.equals(cars.get(i).id)) {
+                savedCar = cars.get(i);
+                currentCarForced = null;
                 carRadioButton.setChecked(true);
+            }
         }
         currentCarForced = null;
         loader.setVisibility(View.GONE);

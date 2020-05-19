@@ -1,6 +1,7 @@
 package com.unitn.disi.lpsmt.racer.ui.dialog;
 
 import android.app.Dialog;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,11 +42,11 @@ import retrofit2.Response;
  *
  * @author Carlo Corradini
  */
-public class ChampionshipSubscribeDialog extends DialogFragment {
+public final class ChampionshipSubscribeDialog extends DialogFragment {
     /**
      * {@link Log} TAG of this class
      */
-    public static final String TAG = DialogFragment.class.getName();
+    public static final String TAG = ChampionshipSubscribeDialog.class.getName();
 
     /**
      * {@link DialogFragment} {@link Toolbar}
@@ -137,6 +138,8 @@ public class ChampionshipSubscribeDialog extends DialogFragment {
 
         toolbar.setNavigationOnClickListener(v -> dismiss());
         toolbar.setTitle(R.string.subscribe);
+        if(toolbar.getNavigationIcon() != null)
+            toolbar.getNavigationIcon().setTint(Color.WHITE);
         toolbar.setOnMenuItemClickListener(item -> {
             dismiss();
             return true;
@@ -218,13 +221,12 @@ public class ChampionshipSubscribeDialog extends DialogFragment {
      * @return True if userChampionship is valid, false otherwise
      */
     private boolean isValidUserChampionship(final UserChampionship userChampionship) {
-
         if (userChampionship.car == null) {
-            Toasty.warning(getContext(), R.string.warning_empty_car).show();
+            Toasty.warning(requireContext(), R.string.warning_empty_car).show();
             return false;
         }
         if (userChampionship.team == null) {
-            Toasty.warning(getContext(), R.string.warning_empty_team).show();
+            Toasty.warning(requireContext(), R.string.warning_empty_team).show();
             return false;
         }
 

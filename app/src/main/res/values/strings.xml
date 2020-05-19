@@ -41,6 +41,7 @@
     <string name="teams">Teams</string>
     <string name="point">Point</string>
     <string name="points">Points</string>
+    <string name="subscription">Subscription</string>
 
     <!-- User Role -->
     <string name="user_role_standard">Standard</string>
@@ -110,6 +111,9 @@
     <!-- Championship Subscribe Dialog -->
     <string name="warning_empty_car">Fill car field</string>
     <string name="warning_empty_team">Fill team field</string>
+
+    <!-- Championship View Subscription Dialog -->
+    <string name="subscription_update_success">Subscription successfully updated</string>
 
     <!-- Dialog Car -->
     <string name="choose_car">Choose a car</string>

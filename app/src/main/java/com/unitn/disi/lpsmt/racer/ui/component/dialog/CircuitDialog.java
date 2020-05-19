@@ -183,8 +183,11 @@ public final class CircuitDialog extends AppCompatDialogFragment {
             circuitsContainer.addView(circuitRadioButton);
             if (savedCircuit != null && savedCircuit.equals(circuits.get(i)))
                 circuitRadioButton.setChecked(true);
-            else if (currentCircuitForced != null && currentCircuitForced.equals(circuits.get(i).id))
+            else if (currentCircuitForced != null && currentCircuitForced.equals(circuits.get(i).id)) {
+                savedCircuit = circuits.get(i);
+                currentCircuitForced = null;
                 circuitRadioButton.setChecked(true);
+            }
         }
         currentCircuitForced = null;
         loader.setVisibility(View.GONE);
