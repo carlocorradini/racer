@@ -49,6 +49,10 @@ public final class CarDialog extends AppCompatDialogFragment {
      */
     private Long currentCarForced = null;
     /**
+     * Visible {@link Car cars}
+     */
+    private List<Long> visibleCarsForced = null;
+    /**
      * Old selected {@link Car car} if the {@link CarDialog} was close and the positive button has been clicked
      */
     private Car savedCar = null;
@@ -177,6 +181,8 @@ public final class CarDialog extends AppCompatDialogFragment {
      */
     private void showCars() {
         for (int i = 0; i < cars.size(); ++i) {
+            if (visibleCarsForced != null && !visibleCarsForced.contains(cars.get(i).id)) continue;
+
             RadioButton carRadioButton = new RadioButton(getContext());
             carRadioButton.setText(cars.get(i).getFullName());
             carRadioButton.setTag(i);
@@ -207,5 +213,14 @@ public final class CarDialog extends AppCompatDialogFragment {
      */
     public void setCurrentCarForced(Long currentCarForced) {
         this.currentCarForced = currentCarForced;
+    }
+
+    /**
+     * Set the {@link List} of visible {@link Car cars} forced
+     *
+     * @param visibleCarsForced The {@link List} of {@link Car} {@link Long ids} to be forced to show
+     */
+    public void setVisibleCarsForced(final List<Long> visibleCarsForced) {
+        this.visibleCarsForced = visibleCarsForced;
     }
 }

@@ -53,6 +53,7 @@ public final class ChampionshipsAdapter extends ArrayAdapter<Championship> {
         Chip txtUsers = convertView.findViewById(R.id.item_championship_users);
         Chip txtCircuits = convertView.findViewById(R.id.item_championship_circuits);
         Chip txtCars = convertView.findViewById(R.id.item_championship_cars);
+        Chip txtTeams = convertView.findViewById(R.id.item_championship_teams);
         Chip txtSettings = convertView.findViewById(R.id.item_championship_settings);
         Chip buttonForum = convertView.findViewById(R.id.item_championship_forum);
 
@@ -61,6 +62,7 @@ public final class ChampionshipsAdapter extends ArrayAdapter<Championship> {
         txtUsers.setText(String.valueOf(championship.users.size()));
         txtCircuits.setText(String.valueOf(championship.circuits.size()));
         txtCars.setText(String.valueOf(championship.cars.size()));
+        txtTeams.setText(String.valueOf(championship.teams.size()));
         txtSettings.setText(String.valueOf(championship.game_settings.size()));
         buttonForum.setOnClickListener(v -> getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(championship.forum.toString()))));
 

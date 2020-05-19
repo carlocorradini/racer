@@ -37,6 +37,10 @@
     <string name="circuits">Circuits</string>
     <string name="circuit">Circuit</string>
     <string name="more_info">More info</string>
+    <string name="team">Team</string>
+    <string name="teams">Teams</string>
+    <string name="point">Point</string>
+    <string name="points">Points</string>
 
     <!-- User Role -->
     <string name="user_role_standard">Standard</string>
@@ -100,13 +104,21 @@
     <string name="subscribe">Subscribe</string>
     <string name="unsubscribe">Unsubscribe</string>
     <string name="view_subscription">View subscription</string>
+    <string name="subscribe_success">Successfully subscribed</string>
     <string name="unsubscribe_success">Successfully unsubscribed</string>
+
+    <!-- Championship Subscribe Dialog -->
+    <string name="warning_empty_car">Fill car field</string>
+    <string name="warning_empty_team">Fill team field</string>
 
     <!-- Dialog Car -->
     <string name="choose_car">Choose a car</string>
 
     <!-- Dialog Circuit -->
     <string name="choose_circuit">Choose a circuit</string>
+
+    <!-- Dialog Team -->
+    <string name="choose_team">Choose a team</string>
 
     <!-- Success -->
     <string name="success_update">Updated successfully</string>

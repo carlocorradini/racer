@@ -423,10 +423,11 @@ public final class AccountFragment extends Fragment implements Observer, SwipeRe
         });
 
         buttonCancel.setOnClickListener(v -> {
+            InputUtil.hideKeyboard(requireActivity());
             user.reset();
             isUpdateMode = false;
             fileAvatar = null;
-            Picasso.get().load(((URI) imageAvatar.getTag()).toString()).into(imageAvatar);
+            Picasso.get().load(imageAvatar.getTag().toString()).into(imageAvatar);
             buttonEdit.setImageResource(R.drawable.ic_edit);
             buttonCancel.setVisibility(View.GONE);
             setEditActionsVisibility();

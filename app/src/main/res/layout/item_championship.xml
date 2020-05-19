@@ -69,6 +69,15 @@
                 app:chipIcon="@drawable/ic_car_formula_one_color" />
 
             <com.google.android.material.chip.Chip
+                android:id="@+id/item_championship_teams"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:text="@string/teams"
+                android:textColor="@color/colorGrey"
+                app:chipIcon="@drawable/ic_team_formula_one_color" />
+
+            <com.google.android.material.chip.Chip
                 android:id="@+id/item_championship_settings"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -81,9 +90,13 @@
                 android:id="@+id/item_championship_forum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/forum"
-                app:chipIcon="@drawable/ic_forum_color" />
+                app:chipEndPadding="4dp"
+                app:chipIcon="@drawable/ic_forum_color"
+                app:chipStartPadding="4dp"
+                app:textEndPadding="0dp"
+                app:textStartPadding="0dp" />
         </com.google.android.material.chip.ChipGroup>
+
 
     </RelativeLayout>
 

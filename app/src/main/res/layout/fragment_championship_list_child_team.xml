@@ -17,8 +17,8 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/fragment-championship_list_child_user_username"
-            android:layout_width="match_parent"
+            android:id="@+id/fragment-championship_list_child_team_id"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
 
@@ -29,20 +29,8 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/fragment-championship_list_child_user_car"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/fragment-championship_list_child_user_team"
-            android:layout_width="match_parent"
+            android:id="@+id/fragment-championship_list_child_team_name"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
 </LinearLayout>

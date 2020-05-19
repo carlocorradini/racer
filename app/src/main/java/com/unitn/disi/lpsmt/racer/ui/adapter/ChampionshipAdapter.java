@@ -17,6 +17,7 @@ import com.unitn.disi.lpsmt.racer.api.entity.ChampionshipCircuit;
 import com.unitn.disi.lpsmt.racer.api.entity.ChampionshipGameSetting;
 import com.unitn.disi.lpsmt.racer.api.entity.Circuit;
 import com.unitn.disi.lpsmt.racer.api.entity.GameSetting;
+import com.unitn.disi.lpsmt.racer.api.entity.Team;
 import com.unitn.disi.lpsmt.racer.api.entity.User;
 import com.unitn.disi.lpsmt.racer.api.entity.UserChampionship;
 import com.unitn.disi.lpsmt.racer.api.entity.Championship;
@@ -42,11 +43,11 @@ public final class ChampionshipAdapter extends BaseExpandableListAdapter {
     /**
      * The number of groups
      */
-    private static final int GROUP_TYPE_COUNT = 4;
+    private static final int GROUP_TYPE_COUNT = 5;
     /**
      * The number of group's child
      */
-    private static final int CHILD_TYPE_COUNT = 4;
+    private static final int CHILD_TYPE_COUNT = 5;
     /**
      * Invalid group
      */
@@ -68,9 +69,13 @@ public final class ChampionshipAdapter extends BaseExpandableListAdapter {
      */
     public static final int TYPE_CHAMPIONSHIP_CAR = 2;
     /**
+     * {@link Team} type
+     */
+    public static final int TYPE_CHAMPIONSHIP_TEAM = 3;
+    /**
      * {@link ChampionshipGameSetting} type
      */
-    public static final int TYPE_CHAMPIONSHIP_GAME_SETTING = 3;
+    public static final int TYPE_CHAMPIONSHIP_GAME_SETTING = 4;
 
     /**
      * Current {@link Context}
@@ -164,6 +169,8 @@ public final class ChampionshipAdapter extends BaseExpandableListAdapter {
             case 2:
                 return TYPE_CHAMPIONSHIP_CAR;
             case 3:
+                return TYPE_CHAMPIONSHIP_TEAM;
+            case 4:
                 return TYPE_CHAMPIONSHIP_GAME_SETTING;
             default:
                 return GROUP_TYPE_UNKNOWN;
@@ -180,6 +187,8 @@ public final class ChampionshipAdapter extends BaseExpandableListAdapter {
             case 2:
                 return TYPE_CHAMPIONSHIP_CAR;
             case 3:
+                return TYPE_CHAMPIONSHIP_TEAM;
+            case 4:
                 return TYPE_CHAMPIONSHIP_GAME_SETTING;
             default:
                 return CHILD_TYPE_UNKNOWN;
@@ -216,6 +225,11 @@ public final class ChampionshipAdapter extends BaseExpandableListAdapter {
                 titleText = R.string.cars;
                 break;
             }
+            case TYPE_CHAMPIONSHIP_TEAM: {
+                titleIcon = R.drawable.ic_team_formula_one_color;
+                titleText = R.string.teams;
+                break;
+            }
             case TYPE_CHAMPIONSHIP_GAME_SETTING: {
                 titleIcon = R.drawable.ic_settings_color;
                 titleText = R.string.settings;
@@ -249,6 +263,10 @@ public final class ChampionshipAdapter extends BaseExpandableListAdapter {
                     convertView = inflater.inflate(R.layout.fragment_championship_list_child_car, null);
                     break;
                 }
+                case TYPE_CHAMPIONSHIP_TEAM: {
+                    convertView = inflater.inflate(R.layout.fragment_championship_list_child_team, null);
+                    break;
+                }
                 case TYPE_CHAMPIONSHIP_GAME_SETTING: {
                     convertView = inflater.inflate(R.layout.fragment_championship_list_child_game_setting, null);
                     break;
@@ -258,12 +276,14 @@ public final class ChampionshipAdapter extends BaseExpandableListAdapter {
 
         switch (childType) {
             case TYPE_CHAMPIONSHIP_USER: {
-                Triple<UserChampionship, User, Car> userChampionships = (Triple<UserChampionship, User, Car>) getChild(groupPosition, childPosition);
+                Triple<User, Car, Team> userChampionships = (Triple<User, Car, Team>) getChild(groupPosition, childPosition);
                 TextView txtUsername = convertView.findViewById(R.id.fragment_championship_list_child_user_username);
                 TextView txtCar = convertView.findViewById(R.id.fragment_championship_list_child_user_car);
+                TextView txtTeam = convertView.findViewById(R.id.fragment_championship_list_child_user_team);
 
-                txtUsername.setText(userChampionships.getMiddle().username);
-                txtCar.setText(userChampionships.getRight().getFullName());
+                txtUsername.setText(userChampionships.getLeft().username);
+                txtCar.setText(userChampionships.getMiddle().getFullName());
+                txtTeam.setText(userChampionships.getRight().name);
                 break;
             }
             case TYPE_CHAMPIONSHIP_CIRCUIT: {
@@ -283,6 +303,16 @@ public final class ChampionshipAdapter extends BaseExpandableListAdapter {
 
                 txtId.setText(String.valueOf(car.id));
                 txtName.setText(car.getFullName());
+                break;
+            }
+            case TYPE_CHAMPIONSHIP_TEAM: {
+                Team team = (Team) getChild(groupPosition, childPosition);
+
+                TextView txtId = convertView.findViewById(R.id.fragment_championship_list_child_team_id);
+                TextView txtName = convertView.findViewById(R.id.fragment_championship_list_child_team_name);
+
+                txtId.setText(String.valueOf(team.id));
+                txtName.setText(team.name);
                 break;
             }
             case TYPE_CHAMPIONSHIP_GAME_SETTING: {

@@ -100,7 +100,9 @@
                         <com.google.android.material.chip.Chip
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:enabled="false"
                             android:text="@string/password"
+                            android:textColor="@color/colorGrey"
                             app:chipIcon="@drawable/ic_lock_color" />
 
                         <EditText
@@ -123,7 +125,9 @@
                         <com.google.android.material.chip.Chip
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:enabled="false"
                             android:text="@string/password_repeat"
+                            android:textColor="@color/colorGrey"
                             app:chipIcon="@drawable/ic_lock_color" />
 
                         <EditText
@@ -161,7 +165,9 @@
                         <com.google.android.material.chip.Chip
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:enabled="false"
                             android:text="@string/name"
+                            android:textColor="@color/colorGrey"
                             app:chipIcon="@drawable/ic_user_color" />
 
                         <LinearLayout
@@ -200,7 +206,9 @@
                         <com.google.android.material.chip.Chip
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:enabled="false"
                             android:text="@string/surname"
+                            android:textColor="@color/colorGrey"
                             app:chipIcon="@drawable/ic_user_color" />
 
                         <LinearLayout
@@ -239,7 +247,9 @@
                         <com.google.android.material.chip.Chip
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:enabled="false"
                             android:text="@string/role"
+                            android:textColor="@color/colorGrey"
                             app:chipIcon="@drawable/ic_dice_color" />
 
                         <TextView
@@ -260,7 +270,9 @@
                         <com.google.android.material.chip.Chip
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:enabled="false"
                             android:text="@string/gender"
+                            android:textColor="@color/colorGrey"
                             app:chipIcon="@drawable/ic_genders_color" />
 
                         <LinearLayout
@@ -300,7 +312,9 @@
                         <com.google.android.material.chip.Chip
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:enabled="false"
                             android:text="@string/date_of_birth"
+                            android:textColor="@color/colorGrey"
                             app:chipIcon="@drawable/ic_birthday_cake_color" />
 
                         <LinearLayout
@@ -341,7 +355,9 @@
                         <com.google.android.material.chip.Chip
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:enabled="false"
                             android:text="@string/residence"
+                            android:textColor="@color/colorGrey"
                             app:chipIcon="@drawable/ic_home_love_color" />
 
                         <LinearLayout
@@ -380,7 +396,9 @@
                         <com.google.android.material.chip.Chip
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:enabled="false"
                             android:text="@string/favorite_number"
+                            android:textColor="@color/colorGrey"
                             app:chipIcon="@drawable/ic_hashtag_color" />
 
                         <LinearLayout
@@ -419,7 +437,9 @@
                         <com.google.android.material.chip.Chip
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:enabled="false"
                             android:text="@string/favorite_car"
+                            android:textColor="@color/colorGrey"
                             app:chipIcon="@drawable/ic_car_formula_one_color" />
 
                         <LinearLayout
@@ -469,7 +489,9 @@
                         <com.google.android.material.chip.Chip
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:enabled="false"
                             android:text="@string/favorite_circuit"
+                            android:textColor="@color/colorGrey"
                             app:chipIcon="@drawable/ic_circuit_formula_one_color" />
 
                         <LinearLayout
@@ -519,7 +541,9 @@
                         <com.google.android.material.chip.Chip
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:enabled="false"
                             android:text="@string/hated_circuit"
+                            android:textColor="@color/colorGrey"
                             app:chipIcon="@drawable/ic_circuit_formula_one_color" />
 
                         <LinearLayout

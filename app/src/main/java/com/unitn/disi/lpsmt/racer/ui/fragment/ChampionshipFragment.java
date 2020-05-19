@@ -36,11 +36,14 @@ import com.unitn.disi.lpsmt.racer.api.service.ChampionshipGameSettingService;
 import com.unitn.disi.lpsmt.racer.api.service.ChampionshipService;
 import com.unitn.disi.lpsmt.racer.api.service.CircuitService;
 import com.unitn.disi.lpsmt.racer.api.service.GameSettingService;
+import com.unitn.disi.lpsmt.racer.api.service.TeamService;
 import com.unitn.disi.lpsmt.racer.api.service.UserChampionshipService;
 import com.unitn.disi.lpsmt.racer.api.service.UserService;
 import com.unitn.disi.lpsmt.racer.helper.ColorHelper;
 import com.unitn.disi.lpsmt.racer.helper.ErrorHelper;
+import com.unitn.disi.lpsmt.racer.api.entity.Team;
 import com.unitn.disi.lpsmt.racer.ui.adapter.ChampionshipAdapter;
+import com.unitn.disi.lpsmt.racer.ui.dialog.ChampionshipSubscribeDialog;
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.lang3.tuple.Triple;
@@ -77,6 +80,11 @@ public final class ChampionshipFragment extends Fragment implements SwipeRefresh
      * Current {@link Championship} {@link Long id} to show
      */
     private long idChampionship = INVALID_CHAMPIONSHIP_ID;
+
+    /**
+     * {@link Championship} loaded from server using idChampionship
+     */
+    private Championship championship = null;
 
     /**
      * {@link Championship} {@link ImageView} logo
@@ -137,7 +145,10 @@ public final class ChampionshipFragment extends Fragment implements SwipeRefresh
      * {@link SwipeRefreshLayout} for reloading the {@link Championship} in the fragment
      */
     private SwipeRefreshLayout swipeRefreshLayout;
-
+    /**
+     * {@link ChampionshipSubscribeDialog} for subscription
+     */
+    private ChampionshipSubscribeDialog championshipSubscribeDialog = null;
     /**
      * Flag to check if the {@link User} has been loaded
      */
@@ -150,6 +161,10 @@ public final class ChampionshipFragment extends Fragment implements SwipeRefresh
      * Flag to check if the {@link Car} has been loaded
      */
     private boolean isCarsLoaded = false;
+    /**
+     * Flag to check if the {@link Team} has been loaded
+     */
+    private boolean isTeamsLoaded = false;
     /**
      * Flag to check if the {@link GameSetting} has been loaded
      */
@@ -187,7 +202,9 @@ public final class ChampionshipFragment extends Fragment implements SwipeRefresh
         expandableListView.setAdapter(championshipAdapter);
 
         btnSubscribe.setOnClickListener(v -> {
-            
+            if (championshipSubscribeDialog == null || championshipSubscribeDialog.isAdded())
+                return;
+            championshipSubscribeDialog.show(getParentFragmentManager(), ChampionshipSubscribeDialog.class.getName());
         });
         btnUnsubscribe.setOnClickListener(v -> unsubscribe());
 
@@ -246,6 +263,15 @@ public final class ChampionshipFragment extends Fragment implements SwipeRefresh
      */
     private void setChampionshipUI(final Championship championship) {
         if (championship == null) return;
+        this.championship = championship;
+        this.championshipSubscribeDialog = new ChampionshipSubscribeDialog(championship);
+
+        championshipSubscribeDialog.setOnDialogSelectionListener(userChampionship -> {
+            if(userChampionship == null) return;
+            championshipSubscribeDialog.dismiss();
+            Toasty.success(getContext(), R.string.subscribe_success).show();
+            refresh();
+        });
 
         Picasso.get().load(championship.logo.toString()).into(imageLogo);
         txtName.setText(championship.name);
@@ -262,8 +288,7 @@ public final class ChampionshipFragment extends Fragment implements SwipeRefresh
             subscriptionContainer.setVisibility(View.GONE);
         }
 
-
-        loadChampionshipUsersAndCars(championship.id);
+        loadChampionshipUsersAndCarsAndTeams(championship.id);
         loadChampionshipCircuits(championship.id);
         loadChampionshipGameSettings(championship.id);
     }
@@ -272,19 +297,22 @@ public final class ChampionshipFragment extends Fragment implements SwipeRefresh
      * Show the UI  only if loaded
      */
     private void showUI() {
-        if (!isUsersLoaded || !isCircuitsLoaded || !isCarsLoaded || !isGameSettingsLoaded) return;
+        if (!isUsersLoaded || !isCircuitsLoaded || !isCarsLoaded || !isTeamsLoaded || !isGameSettingsLoaded)
+            return;
 
         championshipContainer.setVisibility(View.VISIBLE);
         swipeRefreshLayout.setRefreshing(false);
     }
 
     /**
-     * Load the {@link Championship} {@link User} and {@link Car}.
-     * The loading is in combination {@link User} must have {@link Car}
+     * Load the {@link Championship} {@link User} and {@link Car} and {@link Team}.
+     * The loading combination {@link User} must have a {@link Car}
+     * The loading combination {@link User} must have a {@link Team}
+     * todo This code sucks
      *
      * @param idChampionship The {@link Championship} {@link Long identifier}
      */
-    private void loadChampionshipUsersAndCars(final long idChampionship) {
+    private void loadChampionshipUsersAndCarsAndTeams(final long idChampionship) {
         if (idChampionship == INVALID_CHAMPIONSHIP_ID) return;
 
         API.getInstance().getClient().create(UserChampionshipService.class).findByChampionship(idChampionship).enqueue(new Callback<API.Response<List<UserChampionship>>>() {
@@ -305,27 +333,50 @@ public final class ChampionshipFragment extends Fragment implements SwipeRefresh
                                         if (response.isSuccessful() && response.body() != null) {
                                             final List<Car> cars = response.body().data;
 
-                                            final List<Triple<UserChampionship, User, Car>> userChampionships = new ArrayList<>(subscriptions.size());
+                                            API.getInstance().getClient().create(TeamService.class).findByChampionship(idChampionship).enqueue(new Callback<API.Response<List<Team>>>() {
+                                                @Override
+                                                public void onResponse(@NotNull Call<API.Response<List<Team>>> call, @NotNull Response<API.Response<List<Team>>> response) {
+                                                    if (response.isSuccessful() && response.body() != null) {
+                                                        final List<Team> teams = response.body().data;
+                                                        final List<Triple<User, Car, Team>> userChampionships = new ArrayList<>(subscriptions.size());
 
-                                            for (UserChampionship subscription : subscriptions) {
-                                                for (User user : users) {
-                                                    if (!subscription.user.equals(user.id))
-                                                        continue;
-                                                    for (Car car : cars) {
-                                                        if (!subscription.car.equals(car.id))
-                                                            continue;
-                                                        userChampionships.add(Triple.of(subscription, user, car));
-                                                        break;
+                                                        for (UserChampionship subscription : subscriptions) {
+                                                            for (User user : users) {
+                                                                if (!subscription.user.equals(user.id))
+                                                                    continue;
+                                                                for (Car car : cars) {
+                                                                    if (!subscription.car.equals(car.id))
+                                                                        continue;
+                                                                    for (Team team : teams) {
+                                                                        if (!subscription.team.equals(team.id))
+                                                                            continue;
+                                                                        userChampionships.add(Triple.of(user, car, team));
+                                                                        break;
+                                                                    }
+                                                                    break;
+                                                                }
+                                                                break;
+                                                            }
+                                                        }
+
+                                                        championshipAdapter.setListData(ChampionshipAdapter.TYPE_CHAMPIONSHIP_USER, new ArrayList<>(userChampionships));
+                                                        championshipAdapter.setListData(ChampionshipAdapter.TYPE_CHAMPIONSHIP_CAR, new ArrayList<>(cars));
+                                                        championshipAdapter.setListData(ChampionshipAdapter.TYPE_CHAMPIONSHIP_TEAM, new ArrayList<>(teams));
+                                                        isUsersLoaded = true;
+                                                        isCarsLoaded = true;
+                                                        isTeamsLoaded = true;
+                                                        showUI();
+                                                    } else {
+                                                        Toasty.error(requireContext(), R.string.error_unknown).show();
                                                     }
-                                                    break;
                                                 }
-                                            }
 
-                                            championshipAdapter.setListData(ChampionshipAdapter.TYPE_CHAMPIONSHIP_USER, new ArrayList<>(userChampionships));
-                                            championshipAdapter.setListData(ChampionshipAdapter.TYPE_CHAMPIONSHIP_CAR, new ArrayList<>(cars));
-                                            isUsersLoaded = true;
-                                            isCarsLoaded = true;
-                                            showUI();
+                                                @Override
+                                                public void onFailure(@NotNull Call<API.Response<List<Team>>> call, @NotNull Throwable t) {
+                                                    Log.e(TAG, "Unable to load Teams of " + idChampionship + "due to " + t.getMessage(), t);
+                                                    ErrorHelper.showFailureError(getContext(), t);
+                                                }
+                                            });
                                         } else {
                                             Toasty.error(requireContext(), R.string.error_unknown).show();
                                         }
@@ -505,7 +556,8 @@ public final class ChampionshipFragment extends Fragment implements SwipeRefresh
     }
 
     private void refresh() {
-        isUsersLoaded = isCircuitsLoaded = isCarsLoaded = isGameSettingsLoaded = false;
+        if(!swipeRefreshLayout.isRefreshing()) swipeRefreshLayout.setRefreshing(true);
+        isUsersLoaded = isCircuitsLoaded = isCarsLoaded = isTeamsLoaded = isGameSettingsLoaded = false;
         championshipContainer.setVisibility(View.GONE);
         for (int i = 0; i < championshipAdapter.getGroupCount(); i++)
             expandableListView.collapseGroup(i);

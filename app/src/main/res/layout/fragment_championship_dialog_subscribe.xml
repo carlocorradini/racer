@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/fragment_championship_dialog_subscribe_app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:elevation="0dp">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/fragment_championship_dialog_subscribe_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:paddingStart="6dp"
+            android:paddingEnd="16dp"
+            app:contentInsetStartWithNavigation="0dp"
+            app:navigationIcon="@drawable/ic_cancel" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/fragment_championship_dialog_subscribe_app_bar">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding_small"
+            android:paddingTop="@dimen/padding_big"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <ImageView
+                android:id="@+id/fragment_championship_dialog_subscribe_championship_logo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:contentDescription="@string/championship"
+                android:src="@drawable/ic_remove_color" />
+
+            <TextView
+                android:id="@+id/fragment_championship_dialog_subscribe_championship_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/fragment_championship_dialog_subscribe_championship_logo"
+                android:textAlignment="center"
+                android:textSize="@dimen/text_huge" />
+
+            <TableLayout
+                android:id="@+id/fragment_championship_dialog_subscribe_table"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/fragment_championship_dialog_subscribe_championship_name"
+                android:layout_gravity="start"
+                android:layout_marginTop="@dimen/margin_big"
+                android:gravity="center_vertical"
+                android:stretchColumns="*">
+
+                <TableRow
+                    android:layout_width="0dp"
+                    android:gravity="center">
+
+                    <com.google.android.material.chip.Chip
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:enabled="false"
+                        android:text="@string/id"
+                        android:textColor="@color/colorGrey"
+                        app:chipIcon="@drawable/ic_hashtag_color" />
+
+                    <TextView
+                        android:id="@+id/fragment_championship_dialog_subscribe_championship_id"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:enabled="false"
+                        android:hint="@string/id"
+                        android:textAlignment="center"
+                        android:textSize="@dimen/text_big"
+                        android:textStyle="bold" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="0dp"
+                    android:gravity="center">
+
+                    <com.google.android.material.chip.Chip
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:enabled="false"
+                        android:text="@string/car"
+                        android:textColor="@color/colorGrey"
+                        app:chipIcon="@drawable/ic_car_formula_one_color" />
+
+                    <EditText
+                        android:id="@+id/fragment_championship_dialog_subscribe_input_car"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:clickable="true"
+                        android:focusable="false"
+                        android:hint="@string/car"
+                        android:importantForAutofill="no"
+                        android:inputType="textNoSuggestions"
+                        android:textAlignment="center" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="0dp"
+                    android:gravity="center">
+
+                    <com.google.android.material.chip.Chip
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:enabled="false"
+                        android:text="@string/team"
+                        android:textColor="@color/colorGrey"
+                        app:chipIcon="@drawable/ic_team_formula_one_color" />
+
+                    <EditText
+                        android:id="@+id/fragment_championship_dialog_subscribe_input_team"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:clickable="true"
+                        android:focusable="false"
+                        android:hint="@string/team"
+                        android:importantForAutofill="no"
+                        android:inputType="textNoSuggestions"
+                        android:textAlignment="center" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="0dp"
+                    android:gravity="center">
+
+                    <com.google.android.material.chip.Chip
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:enabled="false"
+                        android:text="@string/points"
+                        android:textColor="@color/colorGrey"
+                        app:chipIcon="@drawable/ic_one_color" />
+
+                    <TextView
+                        android:id="@+id/fragment_championship_dialog_subscribe_points"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:enabled="false"
+                        android:hint="@string/points"
+                        android:text="0"
+                        android:textAlignment="center"
+                        android:textSize="@dimen/text_big"
+                        android:textStyle="bold"
+                        tools:ignore="HardcodedText" />
+                </TableRow>
+            </TableLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/fragment_championship_dialog_subscribe_button_subscribe"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/fragment_championship_dialog_subscribe_table"
+                android:layout_marginTop="@dimen/margin_big"
+                android:text="@string/subscribe"
+                android:textSize="@dimen/text_big"
+                android:textStyle="bold"
+                android:visibility="visible"
+                app:backgroundTint="@color/colorGreen"
+                app:icon="@drawable/ic_bell" />
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>
