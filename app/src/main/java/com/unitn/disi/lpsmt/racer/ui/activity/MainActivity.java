@@ -62,7 +62,8 @@ public final class MainActivity extends AppCompatActivity {
         navigationView.setItemIconTintList(null);
         appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_account,
-                R.id.nav_championships)
+                R.id.nav_championships,
+                R.id.nav_championships_photos)
                 .setDrawerLayout(drawerLayout)
                 .build();
 

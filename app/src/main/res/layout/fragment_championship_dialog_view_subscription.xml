@@ -127,6 +127,7 @@
                                 android:importantForAutofill="no"
                                 android:inputType="textNoSuggestions"
                                 android:textAlignment="center"
+                                android:textSize="@dimen/text_medium"
                                 android:visibility="gone" />
                         </LinearLayout>
                     </TableRow>
@@ -170,6 +171,7 @@
                                 android:importantForAutofill="no"
                                 android:inputType="textNoSuggestions"
                                 android:textAlignment="center"
+                                android:textSize="@dimen/text_medium"
                                 android:visibility="gone" />
                         </LinearLayout>
                     </TableRow>

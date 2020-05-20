@@ -113,7 +113,8 @@
                             android:hint="@string/password"
                             android:importantForAutofill="no"
                             android:inputType="textPassword"
-                            android:textAlignment="center" />
+                            android:textAlignment="center"
+                            android:textSize="@dimen/text_medium" />
                     </TableRow>
 
                     <TableRow
@@ -138,7 +139,8 @@
                             android:hint="@string/password_repeat"
                             android:importantForAutofill="no"
                             android:inputType="textPassword"
-                            android:textAlignment="center" />
+                            android:textAlignment="center"
+                            android:textSize="@dimen/text_medium" />
                     </TableRow>
 
                     <TableRow
@@ -195,6 +197,7 @@
                                 android:importantForAutofill="no"
                                 android:inputType="textNoSuggestions"
                                 android:textAlignment="center"
+                                android:textSize="@dimen/text_medium"
                                 android:visibility="gone" />
                         </LinearLayout>
                     </TableRow>
@@ -236,6 +239,7 @@
                                 android:importantForAutofill="no"
                                 android:inputType="textNoSuggestions"
                                 android:textAlignment="center"
+                                android:textSize="@dimen/text_medium"
                                 android:visibility="gone" />
                         </LinearLayout>
                     </TableRow>
@@ -344,6 +348,7 @@
                                 android:importantForAutofill="no"
                                 android:inputType="date"
                                 android:textAlignment="center"
+                                android:textSize="@dimen/text_medium"
                                 android:visibility="gone" />
                         </LinearLayout>
                     </TableRow>
@@ -385,6 +390,7 @@
                                 android:importantForAutofill="no"
                                 android:inputType="textNoSuggestions"
                                 android:textAlignment="center"
+                                android:textSize="@dimen/text_medium"
                                 android:visibility="gone" />
                         </LinearLayout>
                     </TableRow>
@@ -426,6 +432,7 @@
                                 android:importantForAutofill="no"
                                 android:inputType="number"
                                 android:textAlignment="center"
+                                android:textSize="@dimen/text_medium"
                                 android:visibility="gone" />
                         </LinearLayout>
                     </TableRow>
@@ -478,6 +485,7 @@
                                 android:importantForAutofill="no"
                                 android:inputType="textNoSuggestions"
                                 android:textAlignment="center"
+                                android:textSize="@dimen/text_medium"
                                 android:visibility="gone" />
                         </LinearLayout>
                     </TableRow>
@@ -530,6 +538,7 @@
                                 android:importantForAutofill="no"
                                 android:inputType="textNoSuggestions"
                                 android:textAlignment="center"
+                                android:textSize="@dimen/text_medium"
                                 android:visibility="gone" />
                         </LinearLayout>
                     </TableRow>
@@ -582,6 +591,7 @@
                                 android:importantForAutofill="no"
                                 android:inputType="textNoSuggestions"
                                 android:textAlignment="center"
+                                android:textSize="@dimen/text_medium"
                                 android:visibility="gone" />
                         </LinearLayout>
                     </TableRow>

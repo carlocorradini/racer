@@ -10,12 +10,14 @@ import android.widget.ListView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import com.unitn.disi.lpsmt.racer.api.API;
+import com.unitn.disi.lpsmt.racer.api.entity.Championship;
+
 import androidx.navigation.Navigation;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.unitn.disi.lpsmt.racer.R;
-import com.unitn.disi.lpsmt.racer.api.API;
-import com.unitn.disi.lpsmt.racer.api.entity.Championship;
 import com.unitn.disi.lpsmt.racer.api.service.ChampionshipService;
 import com.unitn.disi.lpsmt.racer.helper.ColorHelper;
 import com.unitn.disi.lpsmt.racer.helper.ErrorHelper;
@@ -32,16 +34,16 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
- * {@link Championship Championships} {@link Fragment}
+ * Championships Photos {@link Fragment}
  *
  * @author Carlo Corradini
  */
-public final class ChampionshipsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public final class ChampionshipsPhotosFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     /**
      * {@link Log} TAG of this class
      */
-    private static final String TAG = ChampionshipsFragment.class.getName();
+    private static final String TAG = ChampionshipsPhotosFragment.class.getName();
 
     /**
      * {@link ChampionshipsAdapter} adapter reference
@@ -56,17 +58,18 @@ public final class ChampionshipsFragment extends Fragment implements SwipeRefres
     @NotNull
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_championships, container, false);
+        View root = inflater.inflate(R.layout.fragment_championships_photos, container, false);
 
         championshipsAdapter = new ChampionshipsAdapter(getContext(), new ArrayList<>());
-        ListView listView = root.findViewById(R.id.fragment_championships_list_container);
-        swipeRefreshLayout = root.findViewById(R.id.fragment_championships_swipe_refresh);
+        championshipsAdapter.setWithPhoto(true);
+        ListView listView = root.findViewById(R.id.fragment_championships_photos_list_container);
+        swipeRefreshLayout = root.findViewById(R.id.fragment_championships_photos_swipe_refresh);
 
         listView.setAdapter(championshipsAdapter);
         listView.setOnItemClickListener((parent, view, position, id) -> {
             final Bundle bundle = new Bundle();
             bundle.putLong("id", (long) view.getTag());
-            Navigation.findNavController(root).navigate(R.id.nav_championships_action_to_nav_championship, bundle);
+            Navigation.findNavController(root).navigate(R.id.nav_championships_action_to_nav_championship_photos, bundle);
         });
 
         swipeRefreshLayout.setColorSchemeColors(ColorHelper.COLOR_BLUE, ColorHelper.COLOR_RED, ColorHelper.COLOR_YELLOW, ColorHelper.COLOR_GREEN);

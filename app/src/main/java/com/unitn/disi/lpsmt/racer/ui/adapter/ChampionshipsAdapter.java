@@ -18,8 +18,6 @@ import com.squareup.picasso.Picasso;
 import com.unitn.disi.lpsmt.racer.R;
 import com.unitn.disi.lpsmt.racer.api.entity.Championship;
 
-import java.util.ArrayList;
-
 import java.util.List;
 
 /**
@@ -30,13 +28,27 @@ import java.util.List;
 public final class ChampionshipsAdapter extends ArrayAdapter<Championship> {
 
     /**
+     * Flag to check if the item contain photos
+     */
+    private boolean withPhoto = false;
+
+    /**
      * Construct a {@link ChampionshipsAdapter} with the given context and championships
      *
-     * @param context         The current {@link Context}
-     * @param championships   The {@link List} of {@link Championship} to represent
+     * @param context       The current {@link Context}
+     * @param championships The {@link List} of {@link Championship} to represent
      */
-    public ChampionshipsAdapter(Context context, ArrayList<Championship> championships) {
+    public ChampionshipsAdapter(Context context, List<Championship> championships) {
         super(context, 0, championships);
+    }
+
+    /**
+     * Set the variable flag with photo
+     *
+     * @param withPhoto The value to set the value to
+     */
+    public void setWithPhoto(boolean withPhoto) {
+        this.withPhoto = withPhoto;
     }
 
     @NonNull
@@ -50,6 +62,7 @@ public final class ChampionshipsAdapter extends ArrayAdapter<Championship> {
         convertView.setTag(championship.id);
         ImageView imageLogo = convertView.findViewById(R.id.item_championship_logo);
         TextView txtName = convertView.findViewById(R.id.item_championship_name);
+        Chip txtPhotos = convertView.findViewById(R.id.item_championship_photos);
         Chip txtUsers = convertView.findViewById(R.id.item_championship_users);
         Chip txtCircuits = convertView.findViewById(R.id.item_championship_circuits);
         Chip txtCars = convertView.findViewById(R.id.item_championship_cars);
@@ -59,12 +72,21 @@ public final class ChampionshipsAdapter extends ArrayAdapter<Championship> {
 
         Picasso.get().load(championship.logo.toString()).into(imageLogo);
         txtName.setText(championship.name);
+        txtPhotos.setText(String.valueOf(championship.photos.size()));
         txtUsers.setText(String.valueOf(championship.users.size()));
         txtCircuits.setText(String.valueOf(championship.circuits.size()));
         txtCars.setText(String.valueOf(championship.cars.size()));
         txtTeams.setText(String.valueOf(championship.teams.size()));
         txtSettings.setText(String.valueOf(championship.game_settings.size()));
         buttonForum.setOnClickListener(v -> getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(championship.forum.toString()))));
+
+        if (withPhoto) {
+            txtPhotos.setVisibility(View.VISIBLE);
+            buttonForum.setVisibility(View.GONE);
+        } else {
+            txtPhotos.setVisibility(View.GONE);
+            buttonForum.setVisibility(View.VISIBLE);
+        }
 
         return convertView;
     }

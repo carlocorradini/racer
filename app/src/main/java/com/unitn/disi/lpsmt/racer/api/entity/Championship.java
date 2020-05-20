@@ -79,6 +79,13 @@ public class Championship {
     public List<Long> game_settings;
 
     /**
+     * List of Photo {@link URI uris} of the Championship
+     */
+    @SerializedName("photos")
+    @Expose
+    public List<URI> photos;
+
+    /**
      * Creation {@link LocalDateTime} of the Championship
      */
     @SerializedName("created_at")
@@ -104,10 +111,11 @@ public class Championship {
      * @param teams         List of Team ids that are subscribed to the Championship
      * @param circuits      List of Circuit ids in calendar of the Championship
      * @param game_settings List of Game Setting ids of the Championship
+     * @param photos        List of Photo {@link URI uris} of the Championship
      * @param createdAt     Creation {@link LocalDateTime} of the Championship
      * @param updatedAt     Update {@link LocalDateTime} of the Championship
      */
-    public Championship(Long id, String name, URI logo, URL forum, List<Long> cars, List<UUID> users, List<Long> teams, List<Long> circuits, List<Long> game_settings, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Championship(Long id, String name, URI logo, URL forum, List<Long> cars, List<UUID> users, List<Long> teams, List<Long> circuits, List<Long> game_settings, List<URI> photos, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.name = name;
         this.logo = logo;
@@ -117,6 +125,7 @@ public class Championship {
         this.teams = teams;
         this.circuits = circuits;
         this.game_settings = game_settings;
+        this.photos = photos;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }

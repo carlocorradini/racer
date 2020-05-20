@@ -42,7 +42,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/view_subscription"
+                    android:text="@string/view"
                     android:textStyle="bold"
                     app:backgroundTint="@color/colorBlue"
                     app:icon="@drawable/ic_eye" />

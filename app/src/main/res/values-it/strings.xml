@@ -42,6 +42,8 @@
     <string name="point">Punto</string>
     <string name="points">Punti</string>
     <string name="subscription">Iscrizione</string>
+    <string name="photo">Foto</string>
+    <string name="photos">Foto</string>
 
     <!-- User Role -->
     <string name="user_role_standard">Standard</string>
@@ -104,9 +106,17 @@
     <string name="championship_not_found">Impossibile trovare il campionato</string>
     <string name="subscribe">Iscriviti</string>
     <string name="unsubscribe">Disiscriviti</string>
-    <string name="view_subscription">Visualizza iscrizione</string>
+    <string name="view">Visualizza</string>
     <string name="subscribe_success">Iscritto con success</string>
     <string name="unsubscribe_success">Disiscritto con successo</string>
+
+    <!-- Championships Photos -->
+    <string name="championships_photos">Foto campionati</string>
+
+    <!-- Championship Photo -->
+    <string name="championship_photos">Foto campionato</string>
+    <string name="no_photos">Nessuna foto trovata</string>
+    <string name="share_photo">Condividi foto</string>
 
     <!-- Championship Subscribe Dialog -->
     <string name="warning_empty_car">Compilare il campo macchina</string>
