@@ -1,26 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/fragment_championship_ranking_swipe_refresh"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/fragment_championship_ranking_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone">
 
-        <LinearLayout
+        <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
 
-            <TableLayout
-                android:id="@+id/fragment_championship_ranking_table"
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/fragment_championship_ranking_tab"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="@dimen/margin_big"
-                android:gravity="center_vertical"
-                android:stretchColumns="*" />
-        </LinearLayout>
-    </ScrollView>
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:icon="@drawable/ic_pilots_formula_one_color"
+                    android:text="@string/pilots" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:icon="@drawable/ic_team_formula_one_color"
+                    android:text="@string/teams" />
+            </com.google.android.material.tabs.TabLayout>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/fragment_championship_ranking_view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/padding_tiny"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
