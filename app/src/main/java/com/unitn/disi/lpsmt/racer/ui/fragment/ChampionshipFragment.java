@@ -15,6 +15,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.chip.Chip;
@@ -45,6 +46,7 @@ import com.unitn.disi.lpsmt.racer.api.entity.Team;
 import com.unitn.disi.lpsmt.racer.ui.adapter.ChampionshipAdapter;
 import com.unitn.disi.lpsmt.racer.ui.dialog.ChampionshipSubscribeDialog;
 import com.unitn.disi.lpsmt.racer.ui.dialog.ChampionshipViewSubscriptionDialog;
+import com.unitn.disi.lpsmt.racer.api.entity.ChampionshipPhoto;
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.lang3.tuple.Triple;
@@ -119,9 +121,14 @@ public final class ChampionshipFragment extends Fragment implements SwipeRefresh
     private Chip txtId;
 
     /**
+     * {@link Championship} {@link Chip} {@link ChampionshipPhoto}
+     */
+    private Chip btnPhotos;
+
+    /**
      * {@link Championship} {@link Chip} forum {@link java.net.URL}
      */
-    private Chip txtForum;
+    private Chip btnForum;
 
     /**
      * {@link Button} subscribe
@@ -213,7 +220,8 @@ public final class ChampionshipFragment extends Fragment implements SwipeRefresh
         imageLogo = root.findViewById(R.id.fragment_championship_logo);
         txtName = root.findViewById(R.id.fragment_championship_name);
         txtId = root.findViewById(R.id.fragment_championship_id);
-        txtForum = root.findViewById(R.id.fragment_championship_forum);
+        btnPhotos = root.findViewById(R.id.fragment_championship_photos);
+        btnForum = root.findViewById(R.id.fragment_championship_forum);
         expandableListView = root.findViewById(R.id.fragment_championship_list_view);
         championshipAdapter = new ChampionshipAdapter(requireContext(), new HashMap<>());
 
@@ -241,6 +249,12 @@ public final class ChampionshipFragment extends Fragment implements SwipeRefresh
             if (championshipViewSubscriptionDialog == null || championshipViewSubscriptionDialog.isAdded())
                 return;
             championshipViewSubscriptionDialog.show(getParentFragmentManager(), ChampionshipViewSubscriptionDialog.class.getName());
+        });
+
+        btnPhotos.setOnClickListener(v -> {
+            final Bundle bundle = new Bundle();
+            bundle.putLong("id", idChampionship);
+            Navigation.findNavController(root).navigate(R.id.nav_championship_action_to_nav_championship_photos, bundle);
         });
 
         return root;
@@ -311,7 +325,7 @@ public final class ChampionshipFragment extends Fragment implements SwipeRefresh
         Picasso.get().load(championship.logo.toString()).into(imageLogo);
         txtName.setText(championship.name);
         txtId.setText(String.valueOf(championship.id));
-        txtForum.setOnClickListener(v -> requireContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(championship.forum.toString()))));
+        btnForum.setOnClickListener(v -> requireContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(championship.forum.toString()))));
 
         if (championship.users.contains(AuthManager.getInstance().getAuthUserId())) {
             // User already subscribed
@@ -345,7 +359,7 @@ public final class ChampionshipFragment extends Fragment implements SwipeRefresh
             });
         }
 
-        if(isChampionshipStarted) {
+        if (isChampionshipStarted) {
             btnSubscribe.setEnabled(false);
             btnUnsubscribe.setEnabled(false);
         }
@@ -502,7 +516,7 @@ public final class ChampionshipFragment extends Fragment implements SwipeRefresh
                     final List<ChampionshipCircuit> dates = response.body().data != null ? response.body().data : new ArrayList<>();
 
                     // Check if the championship has already started
-                    if(dates.size() > 0 && dates.get(0).date.isBefore(LocalDate.now()))
+                    if (dates.size() > 0 && dates.get(0).date.isBefore(LocalDate.now()))
                         isChampionshipStarted = true;
 
                     API.getInstance().getClient().create(CircuitService.class).findByChampionship(idChampionship).enqueue(new Callback<API.Response<List<Circuit>>>() {

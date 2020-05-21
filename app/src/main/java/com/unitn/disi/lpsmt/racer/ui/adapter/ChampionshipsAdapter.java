@@ -28,11 +28,6 @@ import java.util.List;
 public final class ChampionshipsAdapter extends ArrayAdapter<Championship> {
 
     /**
-     * Flag to check if the item contain photos
-     */
-    private boolean withPhoto = false;
-
-    /**
      * Construct a {@link ChampionshipsAdapter} with the given context and championships
      *
      * @param context       The current {@link Context}
@@ -40,15 +35,6 @@ public final class ChampionshipsAdapter extends ArrayAdapter<Championship> {
      */
     public ChampionshipsAdapter(Context context, List<Championship> championships) {
         super(context, 0, championships);
-    }
-
-    /**
-     * Set the variable flag with photo
-     *
-     * @param withPhoto The value to set the value to
-     */
-    public void setWithPhoto(boolean withPhoto) {
-        this.withPhoto = withPhoto;
     }
 
     @NonNull
@@ -79,14 +65,6 @@ public final class ChampionshipsAdapter extends ArrayAdapter<Championship> {
         txtTeams.setText(String.valueOf(championship.teams.size()));
         txtSettings.setText(String.valueOf(championship.game_settings.size()));
         buttonForum.setOnClickListener(v -> getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(championship.forum.toString()))));
-
-        if (withPhoto) {
-            txtPhotos.setVisibility(View.VISIBLE);
-            buttonForum.setVisibility(View.GONE);
-        } else {
-            txtPhotos.setVisibility(View.GONE);
-            buttonForum.setVisibility(View.VISIBLE);
-        }
 
         return convertView;
     }

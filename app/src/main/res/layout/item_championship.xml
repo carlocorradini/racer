@@ -36,78 +36,88 @@
             android:text="@string/championship"
             android:textSize="@dimen/text_big" />
 
-        <com.google.android.material.chip.ChipGroup
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/item_championship_name">
+            android:layout_below="@id/item_championship_name"
+            android:orientation="vertical">
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/item_championship_photos"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:enabled="false"
-                android:text="@string/photos"
-                android:textColor="@color/colorGrey"
-                android:visibility="gone"
-                app:chipIcon="@drawable/ic_photo_round_color" />
+            <com.google.android.material.chip.ChipGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/item_championship_users"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:enabled="false"
-                android:text="@string/pilots"
-                android:textColor="@color/colorGrey"
-                app:chipIcon="@drawable/ic_pilots_formula_one_color" />
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/item_championship_users"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:enabled="false"
+                    android:text="@string/pilots"
+                    android:textColor="@color/colorGrey"
+                    app:chipIcon="@drawable/ic_pilots_formula_one_color" />
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/item_championship_circuits"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:enabled="false"
-                android:text="@string/circuits"
-                android:textColor="@color/colorGrey"
-                app:chipIcon="@drawable/ic_circuit_formula_one_color" />
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/item_championship_circuits"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:enabled="false"
+                    android:text="@string/circuits"
+                    android:textColor="@color/colorGrey"
+                    app:chipIcon="@drawable/ic_circuit_formula_one_color" />
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/item_championship_cars"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:enabled="false"
-                android:text="@string/cars"
-                android:textColor="@color/colorGrey"
-                app:chipIcon="@drawable/ic_car_formula_one_color" />
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/item_championship_cars"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:enabled="false"
+                    android:text="@string/cars"
+                    android:textColor="@color/colorGrey"
+                    app:chipIcon="@drawable/ic_car_formula_one_color" />
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/item_championship_teams"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:enabled="false"
-                android:text="@string/teams"
-                android:textColor="@color/colorGrey"
-                app:chipIcon="@drawable/ic_team_formula_one_color" />
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/item_championship_teams"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:enabled="false"
+                    android:text="@string/teams"
+                    android:textColor="@color/colorGrey"
+                    app:chipIcon="@drawable/ic_team_formula_one_color" />
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/item_championship_settings"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:enabled="false"
-                android:text="@string/settings"
-                android:textColor="@color/colorGrey"
-                app:chipIcon="@drawable/ic_settings_color" />
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/item_championship_settings"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:enabled="false"
+                    android:text="@string/settings"
+                    android:textColor="@color/colorGrey"
+                    app:chipIcon="@drawable/ic_settings_color" />
+            </com.google.android.material.chip.ChipGroup>
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/item_championship_forum"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="visible"
-                app:chipEndPadding="4dp"
-                app:chipIcon="@drawable/ic_forum_color"
-                app:chipStartPadding="4dp"
-                app:textEndPadding="0dp"
-                app:textStartPadding="0dp" />
-        </com.google.android.material.chip.ChipGroup>
+            <com.google.android.material.chip.ChipGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/item_championship_photos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:enabled="false"
+                    android:text="@string/photos"
+                    android:textColor="@color/colorGrey"
+                    app:chipIcon="@drawable/ic_photo_round_color" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/item_championship_forum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/forum"
+                    android:visibility="visible"
+                    app:chipEndPadding="4dp"
+                    app:chipIcon="@drawable/ic_forum_color"
+                    app:chipStartPadding="4dp"
+                    app:textEndPadding="0dp"
+                    app:textStartPadding="0dp" />
+            </com.google.android.material.chip.ChipGroup>
+        </LinearLayout>
 
     </RelativeLayout>
 

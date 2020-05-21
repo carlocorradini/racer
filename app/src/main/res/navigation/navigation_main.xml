@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_championships_photos">
+    app:startDestination="@+id/nav_championships">
 
     <fragment
         android:id="@+id/nav_account"
@@ -29,15 +29,8 @@
         <argument
             android:name="id"
             app:argType="long" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/nav_championships_photos"
-        android:name="com.unitn.disi.lpsmt.racer.ui.fragment.ChampionshipsPhotosFragment"
-        android:label="@string/championships_photos"
-        tools:layout="@layout/fragment_championships_photos">
         <action
-            android:id="@+id/nav_championships_action_to_nav_championship_photos"
+            android:id="@+id/nav_championship_action_to_nav_championship_photos"
             app:destination="@id/nav_championship_photos" />
     </fragment>
 

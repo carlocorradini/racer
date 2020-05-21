@@ -17,11 +17,4 @@
             android:title="@string/championships" />
     </group>
 
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_championships_photos"
-            android:icon="@drawable/ic_photo_color"
-            android:title="@string/championships_photos"/>
-    </group>
-
 </menu>

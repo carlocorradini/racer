@@ -89,6 +89,14 @@
                     app:chipIcon="@drawable/ic_hashtag_color" />
 
                 <com.google.android.material.chip.Chip
+                    android:id="@+id/fragment_championship_photos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/photos"
+                    android:textColor="@color/colorGrey"
+                    app:chipIcon="@drawable/ic_photo_round_color" />
+
+                <com.google.android.material.chip.Chip
                     android:id="@+id/fragment_championship_forum"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
