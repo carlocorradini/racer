@@ -44,6 +44,7 @@
     <string name="subscription">Iscrizione</string>
     <string name="photo">Foto</string>
     <string name="photos">Foto</string>
+    <string name="ranking">Classifica</string>
 
     <!-- User Role -->
     <string name="user_role_standard">Standard</string>
@@ -117,6 +118,9 @@
     <string name="championship_photos">Foto campionato</string>
     <string name="no_photos">Nessuna foto trovata</string>
     <string name="share_photo">Condividi foto</string>
+
+    <!-- Championship Ranking -->
+    <string name="championship_not_started">Il campionato non è ancora iniziato</string>
 
     <!-- Championship Subscribe Dialog -->
     <string name="warning_empty_car">Compilare il campo macchina</string>

@@ -8,4 +8,7 @@
     <color name="colorYellow">#FBBC05</color>
     <color name="colorGreen">#34A853</color>
     <color name="colorGrey">#454B54</color>
+    <color name="colorGold">#D4AF37</color>
+    <color name="colorSilver">#C0C0C0</color>
+    <color name="colorBronze">#B08D57</color>
 </resources>

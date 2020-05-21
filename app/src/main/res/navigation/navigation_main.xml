@@ -32,6 +32,9 @@
         <action
             android:id="@+id/nav_championship_action_to_nav_championship_photos"
             app:destination="@id/nav_championship_photos" />
+        <action
+            android:id="@+id/nav_championship_action_to_nav_championship_ranking"
+            app:destination="@id/nav_championship_ranking" />
     </fragment>
 
     <fragment
@@ -39,6 +42,16 @@
         android:name="com.unitn.disi.lpsmt.racer.ui.fragment.ChampionshipPhotosFragment"
         android:label="@string/championship_photos"
         tools:layout="@layout/fragment_championship_photos">
+        <argument
+            android:name="id"
+            app:argType="long" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_championship_ranking"
+        android:name="com.unitn.disi.lpsmt.racer.ui.fragment.ChampionshipRankingFragment"
+        android:label="@string/ranking"
+        tools:layout="@layout/fragment_championship_ranking">
         <argument
             android:name="id"
             app:argType="long" />

@@ -44,6 +44,7 @@
     <string name="subscription">Subscription</string>
     <string name="photo">Photo</string>
     <string name="photos">Photos</string>
+    <string name="ranking">Ranking</string>
 
     <!-- User Role -->
     <string name="user_role_standard">Standard</string>
@@ -117,6 +118,9 @@
     <string name="championship_photos">Championship photos</string>
     <string name="no_photos">No photos found</string>
     <string name="share_photo">Share photo</string>
+
+    <!-- Championship Ranking -->
+    <string name="championship_not_started">Championship hasn\'t started yet</string>
 
     <!-- Championship Subscribe Dialog -->
     <string name="warning_empty_car">Fill car field</string>

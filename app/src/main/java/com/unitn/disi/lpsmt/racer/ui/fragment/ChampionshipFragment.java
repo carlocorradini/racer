@@ -46,7 +46,6 @@ import com.unitn.disi.lpsmt.racer.api.entity.Team;
 import com.unitn.disi.lpsmt.racer.ui.adapter.ChampionshipAdapter;
 import com.unitn.disi.lpsmt.racer.ui.dialog.ChampionshipSubscribeDialog;
 import com.unitn.disi.lpsmt.racer.ui.dialog.ChampionshipViewSubscriptionDialog;
-import com.unitn.disi.lpsmt.racer.api.entity.ChampionshipPhoto;
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.lang3.tuple.Triple;
@@ -121,11 +120,6 @@ public final class ChampionshipFragment extends Fragment implements SwipeRefresh
     private Chip txtId;
 
     /**
-     * {@link Championship} {@link Chip} {@link ChampionshipPhoto}
-     */
-    private Chip btnPhotos;
-
-    /**
      * {@link Championship} {@link Chip} forum {@link java.net.URL}
      */
     private Chip btnForum;
@@ -139,11 +133,6 @@ public final class ChampionshipFragment extends Fragment implements SwipeRefresh
      * {@link Button} unsubscribe
      */
     private Button btnUnsubscribe;
-
-    /**
-     * {@link Button} view subscription
-     */
-    private Button btnViewSubscription;
 
     /**
      * {@link View} subscription container
@@ -215,12 +204,13 @@ public final class ChampionshipFragment extends Fragment implements SwipeRefresh
         swipeRefreshLayout = root.findViewById(R.id.fragment_championship_swipe_refresh);
         btnSubscribe = root.findViewById(R.id.fragment_championship_button_subscribe);
         btnUnsubscribe = root.findViewById(R.id.fragment_championship_button_unsubscribe);
-        btnViewSubscription = root.findViewById(R.id.fragment_championship_button_view_subscription);
+        final Button btnViewSubscription = root.findViewById(R.id.fragment_championship_button_view_subscription);
         subscriptionContainer = root.findViewById(R.id.fragment_championship_button_subscription_container);
         imageLogo = root.findViewById(R.id.fragment_championship_logo);
         txtName = root.findViewById(R.id.fragment_championship_name);
         txtId = root.findViewById(R.id.fragment_championship_id);
-        btnPhotos = root.findViewById(R.id.fragment_championship_photos);
+        final Chip btnRanking = root.findViewById(R.id.fragment_championship_ranking);
+        final Chip btnPhotos = root.findViewById(R.id.fragment_championship_photos);
         btnForum = root.findViewById(R.id.fragment_championship_forum);
         expandableListView = root.findViewById(R.id.fragment_championship_list_view);
         championshipAdapter = new ChampionshipAdapter(requireContext(), new HashMap<>());
@@ -249,6 +239,12 @@ public final class ChampionshipFragment extends Fragment implements SwipeRefresh
             if (championshipViewSubscriptionDialog == null || championshipViewSubscriptionDialog.isAdded())
                 return;
             championshipViewSubscriptionDialog.show(getParentFragmentManager(), ChampionshipViewSubscriptionDialog.class.getName());
+        });
+
+        btnRanking.setOnClickListener(v -> {
+            final Bundle bundle = new Bundle();
+            bundle.putLong("id", idChampionship);
+            Navigation.findNavController(root).navigate(R.id.nav_championship_action_to_nav_championship_ranking, bundle);
         });
 
         btnPhotos.setOnClickListener(v -> {
