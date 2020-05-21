@@ -97,7 +97,7 @@ public final class ChampionshipRankingFragment extends Fragment implements Swipe
 
         tabLayout.setupWithViewPager(viewPager);
 
-        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getParentFragmentManager(), 0);
+        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager(), 0);
         viewPagerAdapter.addFragment(championshipRankingTabUsersFragment, getResources().getString(R.string.pilots));
         viewPagerAdapter.addFragment(championshipRankingTabTeamsFragment, getResources().getString(R.string.teams));
         viewPager.setAdapter(viewPagerAdapter);

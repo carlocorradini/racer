@@ -24,6 +24,7 @@ import com.unitn.disi.lpsmt.racer.util.DimensUtil;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -84,6 +85,7 @@ public final class ChampionshipRankingTabTeamsFragment extends Fragment {
         }
 
         rankingList.sort(((o1, o2) -> o1.getRight().compareTo(o2.getRight())));
+        Collections.reverse(rankingList);
 
         return rankingList;
     }

@@ -21,6 +21,7 @@ import com.unitn.disi.lpsmt.racer.api.entity.UserChampionship;
 import com.unitn.disi.lpsmt.racer.util.DimensUtil;
 import com.unitn.disi.lpsmt.racer.api.entity.Championship;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -60,6 +61,7 @@ public final class ChampionshipRankingTabUsersFragment extends Fragment {
 
         table.removeAllViews();
         userChampionships.sort((o1, o2) -> o1.points.compareTo(o2.points));
+        Collections.reverse(userChampionships);
 
         final TableRow tableRowTitle = constructTableRow();
         final TableRow tableRowDivider = constructTableRow();
