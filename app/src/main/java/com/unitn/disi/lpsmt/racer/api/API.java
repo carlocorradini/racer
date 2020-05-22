@@ -17,6 +17,7 @@ import com.unitn.disi.lpsmt.racer.api.adapter.serializer.LocalDateSerializer;
 import com.unitn.disi.lpsmt.racer.api.adapter.serializer.LocalDateTimeSerializer;
 import com.unitn.disi.lpsmt.racer.api.entity.error.ConflictError;
 import com.unitn.disi.lpsmt.racer.api.entity.error.UnprocessableEntityError;
+import com.unitn.disi.lpsmt.racer.api.interceptor.AdminInterceptor;
 import com.unitn.disi.lpsmt.racer.api.interceptor.AuthInterceptor;
 
 import java.io.IOException;
@@ -49,7 +50,7 @@ public final class API {
     /**
      * API base URL
      **/
-    public static final String BASE_URL = "http://192.168.0.25:8080/api/v1/"; // todo cambiare url
+    public static final String BASE_URL = "http://192.168.0.10:8080/api/v1/"; // todo cambiare url
 
     /**
      * Instance of the current {@link API} class assigned when the first {@link API#getInstance()} is called
@@ -62,11 +63,17 @@ public final class API {
     private final Retrofit client;
 
     /**
+     * The {@link Retrofit} admin client instance
+     */
+    private final Retrofit adminClient;
+
+    /**
      * Construct an API class.
      * API is constructed only once when the first {@link API#getInstance()} is called
      */
     private API() {
         client = buildClient();
+        adminClient = buildAdminClient();
 
         Log.d(TAG, "Client builded");
         Log.i(TAG, "Initialized");
@@ -120,6 +127,32 @@ public final class API {
                 .build();
     }
 
+    private Retrofit buildAdminClient() {
+        // OkHttpClient
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .addInterceptor(new HttpLoggingInterceptor().setLevel(BuildConfig.DEBUG ? HttpLoggingInterceptor.Level.BODY : HttpLoggingInterceptor.Level.BASIC))
+                .addInterceptor(new AdminInterceptor())
+                .build();
+        // END OkHttpClient
+
+        // Gson
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(LocalDate.class, new LocalDateSerializer())
+                .registerTypeAdapter(LocalDate.class, new LocalDateDeserializer())
+                .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeSerializer())
+                .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeDeserializer())
+                .registerTypeAdapter(JWT.class, new JWTSerializer())
+                .registerTypeAdapter(JWT.class, new JWTDeserializer())
+                .create();
+        // END Gson
+
+        return new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .client(okHttpClient)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+    }
+
     /**
      * Return the {@link Retrofit} client instance
      *
@@ -127,6 +160,15 @@ public final class API {
      */
     public Retrofit getClient() {
         return client;
+    }
+
+    /**
+     * Return the {@link Retrofit} admin client instance
+     *
+     * @return {@link Retrofit} admin client instance
+     */
+    public Retrofit getAdminClient() {
+        return adminClient;
     }
 
     /**

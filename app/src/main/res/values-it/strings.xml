@@ -45,6 +45,8 @@
     <string name="photo">Foto</string>
     <string name="photos">Foto</string>
     <string name="ranking">Classifica</string>
+    <string name="admin">Admin</string>
+    <string name="save">Salva</string>
 
     <!-- User Role -->
     <string name="user_role_standard">Standard</string>
@@ -121,6 +123,9 @@
 
     <!-- Championship Ranking -->
     <string name="championship_not_started">Il campionato non è ancora iniziato</string>
+
+    <!-- Admin Panel -->
+    <string name="warning_no_admin_role">Non possiedi abbastanza privilegi</string>
 
     <!-- Championship Subscribe Dialog -->
     <string name="warning_empty_car">Compilare il campo macchina</string>

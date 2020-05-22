@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_championships">
+    app:startDestination="@+id/nav_admin_panel">
 
     <fragment
         android:id="@+id/nav_account"
@@ -56,5 +56,11 @@
             android:name="id"
             app:argType="long" />
     </fragment>
+
+    <fragment
+        android:id="@+id/nav_admin_panel"
+        android:name="com.unitn.disi.lpsmt.racer.ui.fragment.AdminPanelFragment"
+        android:label="@string/admin"
+        tools:layout="@layout/fragment_admin_panel" />
 
 </navigation>

@@ -19,7 +19,6 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.unitn.disi.lpsmt.racer.api.AuthManager;
 import com.unitn.disi.lpsmt.racer.api.entity.User;
-import com.unitn.disi.lpsmt.racer.ui.fragment.ChampionshipFragment;
 import com.unitn.disi.lpsmt.racer.ui.fragment.NavHeaderFragment;
 
 import es.dmoral.toasty.Toasty;
@@ -62,7 +61,8 @@ public final class MainActivity extends AppCompatActivity {
         navigationView.setItemIconTintList(null);
         appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_account,
-                R.id.nav_championships)
+                R.id.nav_championships,
+                R.id.nav_admin_panel)
                 .setDrawerLayout(drawerLayout)
                 .build();
 
@@ -73,7 +73,7 @@ public final class MainActivity extends AppCompatActivity {
                 .setTitle(R.string.sign_out_question)
                 .setNegativeButton(R.string.dismiss, (dialog, which) -> dialog.dismiss())
                 .setPositiveButton(R.string.confirm, ((dialog, which) -> {
-                    AuthManager.getInstance().clearToken();
+                    AuthManager.getInstance().clearTokens();
                     Intent intent = new Intent(this, SignIn.class);
                     intent.putExtra("ACTION_SIGN_OUT", true);
                     startActivity(intent);

@@ -1,5 +1,7 @@
 package com.unitn.disi.lpsmt.racer.api.entity;
 
+import androidx.annotation.NonNull;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -7,6 +9,7 @@ import java.net.URI;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 /**
@@ -134,5 +137,11 @@ public class Championship {
      * Construct an empty Championship class
      */
     public Championship() {
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return String.format(Locale.getDefault(), "%d - %s", this.id, this.name);
     }
 }

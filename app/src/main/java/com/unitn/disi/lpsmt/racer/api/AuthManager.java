@@ -35,6 +35,11 @@ public final class AuthManager {
     private static final String CLAIM_USER_ID = "id";
 
     /**
+     * Key name of {@link JWT} claim for {@link User.Role}
+     */
+    private static final String CLAIM_USER_ROLE = "role";
+
+    /**
      * Instance of the current {@link AuthManager} class assigned when the first {@link AuthManager#getInstance()} is called
      */
     private static AuthManager instance = null;
@@ -43,6 +48,11 @@ public final class AuthManager {
      * {@link SharedPreferences} instance used to retrieve the token
      */
     private final SharedPreferences sharedPreferences;
+
+    /**
+     * Current admin session {@link JWT token}
+     */
+    private static JWT adminToken = null;
 
     /**
      * Construct an Authentication Manager class.
@@ -94,6 +104,15 @@ public final class AuthManager {
     }
 
     /**
+     * Return the {@link JWT admin token}
+     *
+     * @return Admin token
+     */
+    public JWT getAdminToken() {
+        return adminToken;
+    }
+
+    /**
      * Save the given {@link JWT token} into {@link SharedPreferences}
      *
      * @param token The {@link JWT token} to save
@@ -107,14 +126,26 @@ public final class AuthManager {
     }
 
     /**
+     * Set the given {@link JWT token} to adminToken
+     *
+     * @param token The admin token
+     */
+    public void setAdminToken(JWT token) {
+        if (AuthManager.getUserRole(token) != User.Role.ADMIN) return;
+        adminToken = token;
+    }
+
+    /**
      * Remove the {@link JWT token} from {@link SharedPreferences}
      */
-    public void clearToken() {
+    public void clearTokens() {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.remove(AUTH_TOKEN);
         editor.apply();
 
-        Log.i(TAG, "Token cleared");
+        adminToken = null;
+
+        Log.i(TAG, "Tokens cleared");
     }
 
     /**
@@ -133,6 +164,28 @@ public final class AuthManager {
     }
 
     /**
+     * Return the {@link User.Role} of the authenticated user decoded from {@link JWT token} if it's present
+     *
+     * @return Authenticated User Role
+     */
+    public User.Role getAuthUserRole() {
+        return getUserRole(getToken());
+    }
+
+    /**
+     * Return the {@link User.Role} decoded from {@link JWT token} if it's present
+     *
+     * @param jwt The {@link JWT} to decode from
+     * @return User Role
+     */
+    public static User.Role getUserRole(final JWT jwt) {
+        if (jwt == null) return null;
+        User.Role role = jwt.getClaim(CLAIM_USER_ROLE).asObject(User.Role.class);
+
+        return role != null ? role : User.Role.STANDARD;
+    }
+
+    /**
      * Check if the current {@link User} is authenticated
      *
      * @return True if {@link User} is authenticated, false otherwise
@@ -140,6 +193,15 @@ public final class AuthManager {
      */
     public boolean isAuth() {
         return getToken() != null;
+    }
+
+    /**
+     * Check if the current {@link User} is an {@link User.Role#ADMIN}
+     *
+     * @return True if {@link User} is an admin, false otherwise
+     */
+    public boolean isAdmin() {
+        return getAuthUserRole() != null && getAuthUserRole() == User.Role.ADMIN;
     }
 
     /**

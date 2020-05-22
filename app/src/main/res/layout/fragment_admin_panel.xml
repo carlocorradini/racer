@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_vertical"
+    android:gravity="center_vertical"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="vertical"
+            android:padding="@dimen/padding"
+            android:visibility="visible">
+
+            <LinearLayout
+                android:id="@+id/fragment_admin_panel_sign_in_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:orientation="vertical"
+                android:padding="@dimen/padding"
+                android:visibility="visible">
+
+                <ImageView
+                    android:layout_width="@dimen/logo_big_width"
+                    android:layout_height="@dimen/logo_big_height"
+                    android:layout_gravity="center"
+                    android:contentDescription="@string/admin"
+                    android:src="@drawable/ic_settings_color" />
+
+                <EditText
+                    android:id="@+id/fragment_admin_panel_sign_in_input_username"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin"
+                    android:drawableEnd="@drawable/ic_user"
+                    android:hint="@string/username"
+                    android:importantForAutofill="no"
+                    android:inputType="textNoSuggestions" />
+
+                <EditText
+                    android:id="@+id/fragment_admin_panel_sign_in_input_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin"
+                    android:drawableEnd="@drawable/ic_lock"
+                    android:hint="@string/password"
+                    android:importantForAutofill="no"
+                    android:inputType="textPassword" />
+
+                <Button
+                    android:id="@+id/fragment_admin_panel_sign_in_button_sign_in"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin"
+                    android:drawableEnd="@drawable/ic_send"
+                    android:text="@string/sign_in" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/fragment_admin_panel_action_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:orientation="vertical"
+                android:padding="@dimen/padding"
+                android:visibility="visible">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/fragment_admin_panel_button_game_settings"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/settings"
+                    android:textSize="@dimen/text_big"
+                    android:textStyle="bold"
+                    android:visibility="visible"
+                    app:backgroundTint="@color/colorBlue"
+                    app:icon="@drawable/ic_settings_color" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/fragment_admin_panel_button_circuits"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/circuits"
+                    android:textSize="@dimen/text_big"
+                    android:textStyle="bold"
+                    android:visibility="visible"
+                    app:backgroundTint="@color/colorRed"
+                    app:icon="@drawable/ic_circuit" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/fragment_admin_panel_button_users"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/pilots"
+                    android:textSize="@dimen/text_big"
+                    android:textStyle="bold"
+                    android:visibility="visible"
+                    app:backgroundTint="@color/colorYellow"
+                    app:icon="@drawable/ic_user" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

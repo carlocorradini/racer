@@ -45,6 +45,8 @@
     <string name="photo">Photo</string>
     <string name="photos">Photos</string>
     <string name="ranking">Ranking</string>
+    <string name="admin">Admin</string>
+    <string name="save">Save</string>
 
     <!-- User Role -->
     <string name="user_role_standard">Standard</string>
@@ -121,6 +123,9 @@
 
     <!-- Championship Ranking -->
     <string name="championship_not_started">Championship hasn\'t started yet</string>
+
+    <!-- Admin Panel -->
+    <string name="warning_no_admin_role">You don\'t have enough privileges</string>
 
     <!-- Championship Subscribe Dialog -->
     <string name="warning_empty_car">Fill car field</string>

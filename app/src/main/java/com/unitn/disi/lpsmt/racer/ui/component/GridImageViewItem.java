@@ -10,7 +10,7 @@ import androidx.appcompat.widget.AppCompatImageView;
  *
  * @author Carlo Corradini
  */
-public class GridImageViewItem extends AppCompatImageView {
+public final class GridImageViewItem extends AppCompatImageView {
     public GridImageViewItem(Context context) {
         super(context);
     }
