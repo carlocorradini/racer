@@ -39,7 +39,7 @@
                     android:id="@+id/fragment_admin_panel_sign_in_input_username"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin"
+                    android:layout_marginTop="@dimen/margin_big"
                     android:drawableEnd="@drawable/ic_user"
                     android:hint="@string/username"
                     android:importantForAutofill="no"
@@ -49,7 +49,7 @@
                     android:id="@+id/fragment_admin_panel_sign_in_input_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin"
+                    android:layout_marginTop="@dimen/margin_big"
                     android:drawableEnd="@drawable/ic_lock"
                     android:hint="@string/password"
                     android:importantForAutofill="no"
@@ -59,7 +59,7 @@
                     android:id="@+id/fragment_admin_panel_sign_in_button_sign_in"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin"
+                    android:layout_marginTop="@dimen/margin_big"
                     android:drawableEnd="@drawable/ic_send"
                     android:text="@string/sign_in" />
             </LinearLayout>

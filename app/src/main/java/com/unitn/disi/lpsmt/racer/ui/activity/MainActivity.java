@@ -45,6 +45,11 @@ public final class MainActivity extends AppCompatActivity {
      */
     private DrawerLayout drawerLayout;
 
+    /**
+     * Navigation controller
+     */
+    private NavController navController;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +58,7 @@ public final class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar_main);
         drawerLayout = findViewById(R.id.drawer_layout_main);
         NavigationView navigationView = findViewById(R.id.nav_view_main);
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_main);
+        navController = Navigation.findNavController(this, R.id.nav_host_fragment_main);
         Button buttonSignOut = findViewById(R.id.sign_out_button);
         navHeaderFragment = new NavHeaderFragment(navigationView.getHeaderView(0));
 
@@ -95,6 +100,18 @@ public final class MainActivity extends AppCompatActivity {
         if (getIntent().getBooleanExtra("ACTION_SIGN_IN_AUTOMATIC", false)) {
             // Sign In automatic, welcome back
             Toasty.normal(this, R.string.sign_in_automatic).show();
+        }
+        switch (getIntent().getIntExtra("FROM_NOTIFICATION_ID", 0)) {
+            case 1: {
+                long championshipId = getIntent().getLongExtra("CHAMPIONSHIP_ID", 0);
+                if (championshipId == 0) return;
+
+                final Bundle bundle = new Bundle();
+                bundle.putLong("id", championshipId);
+                navController.navigate(R.id.nav_championship, bundle);
+
+                break;
+            }
         }
     }
 

@@ -60,7 +60,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
-                    android:layout_marginTop="@dimen/margin_big"
+                    android:layout_marginTop="@dimen/margin_normal"
                     android:gravity="center_vertical"
                     android:stretchColumns="*">
 
@@ -169,7 +169,7 @@
                     android:id="@+id/fragment_championship_dialog_subscribe_button_subscribe"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_big"
+                    android:layout_marginTop="@dimen/margin_normal"
                     android:text="@string/subscribe"
                     android:textSize="@dimen/text_big"
                     android:textStyle="bold"

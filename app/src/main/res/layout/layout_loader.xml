@@ -8,8 +8,8 @@
     <ImageView
         style="@style/Logo.Small"
         android:layout_gravity="end"
-        android:layout_marginTop="@dimen/margin"
-        android:layout_marginEnd="@dimen/margin"
+        android:layout_marginTop="@dimen/margin_big"
+        android:layout_marginEnd="@dimen/margin_big"
         android:contentDescription="@string/logo" />
 
     <LinearLayout
@@ -30,7 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="@dimen/margin"
+            android:layout_marginTop="@dimen/margin_big"
             android:gravity="center"
             android:text="@string/loading"
             android:textAllCaps="true"

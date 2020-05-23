@@ -47,6 +47,7 @@
     <string name="ranking">Ranking</string>
     <string name="admin">Admin</string>
     <string name="save">Save</string>
+    <string name="value">Value</string>
 
     <!-- User Role -->
     <string name="user_role_standard">Standard</string>
@@ -126,6 +127,10 @@
 
     <!-- Admin Panel -->
     <string name="warning_no_admin_role">You don\'t have enough privileges</string>
+    <string name="update_notification_title">Racer update</string>
+    <string name="update_notification_game_setting">Game Setting update</string>
+    <string name="warning_empty_value">Value cannot be empty</string>
+    <string name="warning_same_value">Value has\'t changed</string>
 
     <!-- Championship Subscribe Dialog -->
     <string name="warning_empty_car">Fill car field</string>

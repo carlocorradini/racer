@@ -50,7 +50,7 @@ public final class API {
     /**
      * API base URL
      **/
-    public static final String BASE_URL = "http://192.168.0.10:8080/api/v1/"; // todo cambiare url
+    public static final String BASE_URL = "http://192.168.0.25:8080/api/v1/"; // todo cambiare url
 
     /**
      * Instance of the current {@link API} class assigned when the first {@link API#getInstance()} is called

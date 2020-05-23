@@ -1,5 +1,10 @@
 package com.unitn.disi.lpsmt.racer.ui.fragment;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +14,8 @@ import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 
 import com.auth0.android.jwt.JWT;
@@ -18,10 +25,13 @@ import com.unitn.disi.lpsmt.racer.api.AuthManager;
 import com.unitn.disi.lpsmt.racer.api.entity.User;
 import com.unitn.disi.lpsmt.racer.api.service.UserService;
 import com.unitn.disi.lpsmt.racer.helper.ErrorHelper;
+import com.unitn.disi.lpsmt.racer.ui.activity.MainActivity;
 import com.unitn.disi.lpsmt.racer.ui.dialog.ChampionshipAdminGameSettingsDialog;
 import com.unitn.disi.lpsmt.racer.util.InputUtil;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Locale;
 
 import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
@@ -34,6 +44,12 @@ import retrofit2.Response;
  * @author Carlo Corradini
  */
 public final class AdminPanelFragment extends Fragment {
+
+    private static final String FROM_NOTIFICATION_ID = "FROM_NOTIFICATION_ID";
+
+    private static final String NOTIFICATION_CHANNEL_ID_GAME_SETTING = "notification_channel_game_setting";
+
+    private static int NOTIFICATION_ID = 1;
 
     /**
      * Sing In {@link View container}
@@ -76,8 +92,37 @@ public final class AdminPanelFragment extends Fragment {
             if (gameSettingsDialog.isAdded()) return;
             gameSettingsDialog.show(getParentFragmentManager(), ChampionshipAdminGameSettingsDialog.class.getName());
         });
+        gameSettingsDialog.setOnDialogSelectionListener(update -> {
+            gameSettingsDialog.dismiss();
+
+            Intent intent = new Intent(requireContext(), MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            intent.putExtra(FROM_NOTIFICATION_ID, 1);
+            intent.putExtra("CHAMPIONSHIP_ID", update.getLeft().getChampionshipGameSetting().championship);
+
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(requireContext(), NOTIFICATION_CHANNEL_ID_GAME_SETTING)
+                    .setSmallIcon(R.drawable.ic_settings_color)
+                    .setContentTitle(getString(R.string.update_notification_title))
+                    .setContentText(getString(R.string.update_notification_game_setting))
+                    .setStyle(new NotificationCompat.BigTextStyle().bigText(String.format(Locale.getDefault(), "Championship [%d] -> Game Setting [%d - %s] updated from %s to %s", update.getLeft().getChampionshipGameSetting().championship, update.getLeft().getGameSetting().id, update.getLeft().getGameSetting().name, update.getLeft().getChampionshipGameSetting().value, update.getRight().value)))
+                    .setContentIntent(PendingIntent.getActivity(requireContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT))
+                    .setAutoCancel(true);
+
+            createNotificationChannel(NOTIFICATION_CHANNEL_ID_GAME_SETTING);
+
+            NotificationManagerCompat.from(requireContext()).notify(NOTIFICATION_ID++, builder.build());
+        });
 
         return root;
+    }
+
+    private void createNotificationChannel(final String channelId) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(channelId, "Admin Notification Channel", NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationManager notificationManager = requireActivity().getSystemService(NotificationManager.class);
+            assert notificationManager != null;
+            notificationManager.createNotificationChannel(channel);
+        }
     }
 
     @Override

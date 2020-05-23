@@ -87,7 +87,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/margin_big"
+                    android:layout_marginTop="@dimen/margin_normal"
                     android:gravity="center_vertical"
                     android:stretchColumns="*">
 
@@ -618,7 +618,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
-        android:layout_margin="@dimen/margin"
+        android:layout_margin="@dimen/margin_big"
         android:contentDescription="@string/edit"
         android:visibility="gone"
         app:backgroundTint="@color/colorBlue"

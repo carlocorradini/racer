@@ -20,7 +20,7 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_admin_panel"
-            android:icon="@drawable/ic_admin_color"
+            android:icon="@drawable/ic_settings_color"
             android:title="@string/admin" />
     </group>
 
