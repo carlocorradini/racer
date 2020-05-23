@@ -45,11 +45,20 @@ import retrofit2.Response;
  */
 public final class AdminPanelFragment extends Fragment {
 
+    /**
+     * Notification id intent put extra
+     */
     private static final String FROM_NOTIFICATION_ID = "FROM_NOTIFICATION_ID";
 
+    /**
+     * Notification channel id used for Game Setting update
+     */
     private static final String NOTIFICATION_CHANNEL_ID_GAME_SETTING = "notification_channel_game_setting";
 
-    private static int NOTIFICATION_ID = 1;
+    /**
+     * Notification id counter so there will be non equals notification ids
+     */
+    private static int NOTIFICATION_ID_COUNTER = 1;
 
     /**
      * Sing In {@link View container}
@@ -110,12 +119,17 @@ public final class AdminPanelFragment extends Fragment {
 
             createNotificationChannel(NOTIFICATION_CHANNEL_ID_GAME_SETTING);
 
-            NotificationManagerCompat.from(requireContext()).notify(NOTIFICATION_ID++, builder.build());
+            NotificationManagerCompat.from(requireContext()).notify(NOTIFICATION_ID_COUNTER++, builder.build());
         });
 
         return root;
     }
 
+    /**
+     * Create the notification Channel only for Android version >= O
+     *
+     * @param channelId The channel id
+     */
     private void createNotificationChannel(final String channelId) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel(channelId, "Admin Notification Channel", NotificationManager.IMPORTANCE_DEFAULT);
