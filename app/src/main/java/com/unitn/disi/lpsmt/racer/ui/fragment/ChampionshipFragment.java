@@ -368,7 +368,7 @@ public final class ChampionshipFragment extends Fragment implements SwipeRefresh
      * Load the {@link Championship} {@link User} and {@link Car} and {@link Team}.
      * The loading combination {@link User} must have a {@link Car}
      * The loading combination {@link User} must have a {@link Team}
-     * todo This code sucks
+     * fixme This code sucks
      *
      * @param idChampionship The {@link Championship} {@link Long identifier}
      */

@@ -19,16 +19,12 @@ public final class Launcher extends AppCompatActivity {
     /**
      * Timeout in ms
      */
-    // TODO 2500
-    private static final int LAUNCHER_TIMEOUT = 0;
+    private static final int LAUNCHER_TIMEOUT = 2500;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launcher);
-
-        // TODO REMOVE!!!
-        // AuthManager.getInstance().clearToken();
 
         new Thread() {
             @Override
