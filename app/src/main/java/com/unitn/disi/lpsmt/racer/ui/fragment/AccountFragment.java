@@ -312,12 +312,15 @@ public final class AccountFragment extends Fragment implements Observer, SwipeRe
         txtId.setText(user.id.toString());
         txtUsername.setText(user.username);
         txtCreatedAt.setText(user.createdAt.format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM).withZone(ZoneId.systemDefault())));
-        txtName.setText(user.name);
-        txtSurname.setText(user.surname);
+        if (user.name != null)
+            txtName.setText(user.name);
+        if (user.surname != null)
+            txtSurname.setText(user.surname);
         txtRole.setText(user.role.getValueRes());
         txtGender.setText(user.gender.getValueRes());
         txtGender.setTag(user.gender);
-        txtDateOfBirth.setText(user.dateOfBirth.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)));
+        if (user.dateOfBirth != null)
+            txtDateOfBirth.setText(user.dateOfBirth.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)));
         txtDateOfBirth.setTag(user.dateOfBirth);
         txtResidence.setText(user.residence);
         txtFavoriteNumber.setText(String.valueOf(user.favoriteNumber));
@@ -331,9 +334,12 @@ public final class AccountFragment extends Fragment implements Observer, SwipeRe
         txtHatedCircuit.setTag(user.hatedCircuit);
         progressHatedCircuit.setVisibility(View.VISIBLE);
 
-        loadFavoriteCar(user.favoriteCar);
-        loadFavoriteCircuit(user.favoriteCircuit);
-        loadHatedCircuit(user.hatedCircuit);
+        if (user.favoriteCar != null)
+            loadFavoriteCar(user.favoriteCar);
+        if (user.favoriteCircuit != null)
+            loadFavoriteCircuit(user.favoriteCircuit);
+        if (user.hatedCircuit != null)
+            loadHatedCircuit(user.hatedCircuit);
 
         swipeRefreshLayout.setRefreshing(false);
         isUpdateMode = false;

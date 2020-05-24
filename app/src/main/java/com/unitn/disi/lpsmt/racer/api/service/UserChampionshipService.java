@@ -82,6 +82,18 @@ public interface UserChampionshipService {
     Call<API.Response> update(@Path("championship") Long championship, @Body UserChampionship userChampionship);
 
     /**
+     * Update the {@link UserChampionship} identified by {@link Championship} {@link Long id} and {@link User} {@link UUID id} with the given userChampionship.
+     * This action is permitted only to ADMINs
+     *
+     * @param championship     The {@link Championship} {@link Long id}
+     * @param user             The {@link User} {@link UUID id}
+     * @param userChampionship The {@link UserChampionship} to update with
+     * @return An {@link API.Response} if the update operation succeeded
+     */
+    @PATCH("auth/user_championship/{championship}/{user}")
+    Call<API.Response> update(@Path("championship") Long championship, @Path("user") UUID user, @Body UserChampionship userChampionship);
+
+    /**
      * Delete the {@link UserChampionship} identified by {@link Championship} {@link Long id}
      *
      * @param championship The {@link Championship} {@link Long id}

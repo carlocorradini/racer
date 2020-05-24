@@ -103,7 +103,8 @@ public final class MainActivity extends AppCompatActivity {
         }
         switch (getIntent().getIntExtra("FROM_NOTIFICATION_ID", 0)) {
             case 1:
-            case 2: {
+            case 2:
+            case 3: {
                 long championshipId = getIntent().getLongExtra("CHAMPIONSHIP_ID", 0);
                 if (championshipId == 0) return;
 

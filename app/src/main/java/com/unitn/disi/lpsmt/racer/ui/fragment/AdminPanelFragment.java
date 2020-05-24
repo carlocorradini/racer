@@ -28,6 +28,7 @@ import com.unitn.disi.lpsmt.racer.helper.ErrorHelper;
 import com.unitn.disi.lpsmt.racer.ui.activity.MainActivity;
 import com.unitn.disi.lpsmt.racer.ui.dialog.ChampionshipAdminCircuitsDialog;
 import com.unitn.disi.lpsmt.racer.ui.dialog.ChampionshipAdminGameSettingsDialog;
+import com.unitn.disi.lpsmt.racer.ui.dialog.ChampionshipAdminUsersDialog;
 import com.unitn.disi.lpsmt.racer.util.InputUtil;
 
 import org.jetbrains.annotations.NotNull;
@@ -64,6 +65,11 @@ public final class AdminPanelFragment extends Fragment {
     private static final String NOTIFICATION_CHANNEL_ID_CIRCUIT = "notification_channel_circuit";
 
     /**
+     * Notification channel id used for User update
+     */
+    private static final String NOTIFICATION_CHANNEL_ID_USER = "notification_channel_user";
+
+    /**
      * Notification id counter so there will be non equals notification ids
      */
     private static int NOTIFICATION_ID_COUNTER = 1;
@@ -86,6 +92,7 @@ public final class AdminPanelFragment extends Fragment {
         final User user = new User();
         final ChampionshipAdminGameSettingsDialog gameSettingsDialog = new ChampionshipAdminGameSettingsDialog();
         final ChampionshipAdminCircuitsDialog circuitsDialog = new ChampionshipAdminCircuitsDialog();
+        final ChampionshipAdminUsersDialog usersDialog = new ChampionshipAdminUsersDialog();
 
         signInContainer = root.findViewById(R.id.fragment_admin_panel_sign_in_container);
         actionContainer = root.findViewById(R.id.fragment_admin_panel_action_container);
@@ -151,6 +158,31 @@ public final class AdminPanelFragment extends Fragment {
                     .setContentIntent(PendingIntent.getActivity(requireContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT))
                     .setAutoCancel(true);
             createNotificationChannel(NOTIFICATION_CHANNEL_ID_CIRCUIT);
+            NotificationManagerCompat.from(requireContext()).notify(NOTIFICATION_ID_COUNTER++, builder.build());
+
+            Toasty.success(requireContext(), R.string.update_success).show();
+        });
+
+        buttonActionUsers.setOnClickListener(v -> {
+            if(usersDialog.isAdded()) return;
+            usersDialog.show(getParentFragmentManager(), ChampionshipAdminUsersDialog.class.getName());
+        });
+        usersDialog.setOnDialogSelectionListener(update -> {
+            usersDialog.dismiss();
+
+            Intent intent = new Intent(requireContext(), MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            intent.putExtra(FROM_NOTIFICATION_ID, 2);
+            intent.putExtra("CHAMPIONSHIP_ID", update.getLeft().getUserChampionship().championship);
+
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(requireContext(), NOTIFICATION_CHANNEL_ID_GAME_SETTING)
+                    .setSmallIcon(R.drawable.ic_user)
+                    .setContentTitle(getString(R.string.update_notification_title))
+                    .setContentText(getString(R.string.update_notification_user))
+                    .setStyle(new NotificationCompat.BigTextStyle().bigText(String.format(Locale.getDefault(), "Championship [%d] -> User [%s - %s] points update from %d to %d", update.getLeft().getUserChampionship().championship, update.getLeft().getUser().username, update.getLeft().getUser().id, update.getLeft().getUserChampionship().points, update.getRight().points)))
+                    .setContentIntent(PendingIntent.getActivity(requireContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT))
+                    .setAutoCancel(true);
+            createNotificationChannel(NOTIFICATION_CHANNEL_ID_USER);
             NotificationManagerCompat.from(requireContext()).notify(NOTIFICATION_ID_COUNTER++, builder.build());
 
             Toasty.success(requireContext(), R.string.update_success).show();

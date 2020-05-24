@@ -127,10 +127,12 @@
     <string name="championship_not_started">Championship hasn\'t started yet</string>
 
     <!-- Admin Panel -->
+    <string name="admin_panel">Admin panel</string>
     <string name="warning_no_admin_role">You don\'t have enough privileges</string>
     <string name="update_notification_title">Racer update</string>
     <string name="update_notification_game_setting">Game Setting update</string>
     <string name="update_notification_circuit">Circuit update</string>
+    <string name="update_notification_user">Pilot update</string>
     <string name="warning_empty_value">Value cannot be empty</string>
     <string name="warning_same_value">Value has\'t changed</string>
     <string name="update_success">Updated successfully</string>

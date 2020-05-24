@@ -1,9 +1,9 @@
 package com.unitn.disi.lpsmt.racer.ui.dialog;
 
-import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,11 +25,13 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.unitn.disi.lpsmt.racer.R;
 import com.unitn.disi.lpsmt.racer.api.entity.Championship;
-import com.unitn.disi.lpsmt.racer.api.service.ChampionshipCircuitService;
+import com.unitn.disi.lpsmt.racer.api.entity.UserChampionship;
 import com.unitn.disi.lpsmt.racer.api.service.ChampionshipService;
-import com.unitn.disi.lpsmt.racer.api.service.CircuitService;
+import com.unitn.disi.lpsmt.racer.api.service.UserChampionshipService;
+import com.unitn.disi.lpsmt.racer.api.service.UserService;
+import com.unitn.disi.lpsmt.racer.filter.NumberMinMaxFilter;
 import com.unitn.disi.lpsmt.racer.helper.ColorHelper;
-import com.unitn.disi.lpsmt.racer.api.entity.Circuit;
+import com.unitn.disi.lpsmt.racer.api.entity.User;
 import com.unitn.disi.lpsmt.racer.helper.ErrorHelper;
 import com.unitn.disi.lpsmt.racer.ui.component.dialog.OnDialogSelectionInterface;
 import com.unitn.disi.lpsmt.racer.util.InputUtil;
@@ -37,13 +39,7 @@ import com.unitn.disi.lpsmt.racer.util.InputUtil;
 import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.NotNull;
 
-import java.text.DateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -53,11 +49,11 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
- * {@link ChampionshipCircuit} & {@link Circuit} {@link DialogFragment} descriptor
+ * {@link ChampionshipCircuit} & {@link User} {@link DialogFragment} descriptor
  *
  * @author Carlo Corradini
  */
-public final class ChampionshipAdminCircuitsDialog extends DialogFragment implements SwipeRefreshLayout.OnRefreshListener {
+public final class ChampionshipAdminUsersDialog extends DialogFragment implements SwipeRefreshLayout.OnRefreshListener {
 
     /**
      * {@link Log} TAG of this class
@@ -75,12 +71,12 @@ public final class ChampionshipAdminCircuitsDialog extends DialogFragment implem
     private Spinner spinnerChampionships;
 
     /**
-     * {@link Circuit} {@link Spinner}
+     * {@link User} {@link Spinner}
      */
-    private Spinner spinnerCircuits;
+    private Spinner spinnerUsers;
 
     /**
-     * {@link Circuit} input value
+     * {@link User} input value
      */
     private EditText inputValue;
 
@@ -95,14 +91,9 @@ public final class ChampionshipAdminCircuitsDialog extends DialogFragment implem
     private SwipeRefreshLayout swipeRefreshLayout;
 
     /**
-     * {@link LocalDate} value
+     * Listener when save button has been clicked with the saved {@link UserDescriptor}
      */
-    private LocalDate date = null;
-
-    /**
-     * Listener when save button has been clicked with the saved {@link CircuitDescriptor}
-     */
-    private OnDialogSelectionInterface<Pair<CircuitDescriptor, ChampionshipCircuit>> listener = null;
+    private OnDialogSelectionInterface<Pair<UserDescriptor, UserChampionship>> listener = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -113,14 +104,14 @@ public final class ChampionshipAdminCircuitsDialog extends DialogFragment implem
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View root = inflater.inflate(R.layout.fragment_admin_circuits_dialog, container, false);
+        View root = inflater.inflate(R.layout.fragment_admin_users_dialog, container, false);
 
-        toolbar = root.findViewById(R.id.fragment_admin_circuits_dialog_subscribe_toolbar);
-        swipeRefreshLayout = root.findViewById(R.id.fragment_admin_circuits_dialog_swipe_refresh);
-        spinnerChampionships = root.findViewById(R.id.fragment_admin_circuits_dialog_championship_spinner);
-        spinnerCircuits = root.findViewById(R.id.fragment_admin_circuits_dialog_circuits);
-        inputValue = root.findViewById(R.id.fragment_admin_circuits_input);
-        buttonSave = root.findViewById(R.id.fragment_admin_circuits_button_save);
+        toolbar = root.findViewById(R.id.fragment_admin_users_dialog_subscribe_toolbar);
+        swipeRefreshLayout = root.findViewById(R.id.fragment_admin_users_dialog_swipe_refresh);
+        spinnerChampionships = root.findViewById(R.id.fragment_admin_users_dialog_championship_spinner);
+        spinnerUsers = root.findViewById(R.id.fragment_admin_users_dialog_users);
+        inputValue = root.findViewById(R.id.fragment_admin_users_input);
+        buttonSave = root.findViewById(R.id.fragment_admin_users_button_save);
 
         return root;
     }
@@ -130,7 +121,7 @@ public final class ChampionshipAdminCircuitsDialog extends DialogFragment implem
         super.onViewCreated(view, savedInstanceState);
 
         toolbar.setNavigationOnClickListener(v -> dismiss());
-        toolbar.setTitle(R.string.circuits);
+        toolbar.setTitle(R.string.pilots);
         if (toolbar.getNavigationIcon() != null)
             toolbar.getNavigationIcon().setTint(Color.WHITE);
         toolbar.setOnMenuItemClickListener(item -> {
@@ -142,18 +133,19 @@ public final class ChampionshipAdminCircuitsDialog extends DialogFragment implem
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setRefreshing(true);
 
+        inputValue.setFilters(new InputFilter[]{new NumberMinMaxFilter(0, Short.MAX_VALUE)});
+
         spinnerChampionships.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 final Championship championship = (Championship) spinnerChampionships.getItemAtPosition(position);
 
                 swipeRefreshLayout.setRefreshing(true);
-                spinnerCircuits.setEnabled(false);
+                spinnerUsers.setEnabled(false);
                 inputValue.setEnabled(false);
                 inputValue.setText("");
                 buttonSave.setEnabled(false);
-                loadCircuits(championship.id);
-                date = null;
+                loadUsers(championship.id);
             }
 
             @Override
@@ -162,39 +154,26 @@ public final class ChampionshipAdminCircuitsDialog extends DialogFragment implem
             }
         });
 
-        spinnerCircuits.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinnerUsers.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                final CircuitDescriptor circuitDescriptor = (CircuitDescriptor) spinnerCircuits.getItemAtPosition(position);
+                final UserDescriptor userDescriptor = (UserDescriptor) spinnerUsers.getItemAtPosition(position);
 
-                inputValue.setText(circuitDescriptor.championshipCircuit.date.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)));
+                inputValue.setText(String.valueOf(userDescriptor.userChampionship.points));
                 inputValue.setEnabled(true);
                 buttonSave.setEnabled(true);
-                date = null;
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
-        });
-
-        inputValue.setOnClickListener(v -> {
-            final Calendar calendar = Calendar.getInstance();
-            DatePickerDialog datePickerDialog = new DatePickerDialog(v.getContext(), (_view, year, month, dayOfMonth) -> {
-                Calendar dateCalendar = Calendar.getInstance();
-                dateCalendar.set(year, month, dayOfMonth);
-                date = LocalDate.of(year, month + 1, dayOfMonth);
-                inputValue.setText(DateFormat.getDateInstance(DateFormat.MEDIUM).format(dateCalendar.getTime()));
-            }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
-            datePickerDialog.getDatePicker().setMaxDate(new Date().getTime());
-            datePickerDialog.show();
         });
 
         buttonSave.setOnClickListener(v -> {
-            if (isValidUpdate((CircuitDescriptor) spinnerCircuits.getSelectedItem())) {
+            if (isValidUpdate((UserDescriptor) spinnerUsers.getSelectedItem())) {
                 InputUtil.hideKeyboard(requireActivity());
-                saveChanges((CircuitDescriptor) spinnerCircuits.getSelectedItem());
+                saveChanges((UserDescriptor) spinnerUsers.getSelectedItem());
             }
         });
 
@@ -241,47 +220,47 @@ public final class ChampionshipAdminCircuitsDialog extends DialogFragment implem
     }
 
     /**
-     * Load available {@link Circuit} given the championshipId
+     * Load available {@link User} given the championshipId
      *
      * @param championshipId The {@link Championship} id
      */
-    private void loadCircuits(final long championshipId) {
-        API.getInstance().getAdminClient().create(ChampionshipCircuitService.class).findByChampionship(championshipId).enqueue(new Callback<API.Response<List<ChampionshipCircuit>>>() {
+    private void loadUsers(final long championshipId) {
+        API.getInstance().getAdminClient().create(UserChampionshipService.class).findByChampionship(championshipId).enqueue(new Callback<API.Response<List<UserChampionship>>>() {
             @Override
-            public void onResponse(@NotNull Call<API.Response<List<ChampionshipCircuit>>> call, @NotNull Response<API.Response<List<ChampionshipCircuit>>> response) {
+            public void onResponse(@NotNull Call<API.Response<List<UserChampionship>>> call, @NotNull Response<API.Response<List<UserChampionship>>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    final List<ChampionshipCircuit> championshipCircuits = response.body().data;
+                    final List<UserChampionship> userChampionships = response.body().data;
 
-                    API.getInstance().getAdminClient().create(CircuitService.class).findByChampionship(championshipId).enqueue(new Callback<API.Response<List<Circuit>>>() {
+                    API.getInstance().getAdminClient().create(UserService.class).findByChampionship(championshipId).enqueue(new Callback<API.Response<List<User>>>() {
                         @Override
-                        public void onResponse(@NotNull Call<API.Response<List<Circuit>>> call, @NotNull Response<API.Response<List<Circuit>>> response) {
+                        public void onResponse(@NotNull Call<API.Response<List<User>>> call, @NotNull Response<API.Response<List<User>>> response) {
                             swipeRefreshLayout.setRefreshing(false);
                             if (response.isSuccessful() && response.body() != null) {
-                                final List<Circuit> circuits = response.body().data;
-                                final List<CircuitDescriptor> circuitDescriptors = new ArrayList<>(championshipCircuits.size());
+                                final List<User> users = response.body().data;
+                                final List<UserDescriptor> userDescriptors = new ArrayList<>(userChampionships.size());
 
-                                for (ChampionshipCircuit championshipCircuit : championshipCircuits) {
-                                    for (Circuit circuit : circuits) {
-                                        if (!championshipCircuit.circuit.equals(circuit.id))
+                                for (UserChampionship userChampionship : userChampionships) {
+                                    for (User user : users) {
+                                        if (!userChampionship.user.equals(user.id))
                                             continue;
-                                        circuitDescriptors.add(new CircuitDescriptor(championshipCircuit, circuit));
+                                        userDescriptors.add(new UserDescriptor(userChampionship, user));
 
                                         break;
                                     }
                                 }
 
-                                final ArrayAdapter<CircuitDescriptor> circuitDescriptorArrayAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, circuitDescriptors);
-                                circuitDescriptorArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                                spinnerCircuits.setEnabled(true);
-                                spinnerCircuits.setAdapter(circuitDescriptorArrayAdapter);
+                                final ArrayAdapter<UserDescriptor> userDescriptorArrayAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, userDescriptors);
+                                userDescriptorArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                spinnerUsers.setEnabled(true);
+                                spinnerUsers.setAdapter(userDescriptorArrayAdapter);
                             } else {
                                 Toasty.error(requireContext(), R.string.error_unknown).show();
                             }
                         }
 
                         @Override
-                        public void onFailure(@NotNull Call<API.Response<List<Circuit>>> call, @NotNull Throwable t) {
-                            Log.e(TAG, "Unable to find Circuits due to " + t.getMessage(), t);
+                        public void onFailure(@NotNull Call<API.Response<List<User>>> call, @NotNull Throwable t) {
+                            Log.e(TAG, "Unable to find Users due to " + t.getMessage(), t);
                             ErrorHelper.showFailureError(getContext(), t);
                             swipeRefreshLayout.setRefreshing(false);
                         }
@@ -293,8 +272,8 @@ public final class ChampionshipAdminCircuitsDialog extends DialogFragment implem
             }
 
             @Override
-            public void onFailure(@NotNull Call<API.Response<List<ChampionshipCircuit>>> call, @NotNull Throwable t) {
-                Log.e(TAG, "Unable to find Championship Circuits to " + t.getMessage(), t);
+            public void onFailure(@NotNull Call<API.Response<List<UserChampionship>>> call, @NotNull Throwable t) {
+                Log.e(TAG, "Unable to find Championship Users to " + t.getMessage(), t);
                 ErrorHelper.showFailureError(getContext(), t);
                 swipeRefreshLayout.setRefreshing(false);
             }
@@ -302,25 +281,25 @@ public final class ChampionshipAdminCircuitsDialog extends DialogFragment implem
     }
 
     /**
-     * Save changes {@link Circuit} value given the {@link CircuitDescriptor}
+     * Save changes {@link User} value given the {@link UserDescriptor}
      *
-     * @param circuitDescriptor The {@link CircuitDescriptor} to save information
+     * @param userDescriptor The {@link UserDescriptor} to save information
      */
-    private void saveChanges(final CircuitDescriptor circuitDescriptor) {
-        if (circuitDescriptor == null || swipeRefreshLayout.isRefreshing() || date == null) return;
+    private void saveChanges(final UserDescriptor userDescriptor) {
+        if (userDescriptor == null || swipeRefreshLayout.isRefreshing()) return;
         swipeRefreshLayout.setRefreshing(true);
 
-        final ChampionshipCircuit updateChampionshipCircuit = new ChampionshipCircuit();
-        updateChampionshipCircuit.date = date;
+        final UserChampionship updateUserChampionship = new UserChampionship();
+        updateUserChampionship.points = Short.valueOf(inputValue.getText().toString());
 
-        API.getInstance().getAdminClient().create(ChampionshipCircuitService.class).update(circuitDescriptor.championshipCircuit.championship, circuitDescriptor.championshipCircuit.circuit, updateChampionshipCircuit).enqueue(new Callback<API.Response>() {
+        API.getInstance().getAdminClient().create(UserChampionshipService.class).update(userDescriptor.userChampionship.championship, userDescriptor.userChampionship.user, updateUserChampionship).enqueue(new Callback<API.Response>() {
             @Override
             public void onResponse(@NotNull Call<API.Response> call, @NotNull Response<API.Response> response) {
                 swipeRefreshLayout.setRefreshing(false);
 
                 if (response.isSuccessful() && response.body() != null) {
                     if (listener != null)
-                        listener.onDialogSelection(Pair.of(circuitDescriptor, updateChampionshipCircuit));
+                        listener.onDialogSelection(Pair.of(userDescriptor, updateUserChampionship));
                 } else {
                     Toasty.error(requireContext(), R.string.error_unknown).show();
                 }
@@ -328,7 +307,7 @@ public final class ChampionshipAdminCircuitsDialog extends DialogFragment implem
 
             @Override
             public void onFailure(@NotNull Call<API.Response> call, @NotNull Throwable t) {
-                Log.e(TAG, "Unable to update Championship Circuits due to " + t.getMessage(), t);
+                Log.e(TAG, "Unable to update Championship Users due to " + t.getMessage(), t);
                 ErrorHelper.showFailureError(getContext(), t);
                 swipeRefreshLayout.setRefreshing(false);
             }
@@ -336,26 +315,26 @@ public final class ChampionshipAdminCircuitsDialog extends DialogFragment implem
     }
 
     /**
-     * Set the listener called when the positive button has been clicked with the saved {@link CircuitDescriptor}
+     * Set the listener called when the positive button has been clicked with the saved {@link UserDescriptor}
      *
-     * @param listener Listener when positive button has been clicked with the selected {@link CircuitDescriptor}
+     * @param listener Listener when positive button has been clicked with the selected {@link UserDescriptor}
      */
-    public void setOnDialogSelectionListener(OnDialogSelectionInterface<Pair<CircuitDescriptor, ChampionshipCircuit>> listener) {
+    public void setOnDialogSelectionListener(OnDialogSelectionInterface<Pair<UserDescriptor, UserChampionship>> listener) {
         this.listener = listener;
     }
 
     /**
      * Check if the update is valid
      *
-     * @param circuitDescriptor Current {@link CircuitDescriptor}
+     * @param userDescriptor Current {@link UserDescriptor}
      * @return True if valid, false otherwise
      */
-    private boolean isValidUpdate(final CircuitDescriptor circuitDescriptor) {
-        if (date == null || inputValue.getText().toString().isEmpty()) {
+    private boolean isValidUpdate(final UserDescriptor userDescriptor) {
+        if (inputValue.getText().toString().isEmpty()) {
             Toasty.warning(requireContext(), R.string.warning_empty_value).show();
             return false;
         }
-        if (date.equals(circuitDescriptor.championshipCircuit.date)) {
+        if (Short.valueOf(inputValue.getText().toString()).equals(userDescriptor.userChampionship.points)) {
             Toasty.warning(requireContext(), R.string.warning_same_value).show();
             return false;
         }
@@ -369,53 +348,53 @@ public final class ChampionshipAdminCircuitsDialog extends DialogFragment implem
     }
 
     /**
-     * {@link ChampionshipCircuit} & {@link Circuit} class descriptor
+     * {@link UserChampionship} & {@link User} class descriptor
      *
      * @author Carlo Corradini
      */
-    public static class CircuitDescriptor {
+    public static class UserDescriptor {
         /**
-         * {@link ChampionshipCircuit} reference
+         * {@link UserChampionship} reference
          */
-        private final ChampionshipCircuit championshipCircuit;
+        private final UserChampionship userChampionship;
         /**
-         * {@link Circuit} reference
+         * {@link User} reference
          */
-        private final Circuit circuit;
+        private final User user;
 
         /**
-         * Construct a {@link CircuitDescriptor} given the {@link ChampionshipCircuit} & {@link Circuit}
+         * Construct a {@link UserDescriptor} given the {@link UserDescriptor} & {@link User}
          *
-         * @param championshipCircuit The {@link ChampionshipCircuit}
-         * @param circuit             The {@link Circuit}
+         * @param userChampionship The {@link UserChampionship}
+         * @param user             The {@link User}
          */
-        public CircuitDescriptor(final ChampionshipCircuit championshipCircuit, final Circuit circuit) {
-            this.championshipCircuit = championshipCircuit;
-            this.circuit = circuit;
+        public UserDescriptor(final UserChampionship userChampionship, final User user) {
+            this.userChampionship = userChampionship;
+            this.user = user;
         }
 
         /**
-         * Return the {@link ChampionshipCircuit} reference
+         * Return the {@link UserChampionship} reference
          *
-         * @return {@link ChampionshipCircuit} reference
+         * @return {@link UserChampionship} reference
          */
-        public ChampionshipCircuit getChampionshipCircuit() {
-            return championshipCircuit;
+        public UserChampionship getUserChampionship() {
+            return userChampionship;
         }
 
         /**
-         * Return the {@link Circuit} reference
+         * Return the {@link User} reference
          *
-         * @return {@link Circuit} reference
+         * @return {@link User} reference
          */
-        public Circuit getCircuit() {
-            return circuit;
+        public User getUser() {
+            return user;
         }
 
         @NonNull
         @Override
         public String toString() {
-            return String.format(Locale.getDefault(), "%d - %s - %s", circuit.id, circuit.name, championshipCircuit.date.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)));
+            return String.format(Locale.getDefault(), "%s - %s - %d", user.username, user.id, userChampionship.points);
         }
     }
 }
