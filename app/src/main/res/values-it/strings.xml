@@ -48,6 +48,7 @@
     <string name="admin">Admin</string>
     <string name="save">Salva</string>
     <string name="value">Valore</string>
+    <string name="date">Data</string>
 
     <!-- User Role -->
     <string name="user_role_standard">Standard</string>
@@ -128,9 +129,11 @@
     <!-- Admin Panel -->
     <string name="warning_no_admin_role">Non possiedi abbastanza privilegi</string>
     <string name="update_notification_title">Racer aggiornamento</string>
-    <string name="update_notification_game_setting">Game Setting update</string>
+    <string name="update_notification_game_setting">Aggiornamento impostazioni di gioco</string>
+    <string name="update_notification_circuit">Aggiornamento circuito</string>
     <string name="warning_empty_value">Il valore non può essere vuoto</string>
     <string name="warning_same_value">Il valore non è cambiato</string>
+    <string name="update_success">Aggiornamento eseguito con successo</string>
 
     <!-- Championship Subscribe Dialog -->
     <string name="warning_empty_car">Compilare il campo macchina</string>

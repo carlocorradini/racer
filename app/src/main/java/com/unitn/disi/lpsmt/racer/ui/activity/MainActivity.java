@@ -102,7 +102,8 @@ public final class MainActivity extends AppCompatActivity {
             Toasty.normal(this, R.string.sign_in_automatic).show();
         }
         switch (getIntent().getIntExtra("FROM_NOTIFICATION_ID", 0)) {
-            case 1: {
+            case 1:
+            case 2: {
                 long championshipId = getIntent().getLongExtra("CHAMPIONSHIP_ID", 0);
                 if (championshipId == 0) return;
 

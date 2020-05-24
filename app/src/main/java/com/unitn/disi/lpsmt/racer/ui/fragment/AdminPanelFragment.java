@@ -26,11 +26,14 @@ import com.unitn.disi.lpsmt.racer.api.entity.User;
 import com.unitn.disi.lpsmt.racer.api.service.UserService;
 import com.unitn.disi.lpsmt.racer.helper.ErrorHelper;
 import com.unitn.disi.lpsmt.racer.ui.activity.MainActivity;
+import com.unitn.disi.lpsmt.racer.ui.dialog.ChampionshipAdminCircuitsDialog;
 import com.unitn.disi.lpsmt.racer.ui.dialog.ChampionshipAdminGameSettingsDialog;
 import com.unitn.disi.lpsmt.racer.util.InputUtil;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.Locale;
 
 import es.dmoral.toasty.Toasty;
@@ -56,6 +59,11 @@ public final class AdminPanelFragment extends Fragment {
     private static final String NOTIFICATION_CHANNEL_ID_GAME_SETTING = "notification_channel_game_setting";
 
     /**
+     * Notification channel id used for Circuit update
+     */
+    private static final String NOTIFICATION_CHANNEL_ID_CIRCUIT = "notification_channel_circuit";
+
+    /**
      * Notification id counter so there will be non equals notification ids
      */
     private static int NOTIFICATION_ID_COUNTER = 1;
@@ -77,6 +85,7 @@ public final class AdminPanelFragment extends Fragment {
 
         final User user = new User();
         final ChampionshipAdminGameSettingsDialog gameSettingsDialog = new ChampionshipAdminGameSettingsDialog();
+        final ChampionshipAdminCircuitsDialog circuitsDialog = new ChampionshipAdminCircuitsDialog();
 
         signInContainer = root.findViewById(R.id.fragment_admin_panel_sign_in_container);
         actionContainer = root.findViewById(R.id.fragment_admin_panel_action_container);
@@ -116,10 +125,35 @@ public final class AdminPanelFragment extends Fragment {
                     .setStyle(new NotificationCompat.BigTextStyle().bigText(String.format(Locale.getDefault(), "Championship [%d] -> Game Setting [%d - %s] updated from %s to %s", update.getLeft().getChampionshipGameSetting().championship, update.getLeft().getGameSetting().id, update.getLeft().getGameSetting().name, update.getLeft().getChampionshipGameSetting().value, update.getRight().value)))
                     .setContentIntent(PendingIntent.getActivity(requireContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT))
                     .setAutoCancel(true);
-
             createNotificationChannel(NOTIFICATION_CHANNEL_ID_GAME_SETTING);
-
             NotificationManagerCompat.from(requireContext()).notify(NOTIFICATION_ID_COUNTER++, builder.build());
+
+            Toasty.success(requireContext(), R.string.update_success).show();
+        });
+
+        buttonActionCircuits.setOnClickListener(v -> {
+            if (circuitsDialog.isAdded()) return;
+            circuitsDialog.show(getParentFragmentManager(), ChampionshipAdminCircuitsDialog.class.getName());
+        });
+        circuitsDialog.setOnDialogSelectionListener(update -> {
+            circuitsDialog.dismiss();
+
+            Intent intent = new Intent(requireContext(), MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            intent.putExtra(FROM_NOTIFICATION_ID, 2);
+            intent.putExtra("CHAMPIONSHIP_ID", update.getLeft().getChampionshipCircuit().championship);
+
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(requireContext(), NOTIFICATION_CHANNEL_ID_GAME_SETTING)
+                    .setSmallIcon(R.drawable.ic_circuit)
+                    .setContentTitle(getString(R.string.update_notification_title))
+                    .setContentText(getString(R.string.update_notification_circuit))
+                    .setStyle(new NotificationCompat.BigTextStyle().bigText(String.format(Locale.getDefault(), "Championship [%d] -> Circuit [%d - %s] date update from %s to %s", update.getLeft().getChampionshipCircuit().championship, update.getLeft().getCircuit().id, update.getLeft().getCircuit().name, update.getLeft().getChampionshipCircuit().date.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)), update.getRight().date.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)))))
+                    .setContentIntent(PendingIntent.getActivity(requireContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT))
+                    .setAutoCancel(true);
+            createNotificationChannel(NOTIFICATION_CHANNEL_ID_CIRCUIT);
+            NotificationManagerCompat.from(requireContext()).notify(NOTIFICATION_ID_COUNTER++, builder.build());
+
+            Toasty.success(requireContext(), R.string.update_success).show();
         });
 
         return root;

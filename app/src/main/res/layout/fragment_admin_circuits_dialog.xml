@@ -5,13 +5,13 @@
     android:layout_height="match_parent">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/fragment_admin_game_settings_dialog_app_bar"
+        android:id="@+id/fragment_admin_circuits_dialog_app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:elevation="0dp">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/fragment_admin_game_settings_dialog_subscribe_toolbar"
+            android:id="@+id/fragment_admin_circuits_dialog_subscribe_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:paddingStart="6dp"
@@ -25,13 +25,13 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/fragment_admin_game_settings_dialog_app_bar"
+        android:layout_below="@id/fragment_admin_circuits_dialog_app_bar"
         android:padding="@dimen/padding_small"
         android:paddingTop="@dimen/padding_big"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/fragment_admin_game_settings_dialog_swipe_refresh"
+            android:id="@+id/fragment_admin_circuits_dialog_swipe_refresh"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -47,7 +47,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/settings"
+                        android:text="@string/circuits"
                         android:textAlignment="center"
                         android:textSize="@dimen/text_huge"
                         android:textStyle="bold" />
@@ -60,7 +60,7 @@
                         android:textAlignment="textStart" />
 
                     <Spinner
-                        android:id="@+id/fragment_admin_game_settings_dialog_championship_spinner"
+                        android:id="@+id/fragment_admin_circuits_dialog_championship_spinner"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_small"
@@ -70,11 +70,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_big"
-                        android:text="@string/setting"
+                        android:text="@string/circuit"
                         android:textAlignment="textStart" />
 
                     <Spinner
-                        android:id="@+id/fragment_admin_game_settings_dialog_game_settings"
+                        android:id="@+id/fragment_admin_circuits_dialog_circuits"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_small"
@@ -84,22 +84,24 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_big"
-                        android:text="@string/value"
+                        android:text="@string/date"
                         android:textAlignment="textStart" />
 
                     <EditText
-                        android:id="@+id/fragment_admin_game_settings_input"
+                        android:id="@+id/fragment_admin_circuits_input"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_small"
+                        android:clickable="true"
                         android:enabled="false"
+                        android:focusable="false"
                         android:hint="@string/unknown"
                         android:importantForAutofill="no"
                         android:inputType="textNoSuggestions"
                         android:textAlignment="center" />
 
                     <com.google.android.material.button.MaterialButton
-                        android:id="@+id/fragment_admin_game_settings_button_save"
+                        android:id="@+id/fragment_admin_circuits_button_save"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_huge"
@@ -108,7 +110,7 @@
                         android:textSize="@dimen/text_big"
                         android:textStyle="bold"
                         android:visibility="visible"
-                        app:backgroundTint="@color/colorBlue"
+                        app:backgroundTint="@color/colorRed"
                         app:icon="@drawable/ic_save" />
 
                 </LinearLayout>
