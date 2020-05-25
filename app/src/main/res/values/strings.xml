@@ -77,6 +77,7 @@
     <string name="favorite_car">Favorite car</string>
     <string name="favorite_circuit">Favorite circuit</string>
     <string name="hated_circuit">Hated circuit</string>
+    <string name="accept_eula"><u>Accept terms &amp; conditions</u></string>
     <string-array name="user_genders_array">
         <item>Unknown</item>
         <item>Male</item>
@@ -97,6 +98,7 @@
     <string name="warning_empty_favorite_circuit">Fill favorite circuit field</string>
     <string name="warning_empty_hated_circuit">Fill hated circuit field</string>
     <string name="warning_favorite_hated_circuits_equals">Favorite and Hated circuit must not be equals</string>
+    <string name="warning_accept_eula">Accept terms &amp; conditions</string>
 
     <!-- Forgot Password -->
     <string name="recover_password_email_sent">Recovery email sent successfully</string>

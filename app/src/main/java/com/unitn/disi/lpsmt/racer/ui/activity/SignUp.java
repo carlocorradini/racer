@@ -2,6 +2,7 @@ package com.unitn.disi.lpsmt.racer.ui.activity;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.view.View;
@@ -9,6 +10,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.Spinner;
+import android.widget.Switch;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -53,6 +56,10 @@ public final class SignUp extends AppCompatActivity {
      */
     private EditText inputPasswordRepeat;
     /**
+     * EULA Switch
+     */
+    private Switch switchEula;
+    /**
      * Loader
      */
     private FrameLayout loader;
@@ -82,6 +89,8 @@ public final class SignUp extends AppCompatActivity {
         CircuitDialog dialogFavoriteCircuit = new CircuitDialog();
         EditText inputHatedCircuit = findViewById(R.id.sign_up_input_hated_circuit);
         CircuitDialog dialogHatedCircuit = new CircuitDialog();
+        switchEula = findViewById(R.id.sign_up_eula_switch);
+        TextView txtEula = findViewById(R.id.sign_up_eula_link);
         Button buttonSignUp = findViewById(R.id.sign_up_button_sign_up);
         loader = findViewById(R.id.sign_up_loader);
 
@@ -126,6 +135,8 @@ public final class SignUp extends AppCompatActivity {
             inputHatedCircuit.setText(circuit.name);
             user.hatedCircuit = circuit.id;
         });
+
+        txtEula.setOnClickListener(v -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://racer-2020.herokuapp.com/site/legal/eula"))));
 
         buttonSignUp.setOnClickListener(v -> {
             user.username = inputUsername.getText().toString();
@@ -282,6 +293,10 @@ public final class SignUp extends AppCompatActivity {
         }
         if (user.favoriteCircuit.equals(user.hatedCircuit)) {
             Toasty.warning(getBaseContext(), R.string.warning_favorite_hated_circuits_equals).show();
+            return false;
+        }
+        if (!switchEula.isChecked()) {
+            Toasty.warning(getBaseContext(), R.string.warning_accept_eula).show();
             return false;
         }
 
