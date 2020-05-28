@@ -55,7 +55,7 @@
     <string name="user_role_admin">Admin</string>
 
     <!-- User Gender -->
-    <string name="user_gender_male">Mascio</string>
+    <string name="user_gender_male">Maschio</string>
     <string name="user_gender_female">Femmina</string>
     <string name="user_gender_unknown">Sconosciuto</string>
 
